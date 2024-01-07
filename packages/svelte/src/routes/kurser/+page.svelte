@@ -14,7 +14,7 @@
 	{#if data.status === 'success'}
 		{#each data.courses as course}
 			<h2>{course.title}</h2>
-			<p>{course.description}</p>
+			<p>{@html course.description}</p>
 		{/each}
 	{/if}
 </div>
