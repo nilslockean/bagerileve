@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm --filter \"@bagerileve/sanity\" dev",
+    "dev": "pnpm --filter \"@bagerileve/svelte\" dev",
+    "studio": "pnpm --filter \"@bagerileve/sanity\" dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
