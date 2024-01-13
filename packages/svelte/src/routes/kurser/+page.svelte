@@ -13,8 +13,10 @@
 
 	{#if data.status === 'success'}
 		{#each data.courses as course}
-			<h2>{course.title}</h2>
-			<p>{@html course.description}</p>
+			<section class="my-12">
+				<h2>{course.title}</h2>
+				<p>{@html course.description}</p>
+			</section>
 		{/each}
 	{/if}
 </div>

@@ -23,7 +23,7 @@ const _SuccessSchema = z.object({
 const _ResponseSchema = z.discriminatedUnion('status', [_ErrorSchema, _SuccessSchema]);
 
 export async function load(event) {
-	const response = await event.fetch('/api/events?include_past=true');
+	const response = await event.fetch('/api/events.json?include_past=true');
 	const json = await response.json();
 
 	const result = _ResponseSchema.safeParse(json);

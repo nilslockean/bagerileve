@@ -1,5 +1,7 @@
+import { type Courses } from '$lib/schemas/CoursesSchema.js';
 import { error, json } from '@sveltejs/kit';
 import { z } from 'zod';
+import { env } from '$env/dynamic/private';
 
 const _UrlSearchParamsSchema = z.object({
 	include_past: z.literal('true').nullable()
@@ -93,7 +95,7 @@ export async function GET(req) {
 	}
 
 	const headers = new Headers();
-	headers.append('Authorization', 'Bearer a8554132986ae781fe946b6f08010420');
+	headers.append('Authorization', `Bearer ${env.FIENTA_API_KEY}`);
 
 	const response = await fetch(fienta, {
 		method: 'GET',
@@ -103,20 +105,18 @@ export async function GET(req) {
 	const data = await response.json();
 	const result = _FientaResponseSchema.parse(data);
 
-	// console.log(result);
-
 	if ('errors' in result) {
 		return json({
 			status: 'error',
 			message: result.errors[0].user_message
-		});
+		} satisfies Courses);
 	}
 
 	const courses = result.data.map((course) => {
 		const { title, description } = course.translations.sv;
 
 		return {
-			title,
+			title: course.is_published ? title : `Utkast: ${title}`,
 			description,
 			past: false,
 			url: course.url
@@ -126,5 +126,5 @@ export async function GET(req) {
 	return json({
 		status: 'success',
 		courses
-	});
+	} satisfies Courses);
 }
