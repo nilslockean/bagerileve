@@ -18,6 +18,9 @@ logs
 # Coverage directory used by testing tools
 coverage
 
+# Playwright test results
+test-results
+
 # Misc
 .DS_Store
 *.pem
