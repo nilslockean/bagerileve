@@ -1,3 +1,6 @@
+import posthog from 'posthog-js';
+import { browser } from '$app/environment';
+
 type _LayoutData = {
 	navigation: Array<{
 		path: string;
@@ -6,6 +9,19 @@ type _LayoutData = {
 };
 
 export const load = (): _LayoutData => {
+	const API_KEY = 'phc_FpOtrZTQsFj3URscXo70ak6KyVRM1kAe5t8zqmS0r9r'; // import.meta.env.VITE_POSTHOG_API_KEY;
+
+	if (browser) {
+		console.log('init posthog', API_KEY, posthog);
+		posthog.init(API_KEY, {
+			api_host: 'https://eu.posthog.com',
+			capture_pageview: false,
+			capture_pageleave: false
+		});
+
+		// posthog.capture('my event', { property: 'value' });
+	}
+
 	return {
 		navigation: [
 			{ path: '/', title: 'Hem' },
