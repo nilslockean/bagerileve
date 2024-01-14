@@ -3,6 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+	@font-face {
+		font-family: 'Gothic725 Bd BT';
+		src:
+			url('/fonts/Gothic725BT-BoldA.woff2') format('woff2'),
+			url('/fonts/Gothic725BT-BoldA.woff') format('woff');
+		font-weight: bold;
+		font-style: normal;
+		font-display: swap;
+	}
+
 	html {
 		background-color: theme(colors.gray.100);
 	}
