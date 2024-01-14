@@ -12,12 +12,4 @@
 		font-style: normal;
 		font-display: swap;
 	}
-
-	html {
-		background-color: theme(colors.gray.100);
-	}
-
-	h1 {
-		@apply text-4xl font-bold;
-	}
 }
