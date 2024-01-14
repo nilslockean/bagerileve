@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { env } from '$env/dynamic/private';
 
 const _UrlSearchParamsSchema = z.object({
-	include_past: z.literal('true').nullable()
+	scope: z.enum(['future', 'past', 'all']).catch('future')
 });
 
 const _FientaSuccessResponseSchema = z.object({
@@ -77,20 +77,18 @@ const _FientaResponseSchema = z.union([_FientaSuccessResponseSchema, _FientaErro
 
 export async function GET(req) {
 	const searchParams = _UrlSearchParamsSchema.safeParse({
-		include_past: req.url.searchParams.get('include_past')
+		scope: req.url.searchParams.get('scope')
 	});
 
 	if (searchParams.success === false) {
 		error(400, searchParams.error.message);
 	}
 
-	const includePast = searchParams.data.include_past === 'true';
-
-	//  'https://fienta.com/api/v1/events?starts_from=2022-11-01 15:30:00&organizer=11554'
 	const fienta = new URL('https://fienta.com/api/v1/events');
 	fienta.searchParams.set('organizer', '11554');
 
-	if (includePast) {
+	const { scope } = searchParams.data;
+	if (scope === 'all' || scope === 'past') {
 		fienta.searchParams.set('starts_from', '1970-01-01 01:00:00');
 	}
 
@@ -112,16 +110,31 @@ export async function GET(req) {
 		} satisfies Courses);
 	}
 
-	const courses = result.data.map((course) => {
-		const { title, description } = course.translations.sv;
+	const now = new Date(result.time.full_datetime).getTime();
 
-		return {
-			title: course.is_published ? title : `Utkast: ${title}`,
-			description,
-			past: false,
-			url: course.url
-		};
-	});
+	const courses = result.data
+		.filter((course) => {
+			if (!course.is_published && env.NODE_ENV === 'production') {
+				return false;
+			}
+
+			if (scope !== 'past') {
+				return true;
+			}
+
+			const starts = new Date(course.starts_at).getTime();
+			return starts < now;
+		})
+		.map((course) => {
+			const { title, description } = course.translations.sv;
+
+			return {
+				title: course.is_published ? title : `Utkast: ${title}`,
+				description,
+				starts_at: course.starts_at,
+				url: course.url
+			};
+		});
 
 	return json({
 		status: 'success',

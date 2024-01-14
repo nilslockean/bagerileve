@@ -15,7 +15,8 @@
 		{#each data.courses as course}
 			<section class="my-12">
 				<h2>{course.title}</h2>
-				<p>{@html course.description}</p>
+				<!-- <p>{@html course.description}</p> -->
+				<p>{course.starts_at}</p>
 			</section>
 		{/each}
 	{/if}

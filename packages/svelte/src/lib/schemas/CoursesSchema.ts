@@ -14,7 +14,7 @@ const _SuccessSchema = z.object({
 				description: 'HTML'
 			}),
 			url: z.string().url(),
-			past: z.boolean()
+			starts_at: z.string().datetime({ offset: true })
 		})
 	)
 });
