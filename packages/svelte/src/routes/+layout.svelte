@@ -26,7 +26,7 @@
 	<slot />
 </main>
 
-<footer class="bg-blue-900 text-orange-50 p-6 sticky top-[100vh]">
+<footer class="bg-blue-900 dark:bg-blue-950 text-orange-50 p-6 sticky top-[100vh]">
 	<div class="grid gap-3">
 		<Logo />
 		<OpeningHours />
