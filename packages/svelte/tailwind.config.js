@@ -7,6 +7,9 @@ export default {
 		extend: {
 			fontFamily: {
 				sans: ['Gothic725 Bd BT', ...defaultTheme.fontFamily.sans]
+			},
+			aria: {
+				current: 'current="true"'
 			}
 		}
 	},
