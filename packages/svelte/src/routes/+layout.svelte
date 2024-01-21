@@ -29,7 +29,7 @@
 <footer class="bg-blue-900 dark:bg-blue-950 text-orange-50 p-6 sticky top-[100vh]">
 	<div class="grid gap-3">
 		<Logo />
-		<OpeningHours />
+		<OpeningHours data={data.openingHours} />
 		<div>
 			<h4 class="uppercase text-lg mb-4">Meny</h4>
 			<nav class="flex flex-col gap-2 mb-4">
