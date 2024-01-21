@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import H1 from '$lib/components/H1.svelte';
 	import H2 from '$lib/components/H2.svelte';
 	import Link from '$lib/components/Link.svelte';
@@ -8,6 +8,17 @@
 	// Get page and layout data from the server
 	export let data;
 </script>
+
+<Section fullwidth>
+	<!-- svelte-ignore a11y-media-has-caption -->
+	<video autoplay muted playsinline class="w-full">
+		<source
+			src="
+		https://cdn.sanity.io/files/mz20cm4o/production/9c057df538547c79bedfa2b06e6f276323deecee.mp4"
+			type="video/mp4"
+		/>
+	</video>
+</Section>
 
 <Section>
 	<H1>En nybakad upplevelse mitt i Malmö</H1>
@@ -36,4 +47,14 @@
 		uppfunnen.
 	</p>
 	<Link href="/om">Historien om Leve</Link>
+</Section>
+
+<Section fullwidth>
+	<img
+		class="w-full"
+		srcset="https://cdn.sanity.io/images/mz20cm4o/production/3a2c5b5af51eb4101e9af5186dbfab9f510fc1ae-3000x1999.jpg?auto=format&w=1280 1280w, https://cdn.sanity.io/images/mz20cm4o/production/3a2c5b5af51eb4101e9af5186dbfab9f510fc1ae-3000x1999.jpg?auto=format"
+		sizes="(max-width: 640px) 1280px, 100vw"
+		src="https://cdn.sanity.io/images/mz20cm4o/production/3a2c5b5af51eb4101e9af5186dbfab9f510fc1ae-3000x1999.jpg?auto=format"
+		alt="Butikspersonal lägger kanelbullar i en papperspåse"
+	/>
 </Section>
