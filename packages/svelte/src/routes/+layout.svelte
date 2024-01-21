@@ -8,6 +8,7 @@
 	import OpeningHours from '$lib/components/OpeningHours.svelte';
 	import Hr from '$lib/components/Hr.svelte';
 	import Link from '$lib/components/Link.svelte';
+	import { LogoSize } from '$lib/enums/LogoSize';
 
 	export let data;
 
@@ -28,7 +29,7 @@
 
 <footer class="bg-blue-900 dark:bg-blue-950 text-orange-50 p-6 sticky top-[100vh]">
 	<div class="grid gap-3">
-		<Logo />
+		<Logo size={LogoSize.SMALL} />
 		<OpeningHours data={data.openingHours} />
 		<div>
 			<h4 class="uppercase text-lg mb-4">Meny</h4>

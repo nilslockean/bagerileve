@@ -1,4 +1,11 @@
-<svg class="h-11 w-auto" viewBox="0 0 112 44" xmlns="http://www.w3.org/2000/svg">
+<script lang="ts">
+	import { cn } from '$lib/cn';
+	import { LogoSize } from '$lib/enums/LogoSize';
+
+	export let size: LogoSize = LogoSize.DEFAULT;
+</script>
+
+<svg class={cn('w-auto', size)} viewBox="0 0 112 44" xmlns="http://www.w3.org/2000/svg">
 	<path d="M6.0648 0.395164V34.8816H17.8807V40.5818H0V0.395164H6.0648Z" fill="currentColor" />
 	<path
 		d="M45.8089 6.0949H29.6973V15.7514H45.34V21.4515H29.6973V34.8816H45.8089V40.5818H23.6333V0.395164H45.8089V6.0949Z"
