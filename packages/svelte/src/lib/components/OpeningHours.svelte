@@ -1,23 +1,25 @@
 <script lang="ts">
 	import type { OpeningHours } from '$lib/schemas/OpeningHoursSchema';
+	import H4 from './H4.svelte';
+	import H5 from './H5.svelte';
 
 	export let data: OpeningHours;
 </script>
 
-<h4 class="uppercase text-lg">{data.title}</h4>
-<table class="table-auto">
+<H4>{data.title}</H4>
+<table class="table-auto w-full">
 	{#each data.hours as row}
-		<tr class="">
+		<tr>
 			<td class="py-1">{row.day}</td>
 			<td class="text-right py-1">{row.time}</td>
 		</tr>
 	{/each}
 </table>
 {#if data.irregular && data.irregular.length > 0}
-	<h5 class="uppercase">Avvikande öppettider</h5>
-	<table class="table-auto">
+	<H5 class="mt-4">Avvikande öppettider</H5>
+	<table class="table-auto w-full">
 		{#each data.irregular as row}
-			<tr class="">
+			<tr>
 				<td class="py-1">{row.date}<br /><small class="opacity-75">{row.name}</small></td>
 				<td class="text-right py-1 align-baseline">{row.time}</td>
 			</tr>
