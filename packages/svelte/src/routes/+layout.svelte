@@ -15,7 +15,7 @@
 	onMount(initPosthogCsr);
 </script>
 
-<header class="p-6 flex items-center justify-between gap-4 flex-wrap max-w-screen-2xl mx-auto">
+<header class="p-6 flex items-center justify-between gap-6 max-w-screen-2xl mx-auto">
 	<a href="/">
 		<Logo />
 	</a>

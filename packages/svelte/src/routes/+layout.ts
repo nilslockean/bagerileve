@@ -45,7 +45,7 @@ export const load = async (): Promise<_LayoutData> => {
 
 	return {
 		navigation: [
-			{ path: '/', title: 'Hem' },
+			// { path: '/', title: 'Hem' },
 			{ path: '/sortiment', title: 'Sortiment' },
 			{ path: '/kurser', title: 'Kurser' },
 			{ path: '/bestallning', title: 'Beställning' },

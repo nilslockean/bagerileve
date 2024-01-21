@@ -1,19 +1,19 @@
 <script lang="ts">
-	import Hamburger from '$lib/components/Hamburger.svelte';
-	import Cross from '$lib/components/Cross.svelte';
+	// import Hamburger from '$lib/components/Hamburger.svelte';
+	// import Cross from '$lib/components/Cross.svelte';
 	import NavLinks from '$lib/components/NavLinks.svelte';
-	import { slide } from 'svelte/transition';
+	// import { slide } from 'svelte/transition';
 	import { onNavigate } from '$app/navigation';
 
-	const _ANIMATION_DURATION = 200;
-	let isMobileNavVisible = false;
-	function _handleButtonClick() {
-		isMobileNavVisible = !isMobileNavVisible;
-	}
+	// const _ANIMATION_DURATION = 200;
+	// let isMobileNavVisible = false;
+	// function _handleButtonClick() {
+	// 	isMobileNavVisible = !isMobileNavVisible;
+	// }
 
-	onNavigate(() => {
-		isMobileNavVisible = false;
-	});
+	// onNavigate(() => {
+	// 	isMobileNavVisible = false;
+	// });
 
 	export let links: Array<{
 		path: string;
@@ -21,8 +21,11 @@
 	}>;
 </script>
 
-<svelte:body class:mobile-nav-expanded={isMobileNavVisible} />
+<nav class="flex lg:text-lg gap-x-3 gap-y-1 flex-wrap justify-end" id="main-nav">
+	<NavLinks {links} />
+</nav>
 
+<!-- 
 <nav class="hidden md:flex text-lg gap-3" id="main-nav">
 	<NavLinks {links} className="no-underline aria-current:underline" />
 </nav>
@@ -60,4 +63,4 @@
 			<NavLinks {links} className="no-underline aria-current:underline" />
 		</nav>
 	</div>
-{/if}
+{/if} -->
