@@ -6,7 +6,8 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ['Gothic725 Bd BT', ...defaultTheme.fontFamily.sans]
+				sans: ['Gothic725 Bd BT', ...defaultTheme.fontFamily.sans],
+				futura: ['Futura Heavy', ...defaultTheme.fontFamily.sans]
 			},
 			aria: {
 				current: 'current="true"'

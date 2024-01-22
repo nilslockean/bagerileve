@@ -11,6 +11,7 @@
 	import { LogoSize } from '$lib/enums/LogoSize';
 	import { page } from '$app/stores';
 	import config from '../config';
+	import H4 from '$lib/components/H4.svelte';
 
 	// Find the current navigation item in config
 	$: currentNavItem = config.navigation.find((item) => item.path === $page.url.pathname);
@@ -45,13 +46,13 @@
 			<OpeningHours data={data.openingHours} />
 		</div>
 		<div>
-			<h4 class="uppercase text-lg mb-4">Meny</h4>
+			<H4 class="mb-4">Meny</H4>
 			<nav class="flex flex-col gap-2 mb-4">
 				<NavLinks links={data.navigation} />
 			</nav>
 		</div>
 		<div>
-			<h4 class="uppercase text-lg mb-4">{config.siteTitle}</h4>
+			<H4 class="mb-4">{config.siteTitle}</H4>
 			<p>
 				Östra Rönneholmsvägen 6<br />
 				211 47 Malmö
