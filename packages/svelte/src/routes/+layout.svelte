@@ -39,9 +39,11 @@
 	<slot />
 </main>
 
-<footer class="bg-blue-900 dark:bg-blue-950 text-orange-50 p-6 sticky top-[100vh]">
-	<div class="grid gap-3">
-		<Logo size={LogoSize.SMALL} />
+<footer class="bg-blue-900 dark:bg-blue-950 text-orange-50 px-6 py-8 sticky top-[100vh]">
+	<div class="grid gap-x-8 gap-y-8 md:grid-cols-2 md:gap-y-16 xl:grid-cols-4 xl:gap-x-16">
+		<div>
+			<Logo size={LogoSize.SMALL} />
+		</div>
 		<div>
 			<OpeningHours data={data.openingHours} />
 		</div>
