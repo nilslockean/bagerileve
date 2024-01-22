@@ -7,22 +7,24 @@
 </script>
 
 <H4>{data.title}</H4>
-<table class="table-auto w-full">
-	{#each data.hours as row}
-		<tr>
-			<td class="py-1">{row.day}</td>
-			<td class="text-right py-1">{row.time}</td>
-		</tr>
-	{/each}
-</table>
-{#if data.irregular && data.irregular.length > 0}
-	<H5 class="mt-4">Avvikande öppettider</H5>
+<div class="@container">
 	<table class="table-auto w-full">
-		{#each data.irregular as row}
-			<tr>
-				<td class="py-1">{row.date}<br /><small class="opacity-75">{row.name}</small></td>
-				<td class="text-right py-1 align-baseline">{row.time}</td>
+		{#each data.hours as row}
+			<tr class="@2xl:border-b-2 border-current last:border-none">
+				<td class="py-1">{row.day}</td>
+				<td class="text-right py-1">{row.time}</td>
 			</tr>
 		{/each}
 	</table>
-{/if}
+	{#if data.irregular && data.irregular.length > 0}
+		<H5 class="mt-4">Avvikelser</H5>
+		<table class="table-auto w-full">
+			{#each data.irregular as row}
+				<tr class="@2xl:border-b-2 border-current last:border-none">
+					<td class="py-1">{row.date}<br /><small class="opacity-75">{row.name}</small></td>
+					<td class="text-right py-1 align-baseline">{row.time}</td>
+				</tr>
+			{/each}
+		</table>
+	{/if}
+</div>

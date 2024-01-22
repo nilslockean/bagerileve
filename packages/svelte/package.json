@@ -40,6 +40,7 @@
 	"type": "module",
 	"dependencies": {
 		"@sanity/client": "^6.11.1",
+		"@tailwindcss/container-queries": "^0.1.1",
 		"clsx": "^2.1.0",
 		"posthog-js": "^1.96.1",
 		"tailwind-merge": "^2.2.0",

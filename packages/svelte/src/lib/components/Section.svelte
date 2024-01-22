@@ -7,6 +7,7 @@
 <section
 	{...$$restProps}
 	class={cn(
+		'@container/section',
 		{
 			'p-6 max-w-screen-2xl mx-auto': !fullwidth
 		},
