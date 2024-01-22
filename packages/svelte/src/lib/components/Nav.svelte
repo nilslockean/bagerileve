@@ -3,7 +3,7 @@
 	// import Cross from '$lib/components/Cross.svelte';
 	import NavLinks from '$lib/components/NavLinks.svelte';
 	// import { slide } from 'svelte/transition';
-	import { onNavigate } from '$app/navigation';
+	// import { onNavigate } from '$app/navigation';
 
 	// const _ANIMATION_DURATION = 200;
 	// let isMobileNavVisible = false;

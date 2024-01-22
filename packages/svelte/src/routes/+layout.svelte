@@ -9,11 +9,22 @@
 	import Hr from '$lib/components/Hr.svelte';
 	import Link from '$lib/components/Link.svelte';
 	import { LogoSize } from '$lib/enums/LogoSize';
+	import { page } from '$app/stores';
+	import config from '../config';
+
+	// Find the current navigation item in config
+	$: currentNavItem = config.navigation.find((item) => item.path === $page.url.pathname);
+
+	// Initialize PostHog
+	onMount(initPosthogCsr);
 
 	export let data;
-
-	onMount(initPosthogCsr);
 </script>
+
+<svelte:head>
+	<title>{$page.data.title ?? `${currentNavItem?.title} • ${config.siteTitle}`}</title>
+	<meta name="description" content={$page.data.metaDescription} />
+</svelte:head>
 
 <header class="p-6 flex items-center justify-between gap-6 max-w-screen-2xl mx-auto">
 	<a href="/">
@@ -40,7 +51,7 @@
 			</nav>
 		</div>
 		<div>
-			<h4 class="uppercase text-lg mb-4">Bageri Leve</h4>
+			<h4 class="uppercase text-lg mb-4">{config.siteTitle}</h4>
 			<p>
 				Östra Rönneholmsvägen 6<br />
 				211 47 Malmö
@@ -49,7 +60,9 @@
 		</div>
 	</div>
 	<Hr className="my-8" />
-	<Link href="/integritetspolicy">Integritetspolicy</Link>
-	&bull;
-	<Link href="/bokningsvillkor">Bokningsvillkor</Link>
+	<nav class="flex gap-3">
+		{#each data.colophonNavigation as { path, title }}
+			<Link href={path}>{title}</Link>
+		{/each}
+	</nav>
 </footer>

@@ -2,6 +2,7 @@ import posthog from 'posthog-js';
 import { browser } from '$app/environment';
 import { createClient } from '@sanity/client';
 import { OpeningHoursSchema, type OpeningHours } from '$lib/schemas/OpeningHoursSchema';
+import config from '../config';
 
 const _POSTHOG_API_KEY = import.meta.env.VITE_POSTHOG_API_KEY;
 
@@ -14,6 +15,10 @@ const _sanityClient = createClient({
 
 type _LayoutData = {
 	navigation: Array<{
+		path: string;
+		title: string;
+	}>;
+	colophonNavigation: Array<{
 		path: string;
 		title: string;
 	}>;
@@ -43,15 +48,12 @@ export const load = async (): Promise<_LayoutData> => {
 		});
 	}
 
+	const mainNavigation = config.navigation.filter((item) => item.header);
+	const colophonNavigation = config.navigation.filter((item) => item.footer);
+
 	return {
-		navigation: [
-			// { path: '/', title: 'Hem' },
-			{ path: '/sortiment', title: 'Sortiment' },
-			{ path: '/kurser', title: 'Kurser' },
-			{ path: '/bestallning', title: 'Beställning' },
-			{ path: '/om', title: 'Om' },
-			{ path: '/kontakt', title: 'Kontakt' }
-		],
+		navigation: mainNavigation,
+		colophonNavigation,
 		openingHours
 	};
 };
