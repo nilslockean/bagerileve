@@ -41,6 +41,9 @@
 		<Course course={nextCourse}>
 			<p><small>Nästa kurs:</small></p>
 		</Course>
+		{#if data.courses.status === 'success' && data.courses.courses.length > 1}
+			<ButtonLink href="/kurser">Fler kurser</ButtonLink>
+		{/if}
 	</Section>
 {/if}
 

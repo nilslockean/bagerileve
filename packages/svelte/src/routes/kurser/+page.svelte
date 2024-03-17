@@ -11,7 +11,7 @@
 
 <Section>
 	<H1>Du kan baka, du är inte rädd</H1>
-	<p class="text-lg">
+	<p class="text-lg max-w-prose">
 		Bli bättre på att få till ett gott surdegsbröd ‐ skaffa en djupare förståelse för varför det
 		blir som det blir och inte alltid som du tänkt dig och lär dig att göra dina egna recept.
 	</p>
@@ -31,7 +31,7 @@
 		{/if}
 
 		{#each courses.courses as course}
-			<Course {course} class="mt-4" />
+			<Course {course} class="mt-4 max-w-prose" />
 		{/each}
 	{/if}
 </Section>
