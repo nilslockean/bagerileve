@@ -1,7 +1,7 @@
 <script lang="ts">
 	import H1 from '$lib/components/H1.svelte';
 	import H2 from '$lib/components/H2.svelte';
-	import Link from '$lib/components/Link.svelte';
+	import ButtonLink from '$lib/components/ButtonLink.svelte';
 	import OpeningHours from '$lib/components/OpeningHours.svelte';
 	import Section from '$lib/components/Section.svelte';
 
@@ -11,7 +11,7 @@
 
 <Section fullwidth>
 	<!-- svelte-ignore a11y-media-has-caption -->
-	<video autoplay muted playsinline class="w-full">
+	<video autoplay muted playsinline loop class="w-full">
 		<source
 			src="
 		https://cdn.sanity.io/files/mz20cm4o/production/9c057df538547c79bedfa2b06e6f276323deecee.mp4"
@@ -23,11 +23,11 @@
 <Section>
 	<H1>En nybakad upplevelse mitt i Malmö</H1>
 	<p class="text-lg">Surdegsbröd ur ugnen på eftermiddagen och nästan allt är veganskt.</p>
+	<ButtonLink href="/boka" variant="primary">Beställ fredagsmunk</ButtonLink>
 </Section>
 
 <Section class="pt-0">
 	<OpeningHours data={data.openingHours} />
-	<Link href="/boka">Beställ fredagsmunk</Link>
 </Section>
 
 <Section class="pt-0">
@@ -35,7 +35,20 @@
 </Section>
 
 <Section class="pt-0">
-	<p>6 st Instagram-bilder här...</p>
+	<behold-widget feed-id="ILmNOqDqv9agGfvK0j7w"></behold-widget>
+	<script>
+		if ('noModule' in HTMLScriptElement.prototype) {
+			const d = document,
+				s = d.createElement('script');
+			s.type = 'module';
+			s.src = 'https://w.behold.so/widget.js';
+			d.body.appendChild(s);
+		}
+	</script>
+
+	<ButtonLink href="https://www.instagram.com/bagerileve" target="_blank" rel="noreferrer"
+		>@bagerileve på Instagram</ButtonLink
+	>
 </Section>
 
 <Section>
@@ -46,7 +59,7 @@
 		smörbaserade recept och att baka surdegsbröd som man gjorde förr, innan jästen ens var
 		uppfunnen.
 	</p>
-	<Link href="/om">Historien om Leve</Link>
+	<ButtonLink href="/om">Historien om Leve</ButtonLink>
 </Section>
 
 <Section fullwidth>
