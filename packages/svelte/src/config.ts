@@ -14,7 +14,7 @@ export type SiteConfig = {
 	}>;
 };
 
-const config: SiteConfig = {
+const config = {
 	siteTitle: 'Bageri Leve',
 	navigation: [
 		{ path: '/sortiment', title: 'Sortiment', header: true, footer: false },
@@ -25,6 +25,6 @@ const config: SiteConfig = {
 		{ path: '/integritetspolicy', title: 'Integritetspolicy', header: false, footer: true },
 		{ path: '/bokningsvillkor', title: 'Bokningsvillkor', header: false, footer: true }
 	]
-} as const;
+} as const satisfies SiteConfig;
 
 export default config;
