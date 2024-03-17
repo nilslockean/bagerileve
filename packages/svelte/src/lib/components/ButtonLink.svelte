@@ -3,13 +3,14 @@
 	type Variant = 'primary' | 'default';
 
 	export let href: string;
-	export let className = '';
 	export let variant: Variant = 'default';
+
+	const { class: className, ...rest } = $$restProps;
 </script>
 
 <a
 	{href}
-	{...$$restProps}
+	{...rest}
 	class={cn(
 		'inline-block uppercase font-futura tracking-wider border-4 transition-colors py-4 px-6 mt-4',
 		'bg-orange-100 border-orange-100 hover:bg-orange-50 active:border-orange-50 dark:bg-blue-950 dark:border-blue-950 dark:hover:bg-blue-900 dark:active:border-blue-900',

@@ -4,9 +4,14 @@
 	import ButtonLink from '$lib/components/ButtonLink.svelte';
 	import OpeningHours from '$lib/components/OpeningHours.svelte';
 	import Section from '$lib/components/Section.svelte';
+	import Link from '$lib/components/Link.svelte';
+	import H3 from '$lib/components/H3.svelte';
+	import Course from '$lib/components/Course.svelte';
 
 	// Get page and layout data from the server
 	export let data;
+
+	const nextCourse = data.courses.status === 'success' ? data.courses.courses[0] : undefined;
 </script>
 
 <Section fullwidth>
@@ -26,15 +31,20 @@
 	<ButtonLink href="/boka" variant="primary">Beställ fredagsmunk</ButtonLink>
 </Section>
 
-<Section class="pt-0">
+<Section>
 	<OpeningHours data={data.openingHours} />
+	<ButtonLink href="/kontakt">Hitta hit</ButtonLink>
 </Section>
 
-<Section class="pt-0">
-	<p>Nästa kurs här...</p>
-</Section>
+{#if nextCourse}
+	<Section>
+		<Course course={nextCourse}>
+			<p><small>Nästa kurs:</small></p>
+		</Course>
+	</Section>
+{/if}
 
-<Section class="pt-0">
+<Section>
 	<behold-widget feed-id="ILmNOqDqv9agGfvK0j7w"></behold-widget>
 	<script>
 		if ('noModule' in HTMLScriptElement.prototype) {

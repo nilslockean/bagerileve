@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { CourseSchema } from './CourseSchema';
 
 const _ErrorSchema = z.object({
 	status: z.literal('error'),
@@ -7,16 +8,7 @@ const _ErrorSchema = z.object({
 
 const _SuccessSchema = z.object({
 	status: z.literal('success'),
-	courses: z.array(
-		z.object({
-			title: z.string(),
-			description: z.string({
-				description: 'HTML'
-			}),
-			url: z.string().url(),
-			starts_at: z.string().datetime({ offset: true })
-		})
-	)
+	courses: z.array(CourseSchema)
 });
 
 export const CoursesSchema = z.discriminatedUnion('status', [_ErrorSchema, _SuccessSchema]);

@@ -1,23 +1,37 @@
 <script lang="ts">
-	export let data;
+	import Course from '$lib/components/Course.svelte';
+	import H1 from '$lib/components/H1.svelte';
+	import H2 from '$lib/components/H2.svelte';
+	import Section from '$lib/components/Section.svelte';
 
+	export let data;
+	const { courses } = data;
 	// console.log(data);
 </script>
 
-<div>
-	<h1>Kurser</h1>
-	{#if data.status === 'error'}
+<Section>
+	<H1>Du kan baka, du är inte rädd</H1>
+	<p class="text-lg">
+		Bli bättre på att få till ett gott surdegsbröd ‐ skaffa en djupare förståelse för varför det
+		blir som det blir och inte alltid som du tänkt dig och lär dig att göra dina egna recept.
+	</p>
+</Section>
+
+<Section>
+	<H2>Kommande kurser</H2>
+
+	{#if courses.status === 'error'}
 		<p>Problem med att hämta kurser:</p>
-		<p>{data.message}</p>
+		<p>{courses.message}</p>
 	{/if}
 
-	{#if data.status === 'success'}
-		{#each data.courses as course}
-			<section class="my-12">
-				<h2>{course.title}</h2>
-				<!-- <p>{@html course.description}</p> -->
-				<p>{course.starts_at}</p>
-			</section>
+	{#if courses.status === 'success'}
+		{#if courses.courses.length === 0}
+			<p>Inga kurser inplanerade just nu.</p>
+		{/if}
+
+		{#each courses.courses as course}
+			<Course {course} class="mt-4" />
 		{/each}
 	{/if}
-</div>
+</Section>
