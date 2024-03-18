@@ -2,6 +2,7 @@
 
 interface ImportMetaEnv {
 	readonly VITE_POSTHOG_API_KEY: string;
+	readonly BASIC_AUTH: string;
 	// more env variables...
 }
 
