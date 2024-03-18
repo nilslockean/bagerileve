@@ -61,11 +61,12 @@ export async function fetchCourses(scope = Scope.Upcoming): Promise<Courses> {
 			const dates = prettyCourseDates(new Date(course.starts_at), new Date(course.ends_at));
 
 			return {
-				title: course.is_published ? title : `Utkast: ${title}`,
-				description,
-				starts_at: course.starts_at,
-				ends_at: course.ends_at,
 				url: course.url,
+				draft: !course.is_published,
+				title,
+				description,
+				// starts_at: course.starts_at,
+				// ends_at: course.ends_at,
 				dates
 			};
 		});

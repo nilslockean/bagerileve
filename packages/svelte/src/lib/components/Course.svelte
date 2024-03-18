@@ -9,8 +9,9 @@
 
 <ButtonLink
 	href={course.url}
-	class={cn('flex flex-col gap-4 font-sans normal-case mt-0', $$restProps.class)}
+	class={cn('flex flex-col gap-4 font-sans normal-case mt-0 py-6 relative', $$restProps.class)}
 >
+	<p class="absolute top-2 right-4"><small>Utkast</small></p>
 	<slot />
 	<H2 class="text-2xl">
 		{course.title}
