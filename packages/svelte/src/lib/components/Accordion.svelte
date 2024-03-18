@@ -17,7 +17,10 @@
 	}
 </script>
 
-<article class="border-4 border-orange-100 dark:border-blue-950">
+<article
+	{...$$restProps}
+	class={cn('border-4 border-orange-100 dark:border-blue-950', $$restProps.class)}
+>
 	<H2 class="mb-0">
 		<button
 			type="button"

@@ -1,3 +1,12 @@
+import { createClient } from '@sanity/client';
+
+export const sanityClient = createClient({
+	projectId: 'mz20cm4o',
+	dataset: 'production',
+	apiVersion: '2024-01-21',
+	useCdn: false
+});
+
 // export enum MenuArea {
 // 	Main = 'main-navigation',
 // 	Footer = 'footer-navigation',

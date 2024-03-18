@@ -81,6 +81,9 @@ importers:
       '@playwright/test':
         specifier: ^1.40.1
         version: 1.40.1
+      '@portabletext/svelte':
+        specifier: ^2.1.7
+        version: 2.1.7(svelte@4.2.7)
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
         version: 3.0.0(@sveltejs/kit@2.0.0)
@@ -2575,22 +2578,29 @@ packages:
     peerDependencies:
       react: ^17 || ^18
     dependencies:
-      '@portabletext/toolkit': 2.0.10
-      '@portabletext/types': 2.0.8
+      '@portabletext/toolkit': 2.0.11
+      '@portabletext/types': 2.0.9
       react: 18.2.0
     dev: false
 
-  /@portabletext/toolkit@2.0.10:
-    resolution: {integrity: sha512-d+F9JvpnMEx7kd6saZ9OWA4U1Iwuokh6TOht7iqkfWU+0ivh9yM4v+b0Kpu+iiPcElicoabhtXol+yTvWJ1jDw==}
+  /@portabletext/svelte@2.1.7(svelte@4.2.7):
+    resolution: {integrity: sha512-hRN7gSA9ZGgrqe8L/m07ojag3dAGRzEYRBOUOme9qhr29jW1EVDq06yWFCC3Or7qL7GcSET78qoushbE2KfPEw==}
+    peerDependencies:
+      svelte: '>=3.47.0 <5.0.0'
+    dependencies:
+      '@portabletext/toolkit': 2.0.11
+      svelte: 4.2.7
+    dev: true
+
+  /@portabletext/toolkit@2.0.11:
+    resolution: {integrity: sha512-4xdn1jZUZzihTvtJJbtZDsuaHNw9aaf/WZqKriP9306SlSuLFYC8Lw1MzW+Xmh3ZSurIjs+L0M+lTflB2NfYSA==}
     engines: {node: ^14.13.1 || >=16.0.0}
     dependencies:
-      '@portabletext/types': 2.0.8
-    dev: false
+      '@portabletext/types': 2.0.9
 
-  /@portabletext/types@2.0.8:
-    resolution: {integrity: sha512-eiq9/kMX2bYezS4/kLFk3xNnruCFjCDdw6aYEv5ECHVKkYROiuLd3/AsP5d7tWF3+kPPy6tB0Wq8aqDG/URHGA==}
+  /@portabletext/types@2.0.9:
+    resolution: {integrity: sha512-1naiVZBrDTUSExPgaUPY8Ip1v9mboLBIsPHSAzvQraVsdj2dyHi6n9qwiXykY4W1JmpJAKz7jYp2rShCnKQ9JA==}
     engines: {node: ^14.13.1 || >=16.0.0 || >=18.0.0}
-    dev: false
 
   /@reduxjs/toolkit@1.9.7(react-redux@7.2.9)(react@18.2.0):
     resolution: {integrity: sha512-t7v8ZPxhhKgOKtU+uyJT13lu4vL7az5aFi4IdoDs/eS548edn2M8Ik9h8fxgvMjGoAUVFSt6ZC1P5cWmQ014QQ==}
