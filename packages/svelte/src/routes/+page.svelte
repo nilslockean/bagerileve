@@ -4,8 +4,7 @@
 	import ButtonLink from '$lib/components/ButtonLink.svelte';
 	import OpeningHours from '$lib/components/OpeningHours.svelte';
 	import Section from '$lib/components/Section.svelte';
-	import Link from '$lib/components/Link.svelte';
-	import H3 from '$lib/components/H3.svelte';
+	import Image from '$lib/components/Image.svelte';
 	import Course from '$lib/components/Course.svelte';
 
 	// Get page and layout data from the server
@@ -91,11 +90,35 @@
 </Section>
 
 <Section fullwidth>
-	<img
+	<Image
 		class="w-full"
-		srcset="https://cdn.sanity.io/images/mz20cm4o/production/3a2c5b5af51eb4101e9af5186dbfab9f510fc1ae-3000x1999.jpg?auto=format&w=1280 1280w, https://cdn.sanity.io/images/mz20cm4o/production/3a2c5b5af51eb4101e9af5186dbfab9f510fc1ae-3000x1999.jpg?auto=format"
-		sizes="(max-width: 640px) 1280px, 100vw"
-		src="https://cdn.sanity.io/images/mz20cm4o/production/3a2c5b5af51eb4101e9af5186dbfab9f510fc1ae-3000x1999.jpg?auto=format"
+		src="https://cdn.sanity.io/images/mz20cm4o/production/3a2c5b5af51eb4101e9af5186dbfab9f510fc1ae-3000x1999.jpg"
 		alt="Butikspersonal lägger kanelbullar i en papperspåse"
 	/>
+</Section>
+
+<Section class="my-16">
+	<H2>Riktigt bröd</H2>
+	<p class="text-lg mb-4">
+		Alla våra bröd är bakade i stenugn och med surdegskultur. När vi letar efter råvaror kollar vi i
+		vår närhet efter de bästa, mest smakrika grejerna vi kan hitta.
+	</p>
+	<Image
+		src="https://cdn.sanity.io/images/mz20cm4o/production/b09cfaf61294549990011326bd557345124f9760-1024x1280.jpg"
+		alt="En hög bröd på ett bord."
+	/>
+	<ButtonLink href="/sortiment">Ät bröd</ButtonLink>
+</Section>
+
+<Section class="my-16">
+	<H2>Växtbaserade bakverk</H2>
+	<p class="text-lg mb-4">
+		I standardutbudet kan du välja mellan munkar, croissanter, pains au chocolat, kanel- och
+		kardemummabullar.
+	</p>
+	<Image
+		src="https://cdn.sanity.io/images/mz20cm4o/production/9f68a6b100e061d1f8176d129403e72906709e3f-1024x1280.jpg"
+		alt="En hög bröd på ett bord."
+	/>
+	<ButtonLink href="/sortiment">Moffa bakverk</ButtonLink>
 </Section>
