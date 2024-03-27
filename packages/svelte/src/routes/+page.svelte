@@ -14,18 +14,33 @@
 	const nextCourse = data.courses.status === 'success' ? data.courses.courses[0] : undefined;
 </script>
 
-<Section fullwidth>
+<Section fullwidth class="relative aspect-video flex items-center">
 	<!-- svelte-ignore a11y-media-has-caption -->
-	<video autoplay muted playsinline loop class="w-full">
+	<video autoplay muted playsinline loop class="w-full absolute z-10">
 		<source
 			src="
 		https://cdn.sanity.io/files/mz20cm4o/production/9c057df538547c79bedfa2b06e6f276323deecee.mp4"
 			type="video/mp4"
 		/>
 	</video>
+
+	<!-- Color overlay -->
+	<div
+		class="absolute hidden lg:block inset-0 bg-blue-950 opacity-50 z-20 aspect-video w-full"
+	></div>
+
+	<div
+		class="z-30 hidden lg:flex flex-col items-start gap-4 p-6 w-full max-w-screen-2xl mx-auto text-orange-50"
+	>
+		<H1>En nybakad upplevelse mitt i Malmö</H1>
+		<p class="text-lg max-w-prose xl:text-xl">
+			Surdegsbröd ur ugnen på eftermiddagen och nästan allt är veganskt.
+		</p>
+		<ButtonLink href="/boka" variant="primary">Beställ fredagsmunk</ButtonLink>
+	</div>
 </Section>
 
-<Section>
+<Section class="lg:hidden">
 	<H1>En nybakad upplevelse mitt i Malmö</H1>
 	<p class="text-lg">Surdegsbröd ur ugnen på eftermiddagen och nästan allt är veganskt.</p>
 	<ButtonLink href="/boka" variant="primary">Beställ fredagsmunk</ButtonLink>

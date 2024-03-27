@@ -1,9 +1,7 @@
-import { FaqSchema } from '$lib/schemas/FAQSchema';
-import { sanityClient } from '../../config';
+import { fetchFaq } from '$lib/sanity';
 
 export async function load() {
-	const groqJson = await sanityClient.fetch(`*[_type == "faq"]{question, answer}`);
-	const faq = FaqSchema.parse(groqJson);
+	const faq = await fetchFaq();
 
 	return { faq };
 }

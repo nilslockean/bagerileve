@@ -12,7 +12,6 @@
 	import { page } from '$app/stores';
 	import config from '../config';
 	import H4 from '$lib/components/H4.svelte';
-	import { env } from '$env/dynamic/public';
 
 	// Find the current navigation item in config
 	$: currentNavItem = config.navigation.find((item) => item.path === $page.url.pathname);
@@ -26,15 +25,15 @@
 <svelte:head>
 	<title>{$page.data.title ?? `${currentNavItem?.title} • ${config.siteTitle}`}</title>
 	<meta name="description" content={$page.data.metaDescription} />
-	<!-- <meta name="robots" content="noindex,follow" /> -->
-	<meta name="robots" content={env.PUBLIC_META_ROBOTS_CONTENT} />
+	{#if import.meta.env.MODE !== 'production'}
+		<meta name="robots" content="noindex,nofollow" />
+	{/if}
 </svelte:head>
 
 <header class="p-6 flex items-center justify-between gap-6 max-w-screen-2xl mx-auto">
 	<a href="/">
 		<Logo />
 	</a>
-
 	<Nav links={data.navigation} />
 </header>
 
