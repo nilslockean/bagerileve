@@ -4,9 +4,12 @@
 	import H5 from './H5.svelte';
 
 	export let data: OpeningHours;
+	export let renderTitle = true;
 </script>
 
-<H4>{data.title}</H4>
+{#if renderTitle}
+	<H4>{data.title}</H4>
+{/if}
 <div class="@container">
 	<table class="table-auto w-full">
 		{#each data.hours as row}
@@ -17,7 +20,7 @@
 		{/each}
 	</table>
 	{#if data.irregular && data.irregular.length > 0}
-		<H5 class="mt-4">Avvikelser</H5>
+		<p class="mt-4 uppercase text-base font-futura tracking-wider">Avvikelser</p>
 		<table class="table-auto w-full">
 			{#each data.irregular as row}
 				<tr class="@2xl:border-b-2 border-current last:border-none">
