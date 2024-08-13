@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
-import Icon from '../components/Icon.svelte';
+import Icon from '../components/Icon.astro';
 import { IconName } from '../lib/enums/IconName';
 ---
 
@@ -36,12 +36,12 @@ import { IconName } from '../lib/enums/IconName';
 			</defs>
 		</svg>
 		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
+		<p class="instructions text-xl">
 			To get started, open the directory <code>src/pages</code> in your project.<br />
 			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
 		</p>
 
-		<Icon name={IconName.MAP_PIN} size="2rem" />
+		<Icon name={IconName.MAP_PIN} />
 
 		<ul role="list" class="link-card-grid">
 			<Card

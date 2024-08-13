@@ -1,0 +1,13 @@
+---
+import { IconName } from '@lib/enums/IconName';
+import { iconMap } from '@lib/icons';
+
+interface Props {
+  name: IconName;
+}
+
+const { name } = Astro.props;
+const htmlString = iconMap[name];
+---
+
+<Fragment set:html={htmlString} />
