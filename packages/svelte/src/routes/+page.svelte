@@ -35,7 +35,7 @@
 		<p class="text-lg max-w-prose xl:text-xl">
 			Surdegsbröd ur ugnen på eftermiddagen och nästan allt är veganskt.
 		</p>
-		<ButtonLink href="/boka" variant="primary">Beställ fredagsmunk</ButtonLink>
+		<ButtonLink href="/bestall" variant="primary">Beställ fredagsmunk</ButtonLink>
 	</div>
 </Section>
 

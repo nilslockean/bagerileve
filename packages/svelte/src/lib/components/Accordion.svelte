@@ -22,7 +22,7 @@
 	{...$$restProps}
 	class={cn('border-4 border-orange-100 dark:border-blue-950', $$restProps.class)}
 >
-	<H3 class="mb-0">
+	<H3 class="mb-0 text-2xl">
 		<button
 			type="button"
 			aria-expanded={_expanded}
