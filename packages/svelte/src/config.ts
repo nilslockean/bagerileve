@@ -28,7 +28,7 @@ const config = {
 	navigation: [
 		{ path: '/sortiment', title: 'Sortiment', header: true, footer: false },
 		{ path: '/kurser', title: 'Kurser', header: true, footer: false },
-		{ path: '/bestallning', title: 'Beställning', header: true, footer: false },
+		{ path: '/bestall', title: 'Beställning', header: true, footer: false },
 		{ path: '/om', title: 'Om', header: true, footer: false },
 		{ path: '/kontakt', title: 'Kontakt', header: true, footer: false },
 		{ path: '/integritetspolicy', title: 'Integritetspolicy', header: false, footer: true },
