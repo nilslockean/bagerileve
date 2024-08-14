@@ -1,29 +1,32 @@
 ---
-	// import Hamburger from '$lib/components/Hamburger.svelte';
-	// import Cross from '$lib/components/Cross.svelte';
-	import NavLinks from './NavLinks.astro';
-	import type { NavLink } from '@lib/types/NavLink';
-	// import { slide } from 'svelte/transition';
-	// import { onNavigate } from '$app/navigation';
+// import Hamburger from '$lib/components/Hamburger.svelte';
+// import Cross from '$lib/components/Cross.svelte';
+import NavLinks from "./NavLinks.astro";
+import type { NavLink } from "@lib/types/NavLink";
+// import { slide } from 'svelte/transition';
+// import { onNavigate } from '$app/navigation';
 
-	// const _ANIMATION_DURATION = 200;
-	// let isMobileNavVisible = false;
-	// function _handleButtonClick() {
-	// 	isMobileNavVisible = !isMobileNavVisible;
-	// }
+// const _ANIMATION_DURATION = 200;
+// let isMobileNavVisible = false;
+// function _handleButtonClick() {
+// 	isMobileNavVisible = !isMobileNavVisible;
+// }
 
-	// onNavigate(() => {
-	// 	isMobileNavVisible = false;
-	// });
-	type Props = {
-		links: NavLink[];
-	}
-	
-	const { links } = Astro.props;
+// onNavigate(() => {
+// 	isMobileNavVisible = false;
+// });
+type Props = {
+  links: NavLink[];
+};
+
+const { links } = Astro.props;
 ---
 
-<nav class="flex lg:text-lg gap-x-3 gap-y-1 flex-wrap justify-end" id="main-nav">
-	<NavLinks {links} />
+<nav
+  class="flex lg:text-lg gap-x-3 gap-y-1 flex-wrap justify-end"
+  id="main-nav"
+>
+  <NavLinks {links} />
 </nav>
 
 <!-- 

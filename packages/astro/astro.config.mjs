@@ -16,7 +16,7 @@ export default defineConfig({
   integrations: [
     svelte(),
     tailwind({
-      applyBaseStyles: false
+      applyBaseStyles: false,
     }),
     sanity({
       projectId: SANITY_PROJECT_ID,

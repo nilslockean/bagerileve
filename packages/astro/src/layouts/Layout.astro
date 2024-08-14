@@ -1,9 +1,9 @@
 ---
-import "../base.css"
+import "../base.css";
 import Logo from "@components/Logo.astro";
 import config from "../config";
 import Nav from "@components/Nav.astro";
-import {NavArea} from "@lib/enums/NavArea"
+import { NavArea } from "@lib/enums/NavArea";
 
 interface Props {
   title: string;
@@ -13,8 +13,8 @@ interface Props {
 const { title, description } = Astro.props;
 const isProduction = import.meta.env.MODE === "production";
 const headerLinks = config.navigation
-	.filter(({ areas }) => areas.includes(NavArea.HEADER))
-	.map(({ link }) => link)
+  .filter(({ areas }) => areas.includes(NavArea.HEADER))
+  .map(({ link }) => link);
 ---
 
 <!doctype html>
