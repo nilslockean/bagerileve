@@ -15,7 +15,9 @@ const { SANITY_PROJECT_ID, SANITY_DATASET } = loadEnv(
 export default defineConfig({
   integrations: [
     svelte(),
-    tailwind(),
+    tailwind({
+      applyBaseStyles: false
+    }),
     sanity({
       projectId: SANITY_PROJECT_ID,
       dataset: SANITY_DATASET,

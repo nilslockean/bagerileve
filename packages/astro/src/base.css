@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Gothic725 Bd BT";
+    src:
+      url("/fonts/Gothic725BT-BoldA.woff2") format("woff2"),
+      url("/fonts/Gothic725BT-BoldA.woff") format("woff");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Futura Heavy";
+    src:
+      url("/fonts/Futura-Heavy.woff2") format("woff2"),
+      url("/fonts/Futura-Heavy.woff") format("woff");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+  }
+}
