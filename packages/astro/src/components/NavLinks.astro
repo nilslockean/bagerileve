@@ -1,0 +1,13 @@
+---
+	import Link from './Link.astro';
+	import type { NavLink } from '@lib/types/NavLink';
+
+	type Props = {
+		links: NavLink[];
+		className?: string;
+	}
+
+	const { links, className = "" } = Astro.props;
+---
+
+{links.map(link => <Link href={link.path} {className}>{link.label}</Link>)}

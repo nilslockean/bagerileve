@@ -1,0 +1,21 @@
+---
+import { cn } from "@lib/cn";
+
+type Props = {
+  href: string;
+  className?: string;
+};
+
+const { pathname } = Astro.url;
+const { href, className = "", ...rest } = Astro.props;
+const current = pathname === href;
+---
+
+<a
+	{...rest}
+  {href}
+  aria-current={current}
+  class={cn("decoration-2 underline aria-current:no-underline", className)}
+>
+  <slot />
+</a>

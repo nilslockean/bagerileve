@@ -1,0 +1,29 @@
+---
+import { cn } from "@lib/cn";
+import { LogoSize } from "@lib/enums/LogoSize";
+
+interface Props {
+  size?: LogoSize;
+}
+
+const { size = LogoSize.DEFAULT } = Astro.props;
+---
+
+<svg
+  class={cn("w-auto", size)}
+  viewBox="0 0 112 44"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M6.0648 0.395164V34.8816H17.8807V40.5818H0V0.395164H6.0648Z"
+    fill="currentColor"></path>
+  <path
+    d="M45.8089 6.0949H29.6973V15.7514H45.34V21.4515H29.6973V34.8816H45.8089V40.5818H23.6333V0.395164H45.8089V6.0949Z"
+    fill="currentColor"></path>
+  <path
+    d="M55.8029 0.39518L66.9174 28.245L78.187 0.39518H84.8237L66.7871 43.6004L49.1662 0.39518H55.8029Z"
+    fill="currentColor"></path>
+  <path
+    d="M111.996 6.0949H95.8845V15.7514H111.527V21.4515H95.8845V34.8816H111.996V40.5818H89.8213V0.395164H111.996V6.0949Z"
+    fill="currentColor"></path>
+</svg>
