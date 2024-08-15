@@ -1,7 +1,7 @@
-import { defineConfig } from "astro/config";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
 import sanity from "@sanity/astro";
+import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 
 // https://docs.astro.build/en/guides/configuring-astro/#environment-variables
