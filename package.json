@@ -12,7 +12,9 @@
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"workspaces": [
-		"packages/*"
-	]
+	"workspaces": ["packages/*"],
+	"devDependencies": {
+		"@biomejs/biome": "1.8.3",
+		"lefthook": "^1.7.12"
+	}
 }
