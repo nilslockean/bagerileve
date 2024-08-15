@@ -3,12 +3,11 @@ import { cn } from "@lib/cn";
 
 type Props = {
   href: string;
-  className?: string;
+  class?: string;
+  current?: boolean;
 };
 
-const { pathname } = Astro.url;
-const { href, className = "", ...rest } = Astro.props;
-const current = pathname === href;
+const { href, current, class: className, ...rest } = Astro.props;
 ---
 
 <a

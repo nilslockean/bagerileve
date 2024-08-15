@@ -4,15 +4,15 @@ import Link from "./Link.astro";
 
 type Props = {
   links: NavLink[];
-  className?: string;
+  class?: string;
 };
 
-const { links, className = "" } = Astro.props;
+const { links, class: className } = Astro.props;
 ---
 
 {
   links.map((link) => (
-    <Link href={link.path} {className}>
+    <Link href={link.path} current={link.current} class:list={[className]}>
       {link.label}
     </Link>
   ))

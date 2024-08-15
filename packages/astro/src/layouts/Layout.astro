@@ -11,10 +11,15 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+const { pathname } = Astro.url;
+
 const isProduction = import.meta.env.MODE === "production";
 const headerLinks = config.navigation
   .filter(({ areas }) => areas.includes(NavArea.HEADER))
-  .map(({ link }) => link);
+  .map(({ link }) => {
+    const current = pathname === link.path;
+    return { ...link, current };
+  });
 ---
 
 <!doctype html>
