@@ -3,6 +3,7 @@ import tailwind from "@astrojs/tailwind";
 import sanity from "@sanity/astro";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
+import netlify from "@astrojs/netlify";
 
 // https://docs.astro.build/en/guides/configuring-astro/#environment-variables
 const { SANITY_PROJECT_ID, SANITY_DATASET } = loadEnv(
@@ -13,6 +14,8 @@ const { SANITY_PROJECT_ID, SANITY_DATASET } = loadEnv(
 
 // https://astro.build/config
 export default defineConfig({
+  output: "hybrid",
+  adapter: netlify(),
   integrations: [
     svelte(),
     tailwind({
