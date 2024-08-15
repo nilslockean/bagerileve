@@ -1,0 +1,15 @@
+---
+type Props = {
+	fullwidth?: boolean;
+	class?: string;
+};
+
+const { fullwidth, class: className, ...rest } = Astro.props;
+---
+
+<section
+  {...rest}
+  class:list={[{"p-6 max-w-screen-2xl mx-auto": !fullwidth}, className]}
+>
+	<slot />
+</section>
