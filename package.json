@@ -1,22 +1,28 @@
 {
-	"name": "bagerileve",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"dev": "pnpm --filter \"@bagerileve/svelte\" dev",
-		"dev:frontend": "pnpm --filter \"@bagerileve/svelte\" dev",
-		"dev:admin": "pnpm --filter \"@bagerileve/sanity\" dev",
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"workspaces": [
-		"packages/*"
-	],
-	"devDependencies": {
-		"prettier": "3.3.3",
-		"prettier-plugin-astro": "^0.14.1"
-	}
+  "name": "bagerileve",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm --filter \"@bagerileve/svelte\" dev",
+    "dev:frontend": "pnpm --filter \"@bagerileve/svelte\" dev",
+    "dev:admin": "pnpm --filter \"@bagerileve/sanity\" dev",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "husky": "^9.1.4",
+    "lint-staged": "^15.2.9",
+    "prettier": "3.3.3",
+    "prettier-plugin-astro": "^0.14.1"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
 }
