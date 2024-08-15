@@ -12,9 +12,11 @@
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"workspaces": ["packages/*"],
+	"workspaces": [
+		"packages/*"
+	],
 	"devDependencies": {
-		"@biomejs/biome": "1.8.3",
-		"lefthook": "^1.7.12"
+		"prettier": "3.3.3",
+		"prettier-plugin-astro": "^0.14.1"
 	}
 }

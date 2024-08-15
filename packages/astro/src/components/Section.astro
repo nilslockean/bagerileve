@@ -1,7 +1,7 @@
 ---
 type Props = {
-	fullwidth?: boolean;
-	class?: string;
+  fullwidth?: boolean;
+  class?: string;
 };
 
 const { fullwidth, class: className, ...rest } = Astro.props;
@@ -9,7 +9,7 @@ const { fullwidth, class: className, ...rest } = Astro.props;
 
 <section
   {...rest}
-  class:list={[{"p-6 max-w-screen-2xl mx-auto": !fullwidth}, className]}
+  class:list={[{ "p-6 max-w-screen-2xl mx-auto": !fullwidth }, className]}
 >
-	<slot />
+  <slot />
 </section>

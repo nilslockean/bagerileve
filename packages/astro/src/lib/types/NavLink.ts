@@ -1,4 +1,4 @@
 export type NavLink = {
-	path: string;
-	label: string; // Label?
+  path: string;
+  label: string; // Label?
 };

@@ -13,12 +13,13 @@ import Layout from "../layouts/Layout.astro";
         type="video/mp4"
       />
     </video>
-  
+
     <!-- Color overlay -->
     <div
       class="absolute hidden lg:block inset-0 bg-blue-950 opacity-50 z-20 aspect-video w-full"
-    ></div>
-  
+    >
+    </div>
+
     <div
       class="z-30 hidden lg:flex flex-col items-start gap-4 p-6 w-full max-w-screen-2xl mx-auto text-orange-50"
     >
@@ -26,7 +27,9 @@ import Layout from "../layouts/Layout.astro";
       <p class="text-lg max-w-prose xl:text-xl">
         Surdegsbröd ur ugnen på eftermiddagen och nästan allt är veganskt.
       </p>
-      <ButtonLink href="/bestall" variant="primary">Beställ fredagsmunk</ButtonLink>
+      <ButtonLink href="/bestall" variant="primary"
+        >Beställ fredagsmunk</ButtonLink
+      >
     </div>
   </Section>
 </Layout>
