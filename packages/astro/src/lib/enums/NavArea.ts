@@ -1,4 +1,4 @@
 export enum NavArea {
-  HEADER = "header",
-  FOOTER = "footer",
+	HEADER = "header",
+	FOOTER = "footer",
 }
