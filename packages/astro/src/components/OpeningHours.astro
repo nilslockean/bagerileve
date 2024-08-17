@@ -1,0 +1,47 @@
+---
+import type { OpeningHours } from "@lib/schemas/OpeningHoursSchema";
+
+type Props = {
+  data: OpeningHours;
+  title?: string;
+};
+
+const { data, title } = Astro.props;
+---
+
+{title && <h4>{title}</h4>}
+
+<div class="@container">
+  <table class="table-auto w-full">
+    {
+      data.hours.map((row) => (
+        <tr class="@2xl:border-b-2 border-current last:border-none">
+          <td class="py-1">{row.day}</td>
+          <td class="text-right py-1">{row.time}</td>
+        </tr>
+      ))
+    }
+  </table>
+
+  {
+    data.irregular && data.irregular.length > 0 && (
+      <>
+        <p class="mt-4 uppercase text-base font-futura tracking-wider">
+          Avvikelser
+        </p>
+        <table class="table-auto w-full">
+          {data.irregular.map((row) => (
+            <tr class="@2xl:border-b-2 border-current last:border-none">
+              <td class="py-1">
+                {row.date}
+                <br />
+                <small class="opacity-75">{row.name}</small>
+              </td>
+              <td class="text-right py-1 align-baseline">{row.time}</td>
+            </tr>
+          ))}
+        </table>
+      </>
+    )
+  }
+</div>

@@ -1,9 +1,13 @@
 ---
 import "../base.css";
 import Logo from "@components/Logo.astro";
-import Nav from "@components/Nav.astro";
 import { NavArea } from "@lib/enums/NavArea";
 import config from "../config";
+import { LogoSize } from "@lib/enums/LogoSize";
+import NavLinks from "@components/NavLinks.astro";
+import OpeningHours from "@components/OpeningHours.astro";
+import { fetchOpeningHours } from "@lib/sanity";
+import { getNavLinks } from "@lib/navigation";
 
 interface Props {
   title: string;
@@ -14,12 +18,11 @@ const { title, description } = Astro.props;
 const { pathname } = Astro.url;
 
 const isProduction = import.meta.env.MODE === "production";
-const headerLinks = config.navigation
-  .filter(({ areas }) => areas.includes(NavArea.HEADER))
-  .map(({ link }) => {
-    const current = pathname === link.path;
-    return { ...link, current };
-  });
+
+const _getNavLinks = (area: NavArea) =>
+  getNavLinks(area, config.navigation, pathname);
+
+const openingHours = await fetchOpeningHours();
 ---
 
 <!doctype html>
@@ -43,11 +46,49 @@ const headerLinks = config.navigation
       <a href="/">
         <Logo />
       </a>
-      <Nav links={headerLinks} />
+      <nav
+        class="flex lg:text-lg gap-x-3 gap-y-1 flex-wrap justify-end"
+        id="main-nav"
+      >
+        <NavLinks links={_getNavLinks(NavArea.HEADER)} />
+      </nav>
     </header>
 
     <main>
       <slot />
     </main>
+
+    <footer
+      class="bg-blue-900 dark:bg-blue-950 text-orange-50 px-6 py-8 sticky top-[100vh]"
+    >
+      <div
+        class="grid gap-x-8 gap-y-8 md:grid-cols-2 md:gap-y-16 xl:grid-cols-4 xl:gap-x-16"
+      >
+        <div>
+          <Logo size={LogoSize.SMALL} />
+        </div>
+        <div>
+          <OpeningHours data={openingHours} />
+        </div>
+        <div>
+          <h4 class="mb-4">Meny</h4>
+          <nav class="flex flex-col gap-2 mb-4">
+            <NavLinks links={_getNavLinks(NavArea.FOOTER)} />
+          </nav>
+        </div>
+        <div>
+          <h4 class="mb-4">{config.siteTitle}</h4>
+          <p>
+            Östra Rönneholmsvägen 6<br />
+            211 47 Malmö
+          </p>
+          <p>Hitta hit</p>
+        </div>
+      </div>
+      <hr class="my-8" />
+      <nav class="flex gap-3">
+        <NavLinks links={_getNavLinks(NavArea.COLOPHON)} />
+      </nav>
+    </footer>
   </body>
 </html>

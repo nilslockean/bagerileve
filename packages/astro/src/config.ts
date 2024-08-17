@@ -1,4 +1,5 @@
 import { NavArea } from "@lib/enums/NavArea";
+import type { Navigation } from "@lib/types/Navigation";
 import type { NavLink } from "@lib/types/NavLink";
 
 export enum Slug {
@@ -13,10 +14,7 @@ export enum Slug {
 
 type SiteConfig = {
   siteTitle: string;
-  navigation: Array<{
-    link: NavLink;
-    areas: NavArea[];
-  }>;
+  navigation: Navigation;
 };
 
 export const PageMap: Record<Slug, NavLink> = Object.freeze({
@@ -38,13 +36,13 @@ export const PageMap: Record<Slug, NavLink> = Object.freeze({
 const config: SiteConfig = {
   siteTitle: "Bageri Leve",
   navigation: [
-    { link: PageMap[Slug.ASSORTMENT], areas: [NavArea.HEADER] },
-    { link: PageMap[Slug.COURSES], areas: [NavArea.HEADER] },
-    { link: PageMap[Slug.ORDER], areas: [NavArea.HEADER] },
-    { link: PageMap[Slug.ABOUT], areas: [NavArea.HEADER] },
-    { link: PageMap[Slug.CONTACT], areas: [NavArea.HEADER] },
-    { link: PageMap[Slug.PRIVACY_POLICY], areas: [NavArea.FOOTER] },
-    { link: PageMap[Slug.BOOKING_TERMS], areas: [NavArea.FOOTER] },
+    { link: PageMap[Slug.ASSORTMENT], areas: [NavArea.HEADER, NavArea.FOOTER] },
+    { link: PageMap[Slug.COURSES], areas: [NavArea.HEADER, NavArea.FOOTER] },
+    { link: PageMap[Slug.ORDER], areas: [NavArea.HEADER, NavArea.FOOTER] },
+    { link: PageMap[Slug.ABOUT], areas: [NavArea.HEADER, NavArea.FOOTER] },
+    { link: PageMap[Slug.CONTACT], areas: [NavArea.HEADER, NavArea.FOOTER] },
+    { link: PageMap[Slug.PRIVACY_POLICY], areas: [NavArea.COLOPHON] },
+    { link: PageMap[Slug.BOOKING_TERMS], areas: [NavArea.COLOPHON] },
   ],
 };
 
