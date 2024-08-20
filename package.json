@@ -7,7 +7,7 @@
     "dev": "pnpm --filter \"@bagerileve/svelte\" dev",
     "dev:frontend": "pnpm --filter \"@bagerileve/svelte\" dev",
     "dev:admin": "pnpm --filter \"@bagerileve/sanity\" dev",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "pnpm --filter \"@bagerileve/*\" test",
     "prepare": "husky"
   },
   "keywords": [],

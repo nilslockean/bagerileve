@@ -1,8 +1,9 @@
 ---
-type Props = {
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"section"> {
   fullwidth?: boolean;
-  class?: string;
-};
+}
 
 const { fullwidth, class: className, ...rest } = Astro.props;
 ---

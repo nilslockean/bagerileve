@@ -1,0 +1,47 @@
+---
+import { fetchCourses } from "@lib/fienta";
+import Course from "@components/Course.astro";
+import { EventScopeSchema } from "@lib/schemas/EventScope.ts";
+import { z } from "astro:content";
+
+const { searchParams } = Astro.url;
+
+const BooleanSchema = z.enum(["true", "false"]);
+const ParamsSchema = z.object({
+  scope: EventScopeSchema.catch("upcoming"),
+  showError: BooleanSchema.catch("false"),
+  showEmpty: BooleanSchema.catch("false"),
+});
+const params = ParamsSchema.parse({
+  scope: searchParams.get("scope"),
+  showError: searchParams.get("showError"),
+  showEmpty: searchParams.get("showEmpty"),
+});
+
+export const partial = true;
+export const prerender = false;
+
+const courses = await fetchCourses(params.scope);
+---
+
+{
+  courses.status === "success" && (
+    <>
+      {courses.courses.map((course) => (
+        <Course {course} class="mt-4 max-w-prose basis-2/4 grow" />
+      ))}
+      {courses.courses.length === 0 && params.showEmpty === "true" && (
+        <p>Inga kurser inplanerade just nu.</p>
+      )}
+    </>
+  )
+}
+
+{
+  courses.status === "error" && params.showError === "true" && (
+    <>
+      <p>Problem med att hämta kurser:</p>
+      <p>{courses.message}</p>
+    </>
+  )
+}

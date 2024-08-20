@@ -1,7 +1,11 @@
 ---
 import ButtonLink from "@components/ButtonLink.astro";
 import Section from "@components/Section.astro";
+import OpeningHours from "@components/OpeningHours.astro";
 import Layout from "../layouts/Layout.astro";
+import { fetchOpeningHours } from "@lib/sanity";
+
+const openingHours = await fetchOpeningHours();
 ---
 
 <Layout title="Bageri Leve" description="Bageriet som vänder på bröddygnet">
@@ -31,5 +35,25 @@ import Layout from "../layouts/Layout.astro";
         >Beställ fredagsmunk</ButtonLink
       >
     </div>
+  </Section>
+  <Section class="lg:hidden">
+    <h1>En nybakad upplevelse mitt i Malmö</h1>
+    <p class="text-lg">
+      Surdegsbröd ur ugnen på eftermiddagen och nästan allt är veganskt.
+    </p>
+    <ButtonLink href="/boka" variant="primary">Beställ fredagsmunk</ButtonLink>
+  </Section>
+
+  <Section>
+    <OpeningHours title="Öppettider" data={openingHours} class="max-w-xl" />
+    <ButtonLink href="/kontakt">Hitta hit</ButtonLink>
+  </Section>
+
+  <Section
+    hx-get="/partials/events?scope=upcoming"
+    hx-trigger="load"
+    class="empty:hidden flex flex-1 gap-4 flex-wrap"
+  >
+    Hämtar kommande kurser...
   </Section>
 </Layout>

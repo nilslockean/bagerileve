@@ -1,0 +1,36 @@
+---
+import { cn } from "@lib/cn";
+import type { Course } from "@lib/schemas/CourseSchema";
+import ButtonLink from "./ButtonLink.astro";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"a"> {
+  course: Course;
+}
+
+const { course, class: className, ...rest } = Astro.props;
+---
+
+<ButtonLink
+  {...rest}
+  href={course.url}
+  class={cn(
+    "flex flex-col gap-4 font-sans normal-case mt-0 py-6 relative",
+    className
+  )}
+>
+  {
+    course.draft && (
+      <p class="absolute top-2 right-4">
+        <small>Utkast</small>
+      </p>
+    )
+  }
+  <slot />
+  <h2 class="text-2xl">
+    {course.title}
+    {course.soldOut && " (slutsåld)"}
+  </h2>
+  <p>{course.dates}</p>
+  <p class="underline">Mer info</p>
+</ButtonLink>

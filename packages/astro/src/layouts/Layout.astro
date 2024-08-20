@@ -12,12 +12,13 @@ import { getNavLinks } from "@lib/navigation";
 interface Props {
   title: string;
   description: string;
+  htmx?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, htmx } = Astro.props;
 const { pathname } = Astro.url;
 
-const isProduction = import.meta.env.MODE === "production";
+const isProduction = import.meta.env.PROD;
 
 const _getNavLinks = (area: NavArea) =>
   getNavLinks(area, config.navigation, pathname);
@@ -38,6 +39,16 @@ const openingHours = await fetchOpeningHours();
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     {!isProduction && <meta name="robots" content="noindex,nofollow" />}
+    {
+      htmx && (
+        <script
+          is:inline
+          src="https://unpkg.com/htmx.org@2.0.2"
+          integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
+          crossorigin="anonymous"
+        />
+      )
+    }
   </head>
   <body>
     <header
