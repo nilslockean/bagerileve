@@ -23,19 +23,24 @@
   }
 
   /* Headings */
-  h1 {
+  h1,
+  .h1 {
     @apply text-5xl leading-tight -mx-1 mb-4 xl:text-6xl;
   }
-  h2 {
+  h2,
+  .h2 {
     @apply text-4xl mb-4;
   }
-  h3 {
+  h3,
+  .h3 {
     @apply text-3xl tracking-wider;
   }
-  h4 {
+  h4,
+  .h4 {
     @apply uppercase text-lg font-futura tracking-wider;
   }
-  h5 {
+  h5,
+  .h5 {
     @apply uppercase text-base font-futura tracking-wider;
   }
 

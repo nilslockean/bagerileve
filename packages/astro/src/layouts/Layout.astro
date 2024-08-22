@@ -54,12 +54,12 @@ const openingHours = await fetchOpeningHours();
     <header
       class="p-6 flex items-center justify-between gap-6 max-w-screen-2xl mx-auto"
     >
-      <a href="/">
+      <a href="/" aria-label="Gå till startsidan">
         <Logo />
       </a>
       <nav
         class="flex lg:text-lg gap-x-3 gap-y-1 flex-wrap justify-end"
-        id="main-nav"
+        aria-label="Huvudmeny"
       >
         <NavLinks links={_getNavLinks(NavArea.HEADER)} />
       </nav>
@@ -79,16 +79,17 @@ const openingHours = await fetchOpeningHours();
           <Logo size={LogoSize.SMALL} />
         </div>
         <div>
+          <p class="h4 mb-4">Öppettider</p>
           <OpeningHours data={openingHours} />
         </div>
         <div>
-          <h4 class="mb-4">Meny</h4>
-          <nav class="flex flex-col gap-2 mb-4">
+          <p class="h4 mb-4" id="footer-nav">Meny</p>
+          <nav class="flex flex-col gap-2 mb-4" aria-labelledby="footer-nav">
             <NavLinks links={_getNavLinks(NavArea.FOOTER)} />
           </nav>
         </div>
         <div>
-          <h4 class="mb-4">{config.siteTitle}</h4>
+          <p class="h4 mb-4">{config.siteTitle}</p>
           <p>
             Östra Rönneholmsvägen 6<br />
             211 47 Malmö
@@ -97,7 +98,7 @@ const openingHours = await fetchOpeningHours();
         </div>
       </div>
       <hr class="my-8" />
-      <nav class="flex gap-3">
+      <nav class="flex gap-3" aria-label="Juridisk information">
         <NavLinks links={_getNavLinks(NavArea.COLOPHON)} />
       </nav>
     </footer>
