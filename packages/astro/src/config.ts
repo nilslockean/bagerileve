@@ -20,7 +20,7 @@ type SiteConfig = {
 
 export const PageMap: Record<Slug, NavLink> = Object.freeze({
   // [Slug.ASSORTMENT]: { label: "Sortiment", path: "/sortiment" },
-  [Slug.HOME]: { label: "Hem", path: "/" },
+  [Slug.HOME]: { label: "Hem", path: "/", className: "hidden lg:inline" },
   [Slug.COURSES]: { label: "Kurser", path: "/kurser" },
   [Slug.ORDER]: { label: "Beställning", path: "/bestall" },
   // [Slug.ABOUT]: { label: "Om", path: "/om" },
@@ -38,7 +38,10 @@ export const PageMap: Record<Slug, NavLink> = Object.freeze({
 const config: SiteConfig = {
   siteTitle: "Bageri Leve",
   navigation: [
-    { link: PageMap[Slug.HOME], areas: [NavArea.HEADER, NavArea.FOOTER] },
+    {
+      link: PageMap[Slug.HOME],
+      areas: [NavArea.HEADER, NavArea.FOOTER],
+    },
     // { link: PageMap[Slug.ASSORTMENT], areas: [NavArea.HEADER, NavArea.FOOTER] },
     { link: PageMap[Slug.COURSES], areas: [NavArea.HEADER, NavArea.FOOTER] },
     { link: PageMap[Slug.ORDER], areas: [NavArea.HEADER, NavArea.FOOTER] },
