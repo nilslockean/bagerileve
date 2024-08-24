@@ -1,4 +1,5 @@
 ---
+import { cn } from "@lib/cn";
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"section"> {
@@ -10,7 +11,7 @@ const { fullwidth, class: className, ...rest } = Astro.props;
 
 <section
   {...rest}
-  class:list={[{ "p-6 max-w-screen-2xl mx-auto": !fullwidth }, className]}
+  class={cn({ "p-6 max-w-screen-2xl mx-auto": !fullwidth }, className)}
 >
   <slot />
 </section>

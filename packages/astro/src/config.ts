@@ -15,7 +15,21 @@ export enum Slug {
 
 type SiteConfig = {
   siteTitle: string;
+  siteUrl: string;
   navigation: Navigation;
+  contact: {
+    legalName: string;
+    email: string;
+    phone: string;
+    address: {
+      street: string;
+      zip: string;
+      city: string;
+      googleMaps: string;
+      appleMaps: string;
+    };
+    orgNumber: string;
+  };
 };
 
 export const PageMap: Record<Slug, NavLink> = Object.freeze({
@@ -50,6 +64,21 @@ const config: SiteConfig = {
     { link: PageMap[Slug.PRIVACY_POLICY], areas: [NavArea.COLOPHON] },
     // { link: PageMap[Slug.BOOKING_TERMS], areas: [NavArea.COLOPHON] },
   ],
+  siteUrl: "https://bagerileve.se",
+  contact: {
+    legalName: "Leve bageri och konditori AB",
+    email: "hej@bagerileve.se",
+    phone: "040-123 45 67",
+    address: {
+      street: "Östra Rönneholmsvägen 6",
+      zip: "211 47",
+      city: "Malmö",
+      googleMaps: "https://maps.app.goo.gl/bKviQyXD7xwvJLmH6",
+      appleMaps:
+        "https://maps.apple.com/?address=Östra%20Rönneholmsvägen%206,%20211%2047%20Malmö,%20Sweden&auid=1128191008389929499&ll=55.596641,12.999685&lsp=9902&q=Bageri%20Leve",
+    },
+    orgNumber: "559097-6030",
+  },
 };
 
 export default config;

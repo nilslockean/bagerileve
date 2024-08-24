@@ -12,12 +12,19 @@ import Link from "@components/Link.astro";
 
 interface Props {
   title: string;
-  description: string;
+  metaDescription?: string;
+  description?: string;
   htmx?: boolean;
   fullwidth?: boolean;
 }
 
-const { title, description, htmx, fullwidth } = Astro.props;
+const {
+  title,
+  description = config.siteTitle,
+  metaDescription,
+  htmx,
+  fullwidth,
+} = Astro.props;
 const { pathname } = Astro.url;
 
 const isProduction = import.meta.env.PROD;
@@ -35,11 +42,11 @@ const openingHours = await fetchOpeningHours();
 >
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
+    {metaDescription && <meta name="description" content={metaDescription} />}
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>{title} &bull; {description}</title>
     {!isProduction && <meta name="robots" content="noindex,nofollow" />}
     {
       htmx && (

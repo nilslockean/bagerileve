@@ -4,6 +4,7 @@ import sanity from "@sanity/astro";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 import netlify from "@astrojs/netlify";
+import mdx from "@astrojs/mdx";
 
 // https://docs.astro.build/en/guides/configuring-astro/#environment-variables
 const { SANITY_PROJECT_ID, SANITY_DATASET } = loadEnv(
@@ -27,5 +28,6 @@ export default defineConfig({
       apiVersion: "2024-01-21",
       useCdn: false,
     }),
+    mdx(),
   ],
 });
