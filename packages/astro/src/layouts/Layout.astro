@@ -33,6 +33,7 @@ const _getNavLinks = (area: NavArea) =>
   getNavLinks(area, config.navigation, pathname);
 
 const openingHours = await fetchOpeningHours();
+const { address } = config.contact;
 ---
 
 <!doctype html>
@@ -99,13 +100,10 @@ const openingHours = await fetchOpeningHours();
         </div>
         <div>
           <p class="h4 mb-4">{config.siteTitle}</p>
-          <Link
-            href="https://maps.app.goo.gl/bKviQyXD7xwvJLmH6"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Östra Rönneholmsvägen 6<br />
-            211 47 Malmö
+          <Link href={address.googleMaps} target="_blank" rel="noreferrer">
+            {address.street}<br />
+            {address.zip}{" "}
+            {address.city}
           </Link>
         </div>
       </div>
