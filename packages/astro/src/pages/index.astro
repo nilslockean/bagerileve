@@ -32,10 +32,10 @@ const openingHours = await fetchOpeningHours();
     </div>
 
     <div
-      class="z-30 hidden lg:flex flex-col items-start gap-4 p-6 w-full max-w-screen-2xl mx-auto text-orange-50"
+      class="z-30 hidden lg:flex flex-col items-start p-6 w-full max-w-screen-2xl mx-auto text-orange-50"
     >
       <h1>En nybakad upplevelse mitt i Malmö</h1>
-      <p class="text-lg max-w-prose xl:text-xl mb-0">
+      <p class="text-lg max-w-prose xl:text-xl">
         Surdegsbröd ur ugnen på eftermiddagen och nästan allt är veganskt.
       </p>
       <ButtonLink href="/bestall" variant="primary"
@@ -52,7 +52,7 @@ const openingHours = await fetchOpeningHours();
   </Section>
 
   <Section class="lg:mt-8 grid lg:grid-cols-2 gap-8">
-    <div class="bas">
+    <div>
       <h2>Öppettider</h2>
       <OpeningHours data={openingHours} class="max-w-xl" />
       <ButtonLink href="/kontakt">Hitta hit</ButtonLink>

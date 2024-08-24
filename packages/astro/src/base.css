@@ -25,7 +25,7 @@
   /* Headings */
   h1,
   .h1 {
-    @apply text-5xl leading-tight -mx-1 mb-4 xl:text-6xl;
+    @apply text-5xl leading-tight -mx-1 mb-8 xl:text-6xl;
   }
   h2,
   .h2 {

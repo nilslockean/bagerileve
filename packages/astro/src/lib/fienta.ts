@@ -35,8 +35,7 @@ export async function fetchCourses(
   const now = new Date(result.time.full_datetime).getTime();
 
   const courses = result.data
-    .filter((course, i) => {
-      console.log(course);
+    .filter((course) => {
       // Display previews in development and staging
       if (!course.is_published && import.meta.env.PROD) {
         return false;

@@ -1,0 +1,53 @@
+---
+import Section from "@components/Section.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Kurser" htmx>
+  <Section>
+    <h1>Du kan baka, du är inte rädd</h1>
+    <p class="text-2xl">
+      Bli bättre på att få till ett gott surdegsbröd ‐ skaffa en djupare
+      förståelse för varför det blir som det blir och inte alltid som du tänkt
+      dig och lär dig att göra dina egna recept.
+    </p>
+  </Section>
+  <Section>
+    <p>
+      Under en helg går vi grundligt igenom hur du lyckas med brödbaket, genom
+      att få en djupare förståelse för hur ingredienserna mjöl, vatten, salt och
+      surdeg fungerar och hur vi kan använda dem för att få till det resultat vi
+      är ute efter. Som deltagare kommer ni alla att baka egna bröd och under
+      tiden degarna jäser går vi igenom alla bakningens delar.
+    </p>
+    <p>
+      Det finns två olika kurser att välja mellan. Den ena är för nybörjare och
+      har som syfte att introducera dig till surdegsbakning. Där fokuserar vi på
+      att ha roligt och vi bakar surdegsbröd på det enklaste och mest
+      straight-forward sätt jag vet. Vi går igenom hur du tar hand om en
+      surdegskultur hemma och du får en enkel och mångsidig metod att använda.
+    </p>
+    <p>
+      Den andra kursen är riktad till dig som redan bakar riktigt mycket hemma
+      eller i en professionell miljö och är intresserade av att ta det ett eller
+      några steg djupare. Där ingår fler moment och svårighetsgraden på det vi
+      bakar är högre. Vi letar efter olika ”key points” för att lyckas med
+      surdegsbakningen och lär oss identifiera bra jäsning.
+    </p>
+    <p>Välkommen på kurs hos oss!</p>
+  </Section>
+  <Section>
+    <div
+      hx-get="/partials/events?scope=upcoming&showEmpty=true&showError=true"
+      hx-trigger="load"
+    >
+      Hämtar kommande kurser...
+    </div>
+  </Section>
+</Layout>
+
+<style>
+  p {
+    @apply max-w-prose;
+  }
+</style>
