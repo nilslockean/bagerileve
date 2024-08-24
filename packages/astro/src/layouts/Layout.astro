@@ -14,9 +14,10 @@ interface Props {
   title: string;
   description: string;
   htmx?: boolean;
+  fullwidth?: boolean;
 }
 
-const { title, description, htmx } = Astro.props;
+const { title, description, htmx, fullwidth } = Astro.props;
 const { pathname } = Astro.url;
 
 const isProduction = import.meta.env.PROD;
@@ -66,7 +67,7 @@ const openingHours = await fetchOpeningHours();
       </nav>
     </header>
 
-    <main>
+    <main class:list={[{ "py-16": !fullwidth }]}>
       <slot />
     </main>
 
