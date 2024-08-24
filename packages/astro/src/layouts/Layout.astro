@@ -8,6 +8,7 @@ import NavLinks from "@components/NavLinks.astro";
 import OpeningHours from "@components/OpeningHours.astro";
 import { fetchOpeningHours } from "@lib/sanity";
 import { getNavLinks } from "@lib/navigation";
+import Link from "@components/Link.astro";
 
 interface Props {
   title: string;
@@ -90,11 +91,13 @@ const openingHours = await fetchOpeningHours();
         </div>
         <div>
           <p class="h4 mb-4">{config.siteTitle}</p>
-          <p>
+          <Link
+            href="https://maps.app.goo.gl/bKviQyXD7xwvJLmH6"
+            target="_blank"
+          >
             Östra Rönneholmsvägen 6<br />
             211 47 Malmö
-          </p>
-          <p>Hitta hit</p>
+          </Link>
         </div>
       </div>
       <hr class="my-8" />

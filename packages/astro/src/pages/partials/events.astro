@@ -27,9 +27,14 @@ const courses = await fetchCourses(params.scope);
 {
   courses.status === "success" && (
     <>
-      {courses.courses.map((course) => (
-        <Course {course} class="mt-4 max-w-prose basis-2/4 grow" />
-      ))}
+      <h2>Kommande kurser</h2>
+      {courses.courses.length > 0 && (
+        <div class="flex flex-1 gap-4 flex-wrap">
+          {courses.courses.map((course) => (
+            <Course {course} class="mt-4 max-w-prose basis-2/4 grow" />
+          ))}
+        </div>
+      )}
       {courses.courses.length === 0 && params.showEmpty === "true" && (
         <p>Inga kurser inplanerade just nu.</p>
       )}
