@@ -9,7 +9,7 @@ export function getNavLinks(
   return navigation
     .filter(({ areas }) => areas.includes(area))
     .map(({ link }) => {
-      const current = currentPath === link.path;
+      const current = (currentPath || "").replace(/\/$/, "") === link.path;
       return { ...link, current };
     });
 }
