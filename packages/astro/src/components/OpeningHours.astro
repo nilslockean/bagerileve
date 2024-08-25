@@ -27,8 +27,8 @@ const { data, title, class: className } = Astro.props;
   {
     data.irregular && data.irregular.length > 0 && (
       <>
-        <p class="mt-4 uppercase text-base font-futura tracking-wider">
-          Avvikelser
+        <p class="mt-4 uppercase text-sm font-futura tracking-wider mb-0">
+          Avvikande öppettider:
         </p>
         <table class="table-auto w-full">
           {data.irregular.map((row) => (
