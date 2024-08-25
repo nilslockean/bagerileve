@@ -22,7 +22,11 @@ if (ADAPTER === "netlify") {
   adapter = netlify();
 }
 if (ADAPTER === "cloudflare") {
-  adapter = cloudflare();
+  adapter = cloudflare({
+    platformProxy: {
+      enabled: true,
+    },
+  });
 }
 
 // https://astro.build/config
