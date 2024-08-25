@@ -134,6 +134,9 @@ importers:
       sanity-plugin-media:
         specifier: ^2.3.2
         version: 2.3.2(@sanity/ui@2.8.8)(@types/react@18.3.4)(react-dom@18.3.1)(react@18.3.1)(sanity@3.55.0)(styled-components@6.1.12)
+      sanity-plugin-webhooks-trigger:
+        specifier: ^0.3.1
+        version: 0.3.1(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(sanity@3.55.0)(styled-components@6.1.12)
       styled-components:
         specifier: ^6.1.12
         version: 6.1.12(react-dom@18.3.1)(react@18.3.1)
@@ -6745,6 +6748,15 @@ packages:
       "@types/react": 18.3.4
     dev: false
 
+  /@types/react-dom@18.3.0:
+    resolution:
+      {
+        integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==,
+      }
+    dependencies:
+      "@types/react": 18.3.4
+    dev: false
+
   /@types/react-is@18.3.0:
     resolution:
       {
@@ -9300,6 +9312,13 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  /crypto-js@4.2.0:
+    resolution:
+      {
+        integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==,
+      }
+    dev: false
 
   /crypto-random-string@2.0.0:
     resolution:
@@ -17821,6 +17840,30 @@ packages:
       - "@types/react"
       - react-native
       - supports-color
+    dev: false
+
+  /sanity-plugin-webhooks-trigger@0.3.1(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(sanity@3.55.0)(styled-components@6.1.12):
+    resolution:
+      {
+        integrity: sha512-a+62UOVRytP5OwD8+2+Nflu+C1jVtEIxcVdR5rfrCMKzwrMpqiEMMk1ei69rTo4grWVeshRZLOc1krxZ0+gtpA==,
+      }
+    engines: { node: ">=18" }
+    peerDependencies:
+      react: ^18
+      sanity: ^3
+    dependencies:
+      "@sanity/icons": 3.4.0(react@18.3.1)
+      "@sanity/incompatible-plugin": 1.0.4(react-dom@18.3.1)(react@18.3.1)
+      "@sanity/ui": 2.8.8(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12)
+      "@types/react-dom": 18.3.0
+      crypto-js: 4.2.0
+      nanoid: 5.0.7
+      react: 18.3.1
+      sanity: 3.55.0(@types/react@18.3.4)(react-dom@18.3.1)(react@18.3.1)(styled-components@6.1.12)
+    transitivePeerDependencies:
+      - react-dom
+      - react-is
+      - styled-components
     dev: false
 
   /sanity@3.55.0(@types/node@22.5.0)(react-dom@18.3.1)(react@18.3.1)(styled-components@6.1.12):
