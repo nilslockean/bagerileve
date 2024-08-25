@@ -53,9 +53,4 @@
   hr {
     @apply border-t-4;
   }
-
-  /* Links */
-  a {
-    @apply decoration-2 underline aria-current:no-underline;
-  }
 }

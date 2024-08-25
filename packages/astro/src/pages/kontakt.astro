@@ -2,6 +2,7 @@
 import Accordion from "@components/Accordion.astro";
 import IconList from "@components/IconList.astro";
 import IconListItem from "@components/IconListItem.astro";
+import Link from "@components/Link.astro";
 import OpeningHours from "@components/OpeningHours.astro";
 import Section from "@components/Section.astro";
 import { IconName } from "@lib/enums/IconName";
@@ -33,7 +34,12 @@ const openingHours = await fetchOpeningHours();
       <h2 class="mb-8">Vanliga frågor</h2>
       {
         faq.map(({ question, answer }, i) => (
-          <Accordion id={`faq-${i}`} title={question} class="mb-4 last:mb-0">
+          <Accordion
+            id={`faq-${i}`}
+            title={question}
+            class="mb-4 last:mb-0"
+            client:load
+          >
             <PortableText value={answer} />
           </Accordion>
         ))
@@ -57,10 +63,10 @@ const openingHours = await fetchOpeningHours();
     </p>
     <IconList>
       <IconListItem icon={IconName.PHONE}>
-        <a href={phoneLink}> {contact.phone}</a>
+        <Link href={phoneLink}> {contact.phone}</Link>
       </IconListItem>
       <IconListItem icon={IconName.ENVELOPE}>
-        <a href={emailLink}>{contact.email}</a>
+        <Link href={emailLink}>{contact.email}</Link>
       </IconListItem>
       <IconListItem icon={IconName.MAP_PIN}>
         <p>
@@ -71,9 +77,9 @@ const openingHours = await fetchOpeningHours();
       </IconListItem>
     </IconList>
     <div class="flex flex-wrap gap-2 mt-4">
-      <a href={contact.address.googleMaps}>Google Maps</a>
+      <Link href={contact.address.googleMaps}>Google Maps</Link>
       <span>/</span>
-      <a href={contact.address.appleMaps}>Apple Maps</a>
+      <Link href={contact.address.appleMaps}>Apple Maps</Link>
     </div>
   </Section>
 </Layout>
