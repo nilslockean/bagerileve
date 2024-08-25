@@ -5,7 +5,8 @@ import type { EventScope } from "./schemas/EventScope.ts";
 import type { Course } from "./schemas/CourseSchema.ts";
 
 export async function fetchCourses(
-  scope: EventScope = "upcoming"
+  scope: EventScope = "upcoming",
+  apiKey: string
 ): Promise<Courses> {
   const fienta = new URL("https://fienta.com/api/v1/events");
   fienta.searchParams.set("organizer", "11554");
@@ -15,7 +16,7 @@ export async function fetchCourses(
   }
 
   const headers = new Headers();
-  headers.append("Authorization", `Bearer ${import.meta.env.FIENTA_API_KEY}`);
+  headers.append("Authorization", `Bearer ${apiKey}`);
 
   const response = await fetch(fienta, {
     method: "GET",

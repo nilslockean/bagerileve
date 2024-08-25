@@ -1,13 +1,6 @@
 import { NavArea } from "@lib/enums/NavArea";
 import type { Navigation } from "@lib/types/Navigation";
 import type { NavLink } from "@lib/types/NavLink";
-import { loadEnv } from "vite";
-
-const { SANITY_PROJECT_ID, SANITY_DATASET, FIENTA_API_KEY, ADAPTER } = loadEnv(
-  process.env.NODE_ENV || "production",
-  process.cwd(),
-  ""
-);
 
 export enum Slug {
   HOME = "home",
@@ -36,12 +29,6 @@ type SiteConfig = {
       appleMaps: string;
     };
     orgNumber: string;
-  };
-  env: {
-    // sanityProjectId: string;
-    // sanityDataset: string;
-    fientaApiKey: string;
-    // beholdFeedId: string;
   };
 };
 
@@ -91,9 +78,6 @@ const config: SiteConfig = {
         "https://maps.apple.com/?address=Östra%20Rönneholmsvägen%206,%20211%2047%20Malmö,%20Sweden&auid=1128191008389929499&ll=55.596641,12.999685&lsp=9902&q=Bageri%20Leve",
     },
     orgNumber: "559097-6030",
-  },
-  env: {
-    fientaApiKey: FIENTA_API_KEY,
   },
 };
 
