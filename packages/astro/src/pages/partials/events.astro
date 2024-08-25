@@ -24,7 +24,7 @@ export const prerender = false;
 const envz = {
   meta: import.meta.env.FIENTA_API_KEY || "",
   process: process.env.FIENTA_API_KEY || "",
-  // locals: Astro.locals.runtime.env.FIENTA_API_KEY || "",
+  locals: Astro.locals.runtime.env.FIENTA_API_KEY || "",
 };
 
 const courses = await fetchCourses(params.scope);
