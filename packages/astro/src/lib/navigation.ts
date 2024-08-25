@@ -10,7 +10,7 @@ export function getNavLinks(
     .filter(({ areas }) => areas.includes(area))
     .map(({ link }) => {
       const regExp = new RegExp("^" + link.path + "/?$");
-      const current = currentPath && regExp.test(currentPath);
+      const current = regExp.test(currentPath || "");
       return { ...link, current };
     });
 }
