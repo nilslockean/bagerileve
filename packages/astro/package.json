@@ -15,8 +15,10 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.2",
+    "@astrojs/cloudflare": "^11.0.4",
     "@astrojs/mdx": "^3.1.4",
     "@astrojs/netlify": "^5.5.1",
+    "@astrojs/node": "^8.3.3",
     "@astrojs/svelte": "^5.7.0",
     "@astrojs/tailwind": "^5.1.0",
     "@axe-core/playwright": "^4.10.0",
