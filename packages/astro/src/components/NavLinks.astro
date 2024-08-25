@@ -1,5 +1,6 @@
 ---
 import type { NavLink } from "@lib/types/NavLink";
+import Link from "./Link.astro";
 import { cn } from "@lib/cn";
 
 type Props = {
@@ -12,12 +13,12 @@ const { links, class: className } = Astro.props;
 
 {
   links.map((link) => (
-    <a
+    <Link
       href={link.path}
-      aria-current={link.current}
+      current={link.current}
       class={cn(link.className, className)}
     >
       {link.label}
-    </a>
+    </Link>
   ))
 }
