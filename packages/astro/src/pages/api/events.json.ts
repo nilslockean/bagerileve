@@ -1,4 +1,5 @@
 import type { APIContext } from "astro";
+import config from "src/config";
 
 export const prerender = false;
 
@@ -10,6 +11,7 @@ export async function GET(context: APIContext) {
         meta: import.meta.env.FIENTA_API_KEY || "",
         process: process.env.FIENTA_API_KEY || "",
         locals: context.locals.runtime.env.FIENTA_API_KEY || "",
+        config: config.env.fientaApiKey,
       },
       null,
       2
