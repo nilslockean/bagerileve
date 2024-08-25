@@ -68,7 +68,7 @@ const config: SiteConfig = {
   contact: {
     legalName: "Leve bageri och konditori AB",
     email: "hej@bagerileve.se",
-    phone: "040-123 45 67",
+    phone: "040-97 93 31",
     address: {
       street: "Östra Rönneholmsvägen 6",
       zip: "211 47",

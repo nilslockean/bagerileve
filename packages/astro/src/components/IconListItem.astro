@@ -1,0 +1,14 @@
+---
+import type { IconName } from "@lib/enums/IconName";
+import Icon from "./Icon.astro";
+
+type Props = {
+  icon: IconName;
+};
+const { icon } = Astro.props;
+---
+
+<li class="flex items-top gap-2">
+  <Icon name={icon} />
+  <slot />
+</li>

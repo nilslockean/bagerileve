@@ -1,0 +1,85 @@
+---
+import Accordion from "@components/Accordion.astro";
+import IconList from "@components/IconList.astro";
+import IconListItem from "@components/IconListItem.astro";
+import Link from "@components/Link.astro";
+import OpeningHours from "@components/OpeningHours.astro";
+import Section from "@components/Section.astro";
+import { IconName } from "@lib/enums/IconName";
+import { fetchFaq, fetchOpeningHours } from "@lib/sanity";
+import { PortableText } from "astro-portabletext";
+import config from "src/config";
+import Layout from "src/layouts/Layout.astro";
+
+const { contact } = config;
+const phoneLink = `tel:${contact.phone
+  .replace(/^0/, "+46")
+  .replace(/[\s-]/g, "")}`;
+const emailLink = `mailto:${contact.email}`;
+
+const faq = await fetchFaq();
+const openingHours = await fetchOpeningHours();
+---
+
+<Layout title="Kontakt">
+  <Section>
+    <h1>Hör av dig!</h1>
+    <p class="text-2xl leading-relaxed max-w-prose">
+      Men om du har en fråga hittar du säkert svaret här.
+    </p>
+  </Section>
+
+  <Section class="lg:mt-8 grid lg:grid-cols-2 gap-8">
+    <div class="max-w-prose">
+      <h2 class="mb-8">Vanliga frågor</h2>
+      {
+        faq.map(({ question, answer }, i) => (
+          <Accordion
+            id={`faq-${i}`}
+            title={question}
+            class="mb-4 last:mb-0"
+            client:load
+          >
+            <PortableText value={answer} />
+          </Accordion>
+        ))
+      }
+    </div>
+    <div class="max-w-xl">
+      <h2>Öppettider</h2>
+      <OpeningHours data={openingHours} />
+    </div>
+  </Section>
+
+  <Section>
+    <h2>Kontaktuppgifter</h2>
+    <p class="mb-4">
+      Vill du beställa något går det fint att ringa till oss. Vi svarar i
+      telefon tisdag-lördag hela dagarna om inget annat anges här.
+    </p>
+    <p class="mb-4">
+      Vi tar inte emot munkbeställningar på fredagar, bara fram till torsdag
+      kväll. Det går inte att beställa via e-post.
+    </p>
+    <IconList>
+      <IconListItem icon={IconName.PHONE}>
+        <Link href={phoneLink}> {contact.phone}</Link>
+      </IconListItem>
+      <IconListItem icon={IconName.ENVELOPE}>
+        <Link href={emailLink}>{contact.email}</Link>
+      </IconListItem>
+      <IconListItem icon={IconName.MAP_PIN}>
+        <p>
+          {contact.address.street}
+          <br />{contact.address.zip}
+          {contact.address.city}
+        </p>
+      </IconListItem>
+    </IconList>
+    <div class="flex flex-wrap gap-2 mt-4">
+      <Link href={contact.address.googleMaps}>Google Maps</Link>
+      <span>/</span>
+      <Link href={contact.address.appleMaps}>Apple Maps</Link>
+    </div>
+  </Section>
+</Layout>
