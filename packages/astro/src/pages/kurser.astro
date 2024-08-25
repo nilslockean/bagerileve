@@ -1,6 +1,8 @@
 ---
 import Section from "@components/Section.astro";
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import bakerImage from "@lib/assets/170711_0552_leve_bageri.jpg";
 ---
 
 <Layout title="Kurser" htmx>
@@ -12,6 +14,7 @@ import Layout from "../layouts/Layout.astro";
       dig och lär dig att göra dina egna recept.
     </p>
   </Section>
+
   <Section>
     <p>
       Under en helg går vi grundligt igenom hur du lyckas med brödbaket, genom
@@ -20,6 +23,13 @@ import Layout from "../layouts/Layout.astro";
       är ute efter. Som deltagare kommer ni alla att baka egna bröd och under
       tiden degarna jäser går vi igenom alla bakningens delar.
     </p>
+  </Section>
+
+  <Section fullwidth>
+    <Image class="w-full" src={bakerImage} alt="Man bakar bröd" />
+  </Section>
+
+  <Section>
     <p>
       Det finns två olika kurser att välja mellan. Den ena är för nybörjare och
       har som syfte att introducera dig till surdegsbakning. Där fokuserar vi på
@@ -36,6 +46,7 @@ import Layout from "../layouts/Layout.astro";
     </p>
     <p>Välkommen på kurs hos oss!</p>
   </Section>
+
   <Section>
     <div
       hx-get="/partials/events?scope=upcoming&showEmpty=true&showError=true"
@@ -44,10 +55,10 @@ import Layout from "../layouts/Layout.astro";
       Hämtar kommande kurser...
     </div>
   </Section>
-</Layout>
 
-<style>
-  p {
-    @apply max-w-prose;
-  }
-</style>
+  <style>
+    p {
+      @apply max-w-prose;
+    }
+  </style>
+</Layout>
