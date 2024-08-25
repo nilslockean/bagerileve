@@ -11,6 +11,7 @@ export enum Slug {
   CONTACT = "kontakt",
   PRIVACY_POLICY = "gdpr",
   // BOOKING_TERMS = "villkor",
+  ADMIN = "admin",
 }
 
 type SiteConfig = {
@@ -47,6 +48,10 @@ export const PageMap: Record<Slug, NavLink> = Object.freeze({
   //   label: "Bokningsvillkor",
   //   path: "/bokningsvillkor",
   // },
+  [Slug.ADMIN]: {
+    label: "Logga in",
+    path: "https://leve.sanity.studio",
+  },
 });
 
 const config: SiteConfig = {
@@ -62,6 +67,7 @@ const config: SiteConfig = {
     // { link: PageMap[Slug.ABOUT], areas: [NavArea.HEADER, NavArea.FOOTER] },
     { link: PageMap[Slug.CONTACT], areas: [NavArea.HEADER, NavArea.FOOTER] },
     { link: PageMap[Slug.PRIVACY_POLICY], areas: [NavArea.COLOPHON] },
+    { link: PageMap[Slug.ADMIN], areas: [NavArea.COLOPHON] },
     // { link: PageMap[Slug.BOOKING_TERMS], areas: [NavArea.COLOPHON] },
   ],
   siteUrl: "https://bagerileve.se",
