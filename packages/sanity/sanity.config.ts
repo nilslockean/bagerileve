@@ -1,10 +1,8 @@
 import {defineConfig} from 'sanity'
-import {deskTool} from 'sanity/desk'
-import {visionTool} from '@sanity/vision'
+import {structureTool} from 'sanity/structure'
 import {schemaTypes} from './schemas'
 import {svSELocale} from '@sanity/locale-sv-se'
 import {media} from 'sanity-plugin-media'
-import {webhooksTrigger} from 'sanity-plugin-webhooks-trigger'
 
 export default defineConfig({
   name: 'default',
@@ -13,15 +11,7 @@ export default defineConfig({
   projectId: 'mz20cm4o',
   dataset: 'production',
 
-  plugins: [
-    deskTool(),
-    svSELocale(),
-    media(),
-    visionTool(),
-    webhooksTrigger({
-      title: 'Deploy',
-    }),
-  ],
+  plugins: [structureTool(), svSELocale(), media()],
 
   schema: {
     types: schemaTypes,

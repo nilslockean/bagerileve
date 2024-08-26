@@ -23,7 +23,6 @@
     "react-is": "^18.3.1",
     "sanity": "^3.55.0",
     "sanity-plugin-media": "^2.3.2",
-    "sanity-plugin-webhooks-trigger": "^0.3.1",
     "styled-components": "^6.1.12"
   },
   "devDependencies": {
