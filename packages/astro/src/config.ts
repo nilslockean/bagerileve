@@ -17,6 +17,7 @@ export enum Slug {
 type SiteConfig = {
   siteTitle: string;
   siteUrl: string;
+  siteDomain: string;
   navigation: Navigation;
   contact: {
     legalName: string;
@@ -71,6 +72,7 @@ const config: SiteConfig = {
     // { link: PageMap[Slug.BOOKING_TERMS], areas: [NavArea.COLOPHON] },
   ],
   siteUrl: "https://bagerileve.se",
+  siteDomain: "bagerileve.se",
   contact: {
     legalName: "Leve bageri och konditori AB",
     email: "hej@bagerileve.se",

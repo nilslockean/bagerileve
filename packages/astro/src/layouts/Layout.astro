@@ -9,6 +9,8 @@ import OpeningHours from "@components/OpeningHours.astro";
 import { fetchOpeningHours } from "@lib/sanity";
 import { getNavLinks } from "@lib/navigation";
 import Link from "@components/Link.astro";
+import defaultOgImage from "@lib/assets/og.png";
+import { getImage } from "astro:assets";
 
 interface Props {
   title: string;
@@ -16,14 +18,16 @@ interface Props {
   description?: string;
   htmx?: boolean;
   fullwidth?: boolean;
+  ogImage?: ImageMetadata;
 }
 
 const {
-  title,
+  title: pageTitle,
   description = config.siteTitle,
   metaDescription,
   htmx,
   fullwidth,
+  ogImage,
 } = Astro.props;
 const { pathname } = Astro.url;
 
@@ -34,6 +38,13 @@ const _getNavLinks = (area: NavArea) =>
 
 const openingHours = await fetchOpeningHours();
 const { address } = config.contact;
+
+const title = `${pageTitle} • ${description}`;
+const canonical = `${config.siteUrl}${pathname}`;
+const optimizedOgImage = await getImage({
+  src: ogImage || defaultOgImage,
+  format: "webp",
+});
 ---
 
 <!doctype html>
@@ -43,11 +54,29 @@ const { address } = config.contact;
 >
   <head>
     <meta charset="UTF-8" />
-    {metaDescription && <meta name="description" content={metaDescription} />}
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title} &bull; {description}</title>
+
+    <!-- HTML Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={metaDescription} />
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:image" content={optimizedOgImage.src} />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content={config.siteDomain} />
+    <meta property="twitter:url" content={canonical} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={optimizedOgImage.src} />
+
     {!isProduction && <meta name="robots" content="noindex,nofollow" />}
     {
       htmx && (
