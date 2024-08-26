@@ -83,6 +83,9 @@ const optimizedOgImage = await getImage({
     <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content={optimizedOgImage.src} />
 
+    <!-- XML Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
     {!isProduction && <meta name="robots" content="noindex,nofollow" />}
     {
       htmx && (

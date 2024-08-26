@@ -7,6 +7,7 @@ import mdx from "@astrojs/mdx";
 import netlify from "@astrojs/netlify";
 import node from "@astrojs/node";
 import cloudflare from "@astrojs/cloudflare";
+import sitemap from "@astrojs/sitemap";
 
 // https://docs.astro.build/en/guides/configuring-astro/#environment-variables
 const { SANITY_PROJECT_ID, SANITY_DATASET, ADAPTER } = loadEnv(
@@ -14,7 +15,6 @@ const { SANITY_PROJECT_ID, SANITY_DATASET, ADAPTER } = loadEnv(
   process.cwd(),
   ""
 );
-
 let adapter = node({
   mode: "standalone",
 });
@@ -31,6 +31,7 @@ if (ADAPTER === "cloudflare") {
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://bagerileve.se",
   output: "hybrid",
   adapter,
   integrations: [
@@ -45,6 +46,9 @@ export default defineConfig({
       useCdn: false,
     }),
     mdx(),
+    sitemap({
+      filter: (page) => !page.includes("/partials/"),
+    }),
   ],
   redirects: {
     "/om": "/",
