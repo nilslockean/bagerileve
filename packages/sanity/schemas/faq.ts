@@ -18,16 +18,5 @@ export default <SchemaTypeDefinition>{
       type: 'array',
       of: [{type: 'block'}],
     },
-    {
-      title: 'Visa på',
-      name: 'linkedPages',
-      type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: [{type: 'page'}],
-        },
-      ],
-    },
   ],
 }
