@@ -46,4 +46,8 @@ export default defineConfig({
     }),
     mdx(),
   ],
+  redirects: {
+    "/om": "/",
+    "/kurs": "/kurser",
+  },
 });
