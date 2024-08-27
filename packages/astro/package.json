@@ -4,7 +4,6 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "start": "netlify dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -17,7 +16,6 @@
     "@astrojs/check": "^0.9.3",
     "@astrojs/cloudflare": "^11.0.4",
     "@astrojs/mdx": "^3.1.4",
-    "@astrojs/netlify": "^5.5.1",
     "@astrojs/node": "^8.3.3",
     "@astrojs/sitemap": "^3.1.6",
     "@astrojs/svelte": "^5.7.0",

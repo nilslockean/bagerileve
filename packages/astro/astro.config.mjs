@@ -4,7 +4,6 @@ import sanity from "@sanity/astro";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 import mdx from "@astrojs/mdx";
-import netlify from "@astrojs/netlify";
 import node from "@astrojs/node";
 import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
@@ -18,9 +17,6 @@ const { SANITY_PROJECT_ID, SANITY_DATASET, ADAPTER } = loadEnv(
 let adapter = node({
   mode: "standalone",
 });
-if (ADAPTER === "netlify") {
-  adapter = netlify();
-}
 if (ADAPTER === "cloudflare") {
   adapter = cloudflare({
     platformProxy: {
