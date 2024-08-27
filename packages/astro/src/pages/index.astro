@@ -6,6 +6,9 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import { fetchOpeningHours } from "@lib/sanity";
 import InstagramFeed from "@components/InstagramFeed.astro";
+import { sanityAsset } from "@lib/sanityAsset";
+import breadImage from "@lib/assets/brod.jpg";
+import cinnamonBunImage from "@lib/assets/170711_0258_leve_bageri.jpg";
 
 const openingHours = await fetchOpeningHours();
 ---
@@ -20,8 +23,7 @@ const openingHours = await fetchOpeningHours();
   <Section fullwidth class="relative aspect-video flex items-center">
     <video autoplay muted playsinline loop class="w-full absolute z-10">
       <source
-        src="
-      https://cdn.sanity.io/files/mz20cm4o/production/9c057df538547c79bedfa2b06e6f276323deecee.mp4"
+        src={sanityAsset("9c057df538547c79bedfa2b06e6f276323deecee.mp4")}
         type="video/mp4"
       />
     </video>
@@ -101,11 +103,7 @@ const openingHours = await fetchOpeningHours();
         <ButtonLink href="/kontakt">Kom hit</ButtonLink>
       </div>
       <div class="mt-8 lg:mt-0 lg:col-span-5 lg:flex">
-        <Image
-          src="https://cdn.sanity.io/images/mz20cm4o/production/b09cfaf61294549990011326bd557345124f9760-1024x1280.jpg"
-          alt="En hög bröd på ett bord"
-          inferSize
-        />
+        <Image src={breadImage} ) alt="En hög bröd på ett bord" />
       </div>
     </div>
   </Section>
@@ -122,9 +120,8 @@ const openingHours = await fetchOpeningHours();
 
   <Section fullwidth>
     <Image
-      inferSize
       class="w-full"
-      src="https://cdn.sanity.io/images/mz20cm4o/production/3a2c5b5af51eb4101e9af5186dbfab9f510fc1ae-3000x1999.jpg"
+      src={cinnamonBunImage}
       alt="Butikspersonal lägger kanelbullar i en papperspåse"
     />
   </Section>
