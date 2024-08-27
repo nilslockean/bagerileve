@@ -2,7 +2,14 @@
 import ButtonLink from "@components/ButtonLink.astro";
 import Section from "@components/Section.astro";
 import Layout from "src/layouts/Layout.astro";
-import { sanityAsset } from "@lib/sanityAsset";
+import { sanityAsset as sa } from "@lib/sanityAsset";
+
+const sanityAsset = (filename: string) =>
+  sa(
+    filename,
+    import.meta.env.SANITY_PROJECT_ID,
+    import.meta.env.SANITY_DATASET
+  );
 ---
 
 <Layout

@@ -6,11 +6,17 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import { fetchOpeningHours } from "@lib/sanity";
 import InstagramFeed from "@components/InstagramFeed.astro";
-import { sanityAsset } from "@lib/sanityAsset";
+import { sanityAsset as sa } from "@lib/sanityAsset";
 import breadImage from "@lib/assets/brod.jpg";
 import cinnamonBunImage from "@lib/assets/170711_0258_leve_bageri.jpg";
 
 const openingHours = await fetchOpeningHours();
+const sanityAsset = (filename: string) =>
+  sa(
+    filename,
+    import.meta.env.SANITY_PROJECT_ID,
+    import.meta.env.SANITY_DATASET
+  );
 ---
 
 <Layout
