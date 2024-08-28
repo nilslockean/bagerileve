@@ -52,9 +52,14 @@ const introText =
       <IntroText>
         {introText}
       </IntroText>
-      <ButtonLink href="/bestall" variant="primary"
-        >Beställ fredagsmunk</ButtonLink
-      >
+      <div>
+        <ButtonLink href="/bestall" variant="primary"
+          >Beställ fredagsmunk</ButtonLink
+        >
+        <ButtonLink href="#oppettider" variant="outline-light"
+          >Kolla öppettider</ButtonLink
+        >
+      </div>
     </div>
   </Section>
   <Section class="lg:hidden">
@@ -67,7 +72,7 @@ const introText =
     >
   </Section>
 
-  <Section class="lg:mt-8 grid lg:grid-cols-2 gap-8">
+  <Section id="oppettider" class="lg:mt-8 grid lg:grid-cols-2 gap-8">
     <div>
       <h2>Öppettider</h2>
       <OpeningHours data={openingHours} class="max-w-xl" />
