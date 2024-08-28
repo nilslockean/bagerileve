@@ -1,11 +1,11 @@
-import {HelpCircleIcon} from '@sanity/icons'
+import {UnknownIcon} from '@sanity/icons'
 import {SchemaTypeDefinition} from 'sanity'
 
 export default <SchemaTypeDefinition>{
   name: 'faq',
   type: 'document',
   title: 'Vanliga frågor',
-  icon: HelpCircleIcon,
+  icon: UnknownIcon,
   fields: [
     {
       name: 'question',

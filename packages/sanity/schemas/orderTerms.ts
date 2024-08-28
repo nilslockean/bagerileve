@@ -1,0 +1,34 @@
+import {BasketIcon} from '@sanity/icons'
+import {SchemaTypeDefinition} from 'sanity'
+
+export default <SchemaTypeDefinition>{
+  name: 'orderTerms',
+  type: 'document',
+  title: 'Beställningsvillkor',
+  icon: BasketIcon,
+  fields: [
+    {
+      name: 'title',
+      type: 'string',
+      title: 'Rubrik',
+    },
+    {
+      title: 'Villkor',
+      name: 'content',
+      type: 'array',
+      of: [{type: 'block'}],
+    },
+    {
+      title: 'Ordning',
+      name: 'order',
+      type: 'number',
+    },
+  ],
+  orderings: [
+    {
+      title: 'Ordning',
+      name: 'order',
+      by: [{field: 'order', direction: 'asc'}],
+    },
+  ],
+}
