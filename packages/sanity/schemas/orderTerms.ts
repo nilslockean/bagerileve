@@ -20,15 +20,15 @@ export default <SchemaTypeDefinition>{
     },
     {
       title: 'Ordning',
-      name: 'order',
+      name: 'sortOrder',
       type: 'number',
     },
   ],
   orderings: [
     {
       title: 'Ordning',
-      name: 'order',
-      by: [{field: 'order', direction: 'asc'}],
+      name: 'sortOrder',
+      by: [{field: 'sortOrder', direction: 'asc'}],
     },
   ],
 }
