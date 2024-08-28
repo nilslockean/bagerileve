@@ -1,5 +1,9 @@
 ---
-const feedId = import.meta.env.BEHOLD_FEED_ID;
+type Props = {
+  feedId: string;
+};
+
+const { feedId } = Astro.props;
 ---
 
 <behold-widget feed-id={feedId}></behold-widget>

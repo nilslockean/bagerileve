@@ -124,7 +124,7 @@ const introText =
   </Section>
 
   {
-    instagramFeedId && (
+    typeof instagramFeedId === "string" && (
       <Section>
         <InstagramFeed feedId={instagramFeedId} />
         <ButtonLink
