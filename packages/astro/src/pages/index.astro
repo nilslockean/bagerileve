@@ -9,6 +9,7 @@ import InstagramFeed from "@components/InstagramFeed.astro";
 import { sanityAsset as sa } from "@lib/sanityAsset";
 import breadImage from "@lib/assets/brod.jpg";
 import cinnamonBunImage from "@lib/assets/170711_0258_leve_bageri.jpg";
+import IntroText from "@components/IntroText.astro";
 
 const openingHours = await fetchOpeningHours();
 const sanityAsset = (filename: string) =>
@@ -17,6 +18,10 @@ const sanityAsset = (filename: string) =>
     import.meta.env.SANITY_PROJECT_ID,
     import.meta.env.SANITY_DATASET
   );
+
+const headingText = "Ett hantverksbageri i hjärtat av Malmö";
+const introText =
+  "Nybakat surdegsbröd på eftermiddagen och allt vi bakar är växtbaserat.";
 ---
 
 <Layout
@@ -43,20 +48,20 @@ const sanityAsset = (filename: string) =>
     <div
       class="z-30 hidden lg:flex flex-col items-start p-6 w-full max-w-screen-2xl mx-auto text-orange-50"
     >
-      <h1>En nybakad upplevelse mitt i Malmö</h1>
-      <p class="text-lg max-w-prose xl:text-xl">
-        Surdegsbröd ur ugnen på eftermiddagen och nästan allt är veganskt.
-      </p>
+      <h1>{headingText}</h1>
+      <IntroText>
+        {introText}
+      </IntroText>
       <ButtonLink href="/bestall" variant="primary"
         >Beställ fredagsmunk</ButtonLink
       >
     </div>
   </Section>
   <Section class="lg:hidden">
-    <h1>En nybakad upplevelse mitt i Malmö</h1>
-    <p class="text-lg">
-      Surdegsbröd ur ugnen på eftermiddagen och nästan allt är veganskt.
-    </p>
+    <h1>{headingText}</h1>
+    <IntroText>
+      {introText}
+    </IntroText>
     <ButtonLink href="/bestall" variant="primary"
       >Beställ fredagsmunk</ButtonLink
     >
@@ -115,13 +120,13 @@ const sanityAsset = (filename: string) =>
   </Section>
 
   <Section class="my-8">
-    <p class="text-2xl leading-relaxed max-w-prose">
+    <IntroText>
       Vi vill att vår verksamhet ska ha en låg miljöpåverkan, och därför arbetar
       vi aktivt för att minimera svinn och använda de råvaror som finns lokalt
       och är i säsong. Vi är också stora på växtbaserade sötsaker där smör och
       ägg helt byts ut mot andra, vegetibilska alternativ. Utöver detta använder
       vi second hand-möbler och kläder samt 100 % grön el.
-    </p>
+    </IntroText>
   </Section>
 
   <Section fullwidth>
