@@ -3,6 +3,9 @@ import ButtonLink from "@components/ButtonLink.astro";
 import Section from "@components/Section.astro";
 import Layout from "src/layouts/Layout.astro";
 import { sanityAsset as sa } from "@lib/sanityAsset";
+import { fetchOrderTerms } from "@lib/sanity";
+import Accordion from "@components/Accordion.astro";
+import { PortableText } from "astro-portabletext";
 
 const sanityAsset = (filename: string) =>
   sa(
@@ -10,6 +13,8 @@ const sanityAsset = (filename: string) =>
     import.meta.env.SANITY_PROJECT_ID,
     import.meta.env.SANITY_DATASET
   );
+
+const orderTerms = await fetchOrderTerms();
 ---
 
 <Layout
@@ -63,61 +68,19 @@ const sanityAsset = (filename: string) =>
       </div>
     </div>
   </Section>
-
   <Section>
-    <h2>Kunde du inte boka?</h2>
-    <p>Om det inte fungerar att boka genom vår hemsida, följ den här listan:</p>
-    <ol class="mt-4">
-      <li>Stäng ner Instagram och webbläsaren du använder.</li>
-      <li>
-        <a href="https://rensacache.nu/" target="_blank" rel="noreferrer"
-          >Rensa cacheminnet</a
-        > på telefonen/datorn du använder alternativt byt till en annan webbläsare
-        på samma enhet.
-      </li>
-      <li>Prova igen.</li>
-    </ol>
-    <p>
-      Funkar inte det - prova att använda dator istället för mobil eller vice
-      versa!
-    </p>
-  </Section>
-
-  <Section>
-    <h2>När kan jag boka?</h2>
-    <p>
-      Denna bokningssida ligger uppe från 8.00 på torsdagar fram till fullbokat.
-      Är det inte fullbokat stänger bokningen kl 18.00 på torsdagen automatiskt.
-    </p>
-  </Section>
-
-  <Section>
-    <h2>Jag hann inte boka!</h2>
-    <p>
-      Utöver bokningar släpper vi munkar till butiken också, vid kl 11.00 när vi
-      öppnar och kl 16.00 när eftermiddagsbrödet kommer ut ur ugnarna. För dessa
-      munkar gäller först till kvarn. Det går endast att boka under torsdagen
-      (se ovan).
-    </p>
-  </Section>
-
-  <Section>
-    <h2>Jag blir sen - kan jag ändå hämta mina munkar?</h2>
-    <p>
-      Ifall du blir försenad att hämta din beställning - ingen fara! Dina
-      packade munkar finns kvar till stängning kl 18.00 på fredagen.
-    </p>
-  </Section>
-
-  <Section>
-    <h2>Övriga villkor</h2>
-    <p class="mb-4">
-      <strong>Ej upphämtade munkar återbetalas ej.</strong> Ifall du har bokat munkar
-      men inte kan komma till exempel pga sjukdom kan du kontakta oss och göra en
-      retur - detta är möjligt fram till senast kl 11.00 på fredagen, därefter återbetalas
-      munkarna ej.
-    </p>
-    <p>Vi ses!</p>
+    <h2 class="mb-8">Beställningsvillkor</h2>
+    {
+      orderTerms.map(({ title, content, sortOrder }) => (
+        <Accordion
+          id={`order-term-${sortOrder}`}
+          title={title}
+          class="mb-4 last:mb-0 portable-text"
+        >
+          <PortableText value={content} />
+        </Accordion>
+      ))
+    }
   </Section>
 </Layout>
 

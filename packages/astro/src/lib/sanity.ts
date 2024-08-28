@@ -4,6 +4,7 @@ import {
   OpeningHoursSchema,
   type OpeningHours,
 } from "./schemas/OpeningHoursSchema";
+import { OrderTermsSchema, type OrderTerms } from "./schemas/OrderTermsSchema";
 
 export async function fetchOpeningHours(): Promise<OpeningHours> {
   const groqJson = await sanityClient.fetch(
@@ -30,4 +31,13 @@ export async function fetchFaq(): Promise<Faq> {
   const faq = FaqSchema.parse(groqJson);
 
   return faq;
+}
+
+export async function fetchOrderTerms(): Promise<OrderTerms> {
+  const groqJson = await sanityClient.fetch(
+    `*[_type == "orderTerms"]{title, content, sortOrder} | order(sortOrder asc) `
+  );
+  const orderTerms = OrderTermsSchema.parse(groqJson);
+
+  return orderTerms;
 }
