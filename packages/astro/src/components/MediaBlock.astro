@@ -1,0 +1,27 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { Image } from "astro:assets";
+import type { LocalImageProps } from "astro:assets";
+import { cn } from "@lib/cn";
+
+interface Props extends HTMLAttributes<"div"> {
+  image: LocalImageProps;
+  reverse?: boolean;
+}
+
+const { image, reverse, class: className, ...rest } = Astro.props;
+---
+
+<div {...rest} class={cn("grid gap-8 lg:py-16 lg:grid-cols-12", className)}>
+  <div class:list={["mr-auto lg:col-span-5", { "order-last": reverse }]}>
+    <Image {...image} />
+  </div>
+  <div
+    class:list={[
+      "place-self-center w-full lg:col-span-7",
+      { "order-first": reverse },
+    ]}
+  >
+    <slot />
+  </div>
+</div>

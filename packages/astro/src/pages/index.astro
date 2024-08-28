@@ -10,8 +10,11 @@ import { sanityAsset as sa } from "@lib/sanityAsset";
 import breadImage from "@lib/assets/brod.jpg";
 import cinnamonBunImage from "@lib/assets/170711_0258_leve_bageri.jpg";
 import IntroText from "@components/IntroText.astro";
+import MediaBlock from "@components/MediaBlock.astro";
 
 const openingHours = await fetchOpeningHours();
+const instagramFeedId = import.meta.env.BEHOLD_FEED_ID;
+
 const sanityAsset = (filename: string) =>
   sa(
     filename,
@@ -98,30 +101,16 @@ const introText =
   </Section>
 
   <Section>
-    <InstagramFeed />
-    <ButtonLink
-      href="https://www.instagram.com/bagerileve"
-      target="_blank"
-      rel="noreferrer">Följ @bagerileve</ButtonLink
-    >
-  </Section>
+    <MediaBlock image={{ src: breadImage, alt: "En hög bröd på ett bord" }}>
+      <h3 class="mb-4">Har du smakat riktigt bröd?</h3>
+      <p class="text-lg mb-4 max-w-prose">
+        Alla våra bröd är bakade i stenugn och med surdegskultur. När vi letar
+        efter råvaror kollar vi i vår närhet efter de bästa, mest smakrika
+        grejerna vi kan hitta.
+      </p>
 
-  <Section>
-    <div class="grid lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-      <div class="mr-auto place-self-center lg:col-span-7">
-        <h2 class="mb-4">Riktigt bröd</h2>
-        <p class="text-lg mb-4 max-w-prose">
-          Alla våra bröd är bakade i stenugn och med surdegskultur. När vi letar
-          efter råvaror kollar vi i vår närhet efter de bästa, mest smakrika
-          grejerna vi kan hitta.
-        </p>
-
-        <ButtonLink href="/kontakt">Kom hit</ButtonLink>
-      </div>
-      <div class="mt-8 lg:mt-0 lg:col-span-5 lg:flex">
-        <Image src={breadImage} ) alt="En hög bröd på ett bord" />
-      </div>
-    </div>
+      <ButtonLink href="/kontakt">Kom hit</ButtonLink>
+    </MediaBlock>
   </Section>
 
   <Section class="my-8">
@@ -133,6 +122,21 @@ const introText =
       vi second hand-möbler och kläder samt 100 % grön el.
     </IntroText>
   </Section>
+
+  {
+    instagramFeedId && (
+      <Section>
+        <InstagramFeed feedId={instagramFeedId} />
+        <ButtonLink
+          href="https://www.instagram.com/bagerileve"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Följ @bagerileve
+        </ButtonLink>
+      </Section>
+    )
+  }
 
   <Section fullwidth>
     <Image
