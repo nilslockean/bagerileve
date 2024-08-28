@@ -27,10 +27,10 @@ const { course, class: className, ...rest } = Astro.props;
     )
   }
   <slot />
-  <h2 class="text-2xl">
+  <h3 class="text-2xl">
     {course.title}
     {course.soldOut && " (slutsåld)"}
-  </h2>
+  </h3>
   <p>{course.dates}</p>
   <p class="underline">Mer info</p>
 </ButtonLink>
