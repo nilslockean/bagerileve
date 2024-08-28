@@ -6,6 +6,7 @@ import { sanityAsset as sa } from "@lib/sanityAsset";
 import { fetchOrderTerms } from "@lib/sanity";
 import Accordion from "@components/Accordion.astro";
 import { PortableText } from "astro-portabletext";
+import IntroText from "@components/IntroText.astro";
 
 const sanityAsset = (filename: string) =>
   sa(
@@ -23,11 +24,11 @@ const orderTerms = await fetchOrderTerms();
 >
   <Section>
     <h1>Beställ dina fredagsmunkar</h1>
-    <p class="text-2xl leading-relaxed max-w-prose mb-8">
+    <IntroText class="mb-8">
       Fredagar på Bageri Leve bjuder på nya veganska munkar varje vecka - så
       populära att köerna ibland ringlar sig långt utanför dörren. Förbeställ
       idag för en garanterad smakupplevelse!
-    </p>
+    </IntroText>
     <div class="grid lg:grid-cols-2 gap-8">
       <video class="w-full" controls>
         <source
@@ -38,7 +39,7 @@ const orderTerms = await fetchOrderTerms();
 
       <div>
         <div class="p-4 border-4 border-current max-w-prose">
-          <h2 class="text-2xl">Gör såhär:</h2>
+          <h2 class="h3">Gör såhär:</h2>
 
           <ol>
             <li>Gå till online-beställningen (men läs klart detta först).</li>

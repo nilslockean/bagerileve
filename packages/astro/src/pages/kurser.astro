@@ -3,6 +3,7 @@ import Section from "@components/Section.astro";
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import bakerImage from "@lib/assets/bagare.webp";
+import IntroText from "@components/IntroText.astro";
 
 const intro =
   "Bli bättre på att få till ett gott surdegsbröd - skaffa en djupare förståelse för varför det blir som det blir och inte alltid som du tänkt dig och lär dig att göra dina egna recept.";
@@ -11,9 +12,7 @@ const intro =
 <Layout title="Kurser" metaDescription={intro} htmx>
   <Section>
     <h1>Du kan baka, du är inte rädd</h1>
-    <p class="text-2xl">
-      {intro}
-    </p>
+    <IntroText>{intro}</IntroText>
   </Section>
 
   <Section>

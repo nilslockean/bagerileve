@@ -2,6 +2,7 @@
 import Accordion from "@components/Accordion.astro";
 import IconList from "@components/IconList.astro";
 import IconListItem from "@components/IconListItem.astro";
+import IntroText from "@components/IntroText.astro";
 import Link from "@components/Link.astro";
 import OpeningHours from "@components/OpeningHours.astro";
 import Section from "@components/Section.astro";
@@ -27,9 +28,7 @@ const openingHours = await fetchOpeningHours();
 >
   <Section>
     <h1>Hör av dig!</h1>
-    <p class="text-2xl leading-relaxed max-w-prose">
-      Men om du har en fråga hittar du säkert svaret här.
-    </p>
+    <IntroText> Men om du har en fråga hittar du säkert svaret här. </IntroText>
   </Section>
 
   <Section class="lg:mt-8 grid lg:grid-cols-2 gap-8">
