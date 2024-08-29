@@ -7,13 +7,10 @@ import { fetchOrderTerms } from "@lib/sanity";
 import Accordion from "@components/Accordion.astro";
 import { PortableText } from "astro-portabletext";
 import IntroText from "@components/IntroText.astro";
+import { SANITY_PROJECT_ID, SANITY_DATASET } from "astro:env/server";
 
 const sanityAsset = (filename: string) =>
-  sa(
-    filename,
-    import.meta.env.SANITY_PROJECT_ID,
-    import.meta.env.SANITY_DATASET
-  );
+  sa(filename, SANITY_PROJECT_ID, SANITY_DATASET);
 
 const orderTerms = await fetchOrderTerms();
 ---

@@ -31,3 +31,7 @@ test-results
 
 # Dotenv and similar local-only files
 *.local
+
+# Wrangler (Cloudflare Workers)
+.wrangler
+.dev.vars

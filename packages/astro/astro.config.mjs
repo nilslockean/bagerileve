@@ -4,32 +4,27 @@ import sanity from "@sanity/astro";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 import mdx from "@astrojs/mdx";
-import node from "@astrojs/node";
 import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
+import { defineConfig, envField } from "astro/config";
 
 // https://docs.astro.build/en/guides/configuring-astro/#environment-variables
-const { SANITY_PROJECT_ID, SANITY_DATASET, ADAPTER } = loadEnv(
+const { SANITY_PROJECT_ID, SANITY_DATASET } = loadEnv(
   process.env.NODE_ENV,
   process.cwd(),
   ""
 );
-let adapter = node({
-  mode: "standalone",
-});
-if (ADAPTER === "cloudflare") {
-  adapter = cloudflare({
-    platformProxy: {
-      enabled: true,
-    },
-  });
-}
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://bagerileve.se",
   output: "hybrid",
-  adapter,
+  adapter: cloudflare({
+    platformProxy: {
+      enabled: true,
+    },
+    imageService: "passthrough",
+  }),
   integrations: [
     svelte(),
     tailwind({
@@ -49,5 +44,23 @@ export default defineConfig({
   redirects: {
     "/om": "/",
     "/kurs": "/kurser",
+  },
+  experimental: {
+    env: {
+      schema: {
+        SANITY_PROJECT_ID: envField.string({
+          context: "server",
+          access: "public",
+        }),
+        SANITY_DATASET: envField.string({
+          context: "server",
+          access: "public",
+        }),
+        FIENTA_API_KEY: envField.string({
+          context: "server",
+          access: "secret",
+        }),
+      },
+    },
   },
 });
