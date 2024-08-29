@@ -56,6 +56,11 @@ export default defineConfig({
           context: "server",
           access: "public",
         }),
+        BEHOLD_FEED_ID: envField.string({
+          context: "server",
+          access: "public",
+          optional: true,
+        }),
         FIENTA_API_KEY: envField.string({
           context: "server",
           access: "secret",

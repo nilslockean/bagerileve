@@ -11,16 +11,17 @@ import breadImage from "@lib/assets/brod.jpg";
 import cinnamonBunImage from "@lib/assets/170711_0258_leve_bageri.jpg";
 import IntroText from "@components/IntroText.astro";
 import MediaBlock from "@components/MediaBlock.astro";
+import {
+  BEHOLD_FEED_ID,
+  SANITY_PROJECT_ID,
+  SANITY_DATASET,
+} from "astro:env/server";
 
 const openingHours = await fetchOpeningHours();
-const instagramFeedId = import.meta.env.BEHOLD_FEED_ID;
+const instagramFeedId = BEHOLD_FEED_ID;
 
 const sanityAsset = (filename: string) =>
-  sa(
-    filename,
-    import.meta.env.SANITY_PROJECT_ID,
-    import.meta.env.SANITY_DATASET
-  );
+  sa(filename, SANITY_PROJECT_ID, SANITY_DATASET);
 
 const headingText = "Ett hantverksbageri i hjärtat av Malmö";
 const introText =
