@@ -24,7 +24,7 @@ const sanityAsset = (filename: string) =>
 
 const headingText = "Ett hantverksbageri i hjärtat av Malmö";
 const introText =
-  "Nybakat surdegsbröd på eftermiddagen och allt vi bakar är växtbaserat.";
+  "Surdegsbröd ur ugnen på eftermiddagen och allt vi bakar är växtbaserat.";
 ---
 
 <Layout
@@ -35,7 +35,15 @@ const introText =
   fullwidth
 >
   <Section fullwidth class="relative aspect-video flex items-center">
-    <video autoplay muted playsinline loop class="w-full absolute z-10">
+    <video
+      id="hero-video"
+      muted
+      playsinline
+      controls={true}
+      loop={false}
+      autoplay={false}
+      class="w-full absolute z-10"
+    >
       <source
         src={sanityAsset("9c057df538547c79bedfa2b06e6f276323deecee.mp4")}
         type="video/mp4"
@@ -44,6 +52,7 @@ const introText =
 
     <!-- Color overlay -->
     <div
+      id="hero-video-overlay"
       class="absolute hidden lg:block inset-0 bg-blue-950 opacity-50 z-20 aspect-video w-full"
     >
     </div>
@@ -65,6 +74,7 @@ const introText =
       </div>
     </div>
   </Section>
+
   <Section class="lg:hidden">
     <h1>{headingText}</h1>
     <IntroText>
@@ -94,7 +104,7 @@ const introText =
     <h2>Välkommen till Bageri Leve</h2>
     <p class="text-lg max-w-prose">
       Ett nytänkande bageri mitt i Malmö. Vi har valt att baka på dagen istället
-      för på natten, att baka mycket växtbaserade bakverk istället för att låsa
+      för på natten, att endast baka växtbaserade bakverk istället för att låsa
       fast oss helt i traditionella smörbaserade recept och att baka surdegsbröd
       som man gjorde förr, innan jästen ens var uppfunnen.
     </p>
@@ -146,3 +156,19 @@ const introText =
     />
   </Section>
 </Layout>
+
+<script>
+  // Make sure the video only autoplays when it is rendered as a background video
+  const heroVideo = document.querySelector<HTMLVideoElement>("#hero-video");
+  const heroVideoOverlay = document.querySelector<HTMLDivElement>(
+    "#hero-video-overlay"
+  );
+  const isOverlayVisible =
+    heroVideoOverlay && getComputedStyle(heroVideoOverlay).display !== "none";
+
+  if (heroVideo && isOverlayVisible) {
+    heroVideo.autoplay = true;
+    heroVideo.controls = false;
+    heroVideo.loop = true;
+  }
+</script>
