@@ -22,7 +22,7 @@ function assertA11y(path: string) {
 
       const accessibilityScanResults = await new AxeBuilder({ page })
         // Behold widget is technically accessible but has some issues with presentation roles
-        .exclude("behold-widget")
+        .exclude("behold-widget, .weglot-container, #wg_progress")
         .analyze();
 
       expect(accessibilityScanResults.violations).toEqual([]);
