@@ -3,7 +3,7 @@ import { fetchCourses } from "@lib/fienta";
 import Course from "@components/Course.astro";
 import { EventScopeSchema } from "@lib/schemas/EventScope.ts";
 import { z } from "astro:content";
-import { FIENTA_API_KEY } from "astro:env/server";
+import { SECRET_FIENTA_API_KEY } from "astro:env/server";
 
 const { searchParams } = Astro.url;
 
@@ -21,7 +21,7 @@ const params = ParamsSchema.parse({
 
 export const partial = true;
 export const prerender = false;
-const courses = await fetchCourses(params.scope, FIENTA_API_KEY);
+const courses = await fetchCourses(params.scope, SECRET_FIENTA_API_KEY);
 ---
 
 {
