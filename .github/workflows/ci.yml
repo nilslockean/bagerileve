@@ -31,6 +31,7 @@ jobs:
       - name: Save environment variables to .env
         run: |
           cp .env.public .env
+          echo "FIENTA_API_KEY=${{ secrets.FIENTA_API_KEY }}" >> .dev.vars
           echo ".env file contents:"
           cat .env
       - name: Save secrets to .dev.vars
