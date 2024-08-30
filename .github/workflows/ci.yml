@@ -30,15 +30,13 @@ jobs:
         run: pnpm install
       - name: Save environment variables to .env
         run: |
-          printenv | grep -v '::' > .env
+          cp .env.public .env
           echo ".env file contents:"
           cat .env
       - name: Save secrets to .dev.vars
         run: |
           touch .dev.vars
-          for secret in $(printenv | grep -oP '(?<=SECRET_)\w+'); do
-            echo "$secret=${{ secrets[$secret] }}" >> .dev.vars
-          done
+          echo "FIENTA_API_KEY=${{ secrets.FIENTA_API_KEY }}" >> .dev.vars
           echo ".dev.vars file contents:"
           cat .dev.vars
       - name: Build Astro

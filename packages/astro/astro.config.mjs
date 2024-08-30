@@ -61,7 +61,7 @@ export default defineConfig({
           access: "public",
           optional: true,
         }),
-        SECRET_FIENTA_API_KEY: envField.string({
+        FIENTA_API_KEY: envField.string({
           context: "server",
           access: "secret",
         }),
