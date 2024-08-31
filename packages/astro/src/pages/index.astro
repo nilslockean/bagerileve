@@ -36,7 +36,14 @@ const introText =
   fullwidth
 >
   <Section fullwidth class="relative aspect-video flex items-center">
-    <video id="hero-video" muted playsinline class="w-full absolute z-10">
+    <video
+      id="hero-video"
+      muted
+      playsinline
+      controls
+      autoplay
+      class="w-full absolute z-10"
+    >
       <source
         src={sanityAsset("9c057df538547c79bedfa2b06e6f276323deecee.mp4")}
         type="video/mp4"
@@ -160,7 +167,6 @@ const introText =
     heroVideoOverlay && getComputedStyle(heroVideoOverlay).display !== "none";
 
   if (heroVideo && isOverlayVisible) {
-    heroVideo.autoplay = true;
     heroVideo.controls = false;
     heroVideo.loop = true;
   }
