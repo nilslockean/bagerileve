@@ -23,6 +23,12 @@ export default <SchemaTypeDefinition>{
       name: 'sortOrder',
       type: 'number',
     },
+    {
+      title: 'Språk',
+      name: 'language',
+      type: 'string',
+      readOnly: true,
+    },
   ],
   orderings: [
     {
