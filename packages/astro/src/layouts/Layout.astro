@@ -11,6 +11,7 @@ import { getNavLinks } from "@lib/navigation";
 import Link from "@components/Link.astro";
 import defaultOgImage from "@lib/assets/og.png";
 import { getImage } from "astro:assets";
+import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -108,6 +109,8 @@ const optimizedOgImage = await getImage({
         api_key: "wg_04d80574e592d22694107634956a7bdd6",
       });
     </script>
+
+    <ViewTransitions />
   </head>
   <body>
     <header
@@ -124,7 +127,7 @@ const optimizedOgImage = await getImage({
       </nav>
     </header>
 
-    <main class:list={[{ "py-16": !fullwidth }]}>
+    <main class:list={[{ "py-16": !fullwidth }]} transition:animate="fade">
       <slot />
     </main>
 
