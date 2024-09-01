@@ -6,22 +6,22 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import { fetchOpeningHours } from "@lib/sanity";
 import InstagramFeed from "@components/InstagramFeed.astro";
-import { sanityAsset as sa } from "@lib/sanityAsset";
 import breadImage from "@lib/assets/brod.jpg";
 import cinnamonBunImage from "@lib/assets/170711_0258_leve_bageri.jpg";
 import IntroText from "@components/IntroText.astro";
 import MediaBlock from "@components/MediaBlock.astro";
-import {
-  BEHOLD_FEED_ID,
-  SANITY_PROJECT_ID,
-  SANITY_DATASET,
-} from "astro:env/server";
+import { BEHOLD_FEED_ID } from "astro:env/server";
+import Video, { Videos } from "@components/Video.astro";
+import { getImage } from "astro:assets";
+import videoPoster from "@lib/assets/Brod-poster.jpg";
+
+const optimizedVideoPoster = await getImage({
+  src: videoPoster,
+  format: "webp",
+});
 
 const openingHours = await fetchOpeningHours();
 const instagramFeedId = BEHOLD_FEED_ID;
-
-const sanityAsset = (filename: string) =>
-  sa(filename, SANITY_PROJECT_ID, SANITY_DATASET);
 
 const headingText = "Ett hantverksbageri i hjärtat av Malmö";
 const introText =
@@ -36,12 +36,16 @@ const introText =
   fullwidth
 >
   <Section fullwidth class="relative aspect-video flex items-center">
-    <video id="hero-video" muted playsinline class="w-full absolute z-10">
-      <source
-        src={sanityAsset("9c057df538547c79bedfa2b06e6f276323deecee.mp4")}
-        type="video/mp4"
-      />
-    </video>
+    <Video
+      id="hero-video"
+      sources={Videos.Brod}
+      poster={optimizedVideoPoster.src}
+      muted
+      playsinline
+      controls
+      autoplay
+      class="w-full absolute z-10"
+    />
 
     <!-- Color overlay -->
     <div
@@ -148,20 +152,19 @@ const introText =
       alt="Butikspersonal lägger kanelbullar i en papperspåse"
     />
   </Section>
+
+  <script>
+    // Make sure the video only autoplays when it is rendered as a background video
+    const heroVideo = document.querySelector<HTMLVideoElement>("#hero-video");
+    const heroVideoOverlay = document.querySelector<HTMLDivElement>(
+      "#hero-video-overlay"
+    );
+    const isOverlayVisible =
+      heroVideoOverlay && getComputedStyle(heroVideoOverlay).display !== "none";
+
+    if (heroVideo && isOverlayVisible) {
+      heroVideo.controls = false;
+      heroVideo.loop = true;
+    }
+  </script>
 </Layout>
-
-<script>
-  // Make sure the video only autoplays when it is rendered as a background video
-  const heroVideo = document.querySelector<HTMLVideoElement>("#hero-video");
-  const heroVideoOverlay = document.querySelector<HTMLDivElement>(
-    "#hero-video-overlay"
-  );
-  const isOverlayVisible =
-    heroVideoOverlay && getComputedStyle(heroVideoOverlay).display !== "none";
-
-  if (heroVideo && isOverlayVisible) {
-    heroVideo.autoplay = true;
-    heroVideo.controls = false;
-    heroVideo.loop = true;
-  }
-</script>
