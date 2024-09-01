@@ -1,0 +1,46 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import config from "src/config";
+
+export type R2Object = {
+  id: string;
+  type: string;
+};
+
+export const Videos: Record<string, R2Object[]> = {
+  Vackergrej: [{ id: "Vackergrej-min.mp4", type: "video/mp4" }],
+  Semlor: [{ id: "Semlor-min.mp4", type: "video/mp4" }],
+  Semla2: [{ id: "Semla-2-min.mp4", type: "video/mp4" }],
+  Semla1: [{ id: "Semla-1-min.mp4", type: "video/mp4" }],
+  Princesstarta: [{ id: "Princesstarta-min.mp4", type: "video/mp4" }],
+  Munk4: [{ id: "Munk-4-min.mp4", type: "video/mp4" }],
+  Munk3: [{ id: "Munk-3-min.mp4", type: "video/mp4" }],
+  Munk2: [{ id: "Munk-2-min.mp4", type: "video/mp4" }],
+  Munk1: [{ id: "Munk-1-min.mp4", type: "video/mp4" }],
+  Kanelbulle: [{ id: "Kanelbulle-min.mp4", type: "video/mp4" }],
+  Jordgubbstartelette: [
+    { id: "Jordgubbstartelette-min.mp4", type: "video/mp4" },
+  ],
+  Croissant: [{ id: "Croissant-min.mp4", type: "video/mp4" }],
+  Brod: [{ id: "Brod-min.mp4", type: "video/mp4" }],
+  Biskvi: [{ id: "Biskvi-min.mp4", type: "video/mp4" }],
+};
+
+interface Props extends HTMLAttributes<"video"> {
+  sources: R2Object[];
+}
+
+const { sources, ...rest } = Astro.props;
+
+const composeUrl = (id: string) => `${config.r2BaseUrl}/${id}`;
+---
+
+<video {...rest}>
+  {
+    sources.map((object) => (
+      <>
+        <source src={composeUrl(object.id)} type={object.type} />
+      </>
+    ))
+  }
+</video>
