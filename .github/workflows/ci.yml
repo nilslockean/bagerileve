@@ -28,18 +28,15 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install
-      - name: Save environment variables to .env
-        run: |
-          cp .env.public .env
-          echo "FIENTA_API_KEY=${{ secrets.FIENTA_API_KEY }}" >> .env
-          echo ".env file contents:"
-          cat .env
-      - name: Save secrets to .dev.vars
+      - name: Save secrets to .dev.vars and .env
         run: |
           touch .dev.vars
           echo "FIENTA_API_KEY=${{ secrets.FIENTA_API_KEY }}" >> .dev.vars
+          cp .dev.vars .env
           echo ".dev.vars file contents:"
           cat .dev.vars
+          echo ".env file contents:"
+          cat .env
       - name: Build Astro
         run: pnpm build
       - name: Install Playwright Browsers

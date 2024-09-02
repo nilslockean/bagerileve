@@ -12,6 +12,8 @@ import Link from "@components/Link.astro";
 import defaultOgImage from "@lib/assets/og.png";
 import { getImage } from "astro:assets";
 import { ViewTransitions } from "astro:transitions";
+import { WEGLOT_ENABLED } from "astro:env/server";
+import WeGlotScript from "@components/WeGlotScript.astro";
 
 interface Props {
   title: string;
@@ -100,15 +102,7 @@ const optimizedOgImage = await getImage({
       )
     }
 
-    <script
-      type="text/javascript"
-      src="https://cdn.weglot.com/weglot.min.js"
-      is:inline></script>
-    <script is:inline>
-      Weglot.initialize({
-        api_key: "wg_04d80574e592d22694107634956a7bdd6",
-      });
-    </script>
+    {WEGLOT_ENABLED && <WeGlotScript />}
 
     <ViewTransitions />
   </head>
