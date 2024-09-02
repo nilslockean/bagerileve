@@ -11,9 +11,9 @@ import cinnamonBunImage from "@lib/assets/170711_0258_leve_bageri.jpg";
 import IntroText from "@components/IntroText.astro";
 import MediaBlock from "@components/MediaBlock.astro";
 import { BEHOLD_FEED_ID } from "astro:env/server";
-import Video, { Videos } from "@components/Video.astro";
+import Video, { VideoName } from "@components/Video.astro";
 import { getImage } from "astro:assets";
-import videoPoster from "@lib/assets/Brod-poster.jpg";
+import videoPoster from "@lib/assets/BrodTrim-poster.jpg";
 
 const optimizedVideoPoster = await getImage({
   src: videoPoster,
@@ -38,7 +38,7 @@ const introText =
   <Section fullwidth class="relative aspect-video flex items-center">
     <Video
       id="hero-video"
-      sources={Videos.Brod}
+      name={VideoName.BrodTrim}
       poster={optimizedVideoPoster.src}
       muted
       playsinline
