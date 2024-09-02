@@ -25,15 +25,15 @@
   /* Headings */
   h1,
   .h1 {
-    @apply text-5xl leading-tight -mx-1 mb-8 xl:text-6xl;
+    @apply text-4xl lg:text-5xl xl:text-6xl leading-tight -mx-1 mb-8;
   }
   h2,
   .h2 {
-    @apply text-4xl mb-4;
+    @apply text-3xl lg:text-4xl mb-4;
   }
   h3,
   .h3 {
-    @apply text-3xl tracking-wider;
+    @apply text-2xl lg:text-3xl tracking-wider;
   }
   h4,
   .h4 {
