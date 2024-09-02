@@ -69,7 +69,7 @@ export default defineConfig({
           context: "server",
           access: "public",
           optional: true,
-          default: true,
+          default: false,
         }),
       },
     },
