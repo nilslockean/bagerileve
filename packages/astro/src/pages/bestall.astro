@@ -6,7 +6,7 @@ import { fetchOrderTerms } from "@lib/sanity";
 import Accordion from "@components/Accordion.astro";
 import { PortableText } from "astro-portabletext";
 import IntroText from "@components/IntroText.astro";
-import Video, { Videos } from "@components/Video.astro";
+import Video, { VideoName } from "@components/Video.astro";
 import { getImage } from "astro:assets";
 import videoPoster from "@lib/assets/Munk-4-poster.jpg";
 
@@ -32,7 +32,7 @@ const orderTerms = await fetchOrderTerms();
     </IntroText>
     <div class="grid lg:grid-cols-2 gap-8">
       <Video
-        sources={Videos.Munk4}
+        name={VideoName.Munk4}
         class="w-full"
         controls
         poster={optimizedVideoPoster.src}
