@@ -2,18 +2,11 @@ import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
 import sanity from "@sanity/astro";
 import { defineConfig } from "astro/config";
-import { loadEnv } from "vite";
 import mdx from "@astrojs/mdx";
 import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
-
-// https://docs.astro.build/en/guides/configuring-astro/#environment-variables
-const { SANITY_PROJECT_ID, SANITY_DATASET } = loadEnv(
-  process.env.NODE_ENV,
-  process.cwd(),
-  ""
-);
+import { SANITY_PROJECT_ID, SANITY_DATASET } from "@bagerileve/shared";
 
 // https://astro.build/config
 export default defineConfig({
@@ -48,14 +41,6 @@ export default defineConfig({
   experimental: {
     env: {
       schema: {
-        SANITY_PROJECT_ID: envField.string({
-          context: "server",
-          access: "public",
-        }),
-        SANITY_DATASET: envField.string({
-          context: "server",
-          access: "public",
-        }),
         BEHOLD_FEED_ID: envField.string({
           context: "server",
           access: "public",
