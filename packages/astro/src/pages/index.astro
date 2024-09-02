@@ -22,10 +22,6 @@ const optimizedVideoPoster = await getImage({
 
 const openingHours = await fetchOpeningHours();
 const instagramFeedId = BEHOLD_FEED_ID;
-
-const headingText = "Ett hantverksbageri i hjärtat av Malmö";
-const introText =
-  "Surdegsbröd ur ugnen på eftermiddagen och allt vi bakar är växtbaserat.";
 ---
 
 <Layout
@@ -35,31 +31,31 @@ const introText =
   htmx
   fullwidth
 >
-  <Section fullwidth class="relative aspect-video flex items-center">
+  <Section fullwidth class="relative flex items-center py-16 lg:aspect-video">
     <Video
       id="hero-video"
       name={VideoName.BrodTrim}
       poster={optimizedVideoPoster.src}
       muted
       playsinline
-      controls
       autoplay
-      class="w-full absolute z-10"
+      loop
+      class="h-full w-full absolute inset-y-0 inset-x-0 z-10 object-cover"
     />
 
     <!-- Color overlay -->
     <div
       id="hero-video-overlay"
-      class="absolute hidden lg:block inset-0 bg-blue-950 opacity-50 z-20 aspect-video w-full"
+      class="absolute top-0 right-0 left-0 bottom-0 inset-0 bg-blue-950 opacity-50 z-20 w-full"
     >
     </div>
 
     <div
-      class="z-30 hidden lg:flex flex-col items-start p-6 w-full max-w-screen-2xl mx-auto text-orange-50"
+      class="z-30 flex flex-col items-start p-6 w-full max-w-screen-2xl mx-auto text-orange-50"
     >
-      <h1>{headingText}</h1>
+      <h1>Ett hantverksbageri i hjärtat av Malmö</h1>
       <IntroText>
-        {introText}
+        Surdegsbröd ur ugnen på eftermiddagen och allt vi bakar är växtbaserat.
       </IntroText>
       <div>
         <ButtonLink href="/bestall" variant="primary"
@@ -70,16 +66,6 @@ const introText =
         >
       </div>
     </div>
-  </Section>
-
-  <Section class="lg:hidden">
-    <h1>{headingText}</h1>
-    <IntroText>
-      {introText}
-    </IntroText>
-    <ButtonLink href="/bestall" variant="primary"
-      >Beställ fredagsmunk</ButtonLink
-    >
   </Section>
 
   <Section id="oppettider" class="lg:mt-8 grid lg:grid-cols-2 gap-8">
@@ -152,19 +138,4 @@ const introText =
       alt="Butikspersonal lägger kanelbullar i en papperspåse"
     />
   </Section>
-
-  <script>
-    // Make sure the video only autoplays when it is rendered as a background video
-    const heroVideo = document.querySelector<HTMLVideoElement>("#hero-video");
-    const heroVideoOverlay = document.querySelector<HTMLDivElement>(
-      "#hero-video-overlay"
-    );
-    const isOverlayVisible =
-      heroVideoOverlay && getComputedStyle(heroVideoOverlay).display !== "none";
-
-    if (heroVideo && isOverlayVisible) {
-      heroVideo.controls = false;
-      heroVideo.loop = true;
-    }
-  </script>
 </Layout>
