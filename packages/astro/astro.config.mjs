@@ -65,6 +65,12 @@ export default defineConfig({
           context: "server",
           access: "secret",
         }),
+        WEGLOT_ENABLED: envField.boolean({
+          context: "server",
+          access: "public",
+          optional: true,
+          default: true,
+        }),
       },
     },
   },
