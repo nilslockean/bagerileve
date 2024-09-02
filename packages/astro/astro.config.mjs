@@ -50,7 +50,13 @@ export default defineConfig({
           context: "server",
           access: "secret",
         }),
-        WEGLOT_ENABLED: envField.boolean({
+        ENABLE_WEGLOT: envField.boolean({
+          context: "server",
+          access: "public",
+          optional: true,
+          default: false,
+        }),
+        ENABLE_VIEW_TRANSITIONS: envField.boolean({
           context: "server",
           access: "public",
           optional: true,
