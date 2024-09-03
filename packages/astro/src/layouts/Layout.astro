@@ -14,6 +14,7 @@ import { getImage } from "astro:assets";
 import { ViewTransitions } from "astro:transitions";
 import { ENABLE_WEGLOT, ENABLE_VIEW_TRANSITIONS } from "astro:env/server";
 import WeGlotScript from "@components/WeGlotScript.astro";
+import FientaEmbedScript from "@components/FientaEmbedScript.astro";
 
 interface Props {
   title: string;
@@ -102,6 +103,7 @@ const optimizedOgImage = await getImage({
       )
     }
 
+    <FientaEmbedScript />
     {ENABLE_WEGLOT && <WeGlotScript />}
     {ENABLE_VIEW_TRANSITIONS && <ViewTransitions />}
   </head>
