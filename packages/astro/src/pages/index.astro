@@ -3,20 +3,23 @@ import ButtonLink from "@components/ButtonLink.astro";
 import Section from "@components/Section.astro";
 import OpeningHours from "@components/OpeningHours.astro";
 import Layout from "../layouts/Layout.astro";
-import { Image } from "astro:assets";
 import { fetchOpeningHours } from "@lib/sanity";
 import InstagramFeed from "@components/InstagramFeed.astro";
 import breadImage from "@lib/assets/brod.jpg";
-import cinnamonBunImage from "@lib/assets/170711_0258_leve_bageri.jpg";
 import IntroText from "@components/IntroText.astro";
 import MediaBlock from "@components/MediaBlock.astro";
 import { BEHOLD_FEED_ID } from "astro:env/server";
 import Video, { VideoName } from "@components/Video.astro";
 import { getImage } from "astro:assets";
-import videoPoster from "@lib/assets/BrodTrim-poster.jpg";
+import heroVideoPoster from "@lib/assets/BrodTrim-poster.jpg";
+import footerVideoPoster from "@lib/assets/Kanelbulle-poster.jpg";
 
-const optimizedVideoPoster = await getImage({
-  src: videoPoster,
+const optimizedHeroVideoPoster = await getImage({
+  src: heroVideoPoster,
+  format: "webp",
+});
+const optimizedFooterVideoPoster = await getImage({
+  src: footerVideoPoster,
   format: "webp",
 });
 
@@ -35,7 +38,7 @@ const instagramFeedId = BEHOLD_FEED_ID;
     <Video
       id="hero-video"
       name={VideoName.BrodTrim}
-      poster={optimizedVideoPoster.src}
+      poster={optimizedHeroVideoPoster.src}
       muted
       playsinline
       autoplay
@@ -132,10 +135,12 @@ const instagramFeedId = BEHOLD_FEED_ID;
   }
 
   <Section fullwidth>
-    <Image
+    <Video
+      id="footer-video"
       class="w-full"
-      src={cinnamonBunImage}
-      alt="Butikspersonal lägger kanelbullar i en papperspåse"
+      name={VideoName.Kanelbulle}
+      poster={optimizedFooterVideoPoster.src}
+      controls
     />
   </Section>
 </Layout>
