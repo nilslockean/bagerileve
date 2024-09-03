@@ -34,10 +34,6 @@ export default defineConfig({
       filter: (page) => !page.includes("/partials/"),
     }),
   ],
-  redirects: {
-    "/om": "/",
-    "/kurs": "/kurser",
-  },
   experimental: {
     env: {
       schema: {
