@@ -5,6 +5,7 @@ import {
   type OpeningHours,
 } from "./schemas/OpeningHoursSchema";
 import { OrderTermsSchema, type OrderTerms } from "./schemas/OrderTermsSchema";
+import { SiteLanguage } from "../config";
 
 export async function fetchOpeningHours(): Promise<OpeningHours> {
   const groqJson = await sanityClient.fetch(
@@ -24,18 +25,20 @@ export async function fetchOpeningHours(): Promise<OpeningHours> {
   return openingHours;
 }
 
-export async function fetchFaq(): Promise<Faq> {
+export async function fetchFaq(language = SiteLanguage.SV): Promise<Faq> {
   const groqJson = await sanityClient.fetch(
-    `*[_type == "faq"]{question, answer}`
+    `*[_type == "faq" && language == "${language}"]{question, answer}`
   );
   const faq = FaqSchema.parse(groqJson);
 
   return faq;
 }
 
-export async function fetchOrderTerms(): Promise<OrderTerms> {
+export async function fetchOrderTerms(
+  language = SiteLanguage.SV
+): Promise<OrderTerms> {
   const groqJson = await sanityClient.fetch(
-    `*[_type == "orderTerms"]{title, content, sortOrder} | order(sortOrder asc) `
+    `*[_type == "orderTerms" && language == "${language}"]{title, content, sortOrder} | order(sortOrder asc) `
   );
   const orderTerms = OrderTermsSchema.parse(groqJson);
 
