@@ -15,6 +15,7 @@
     "sanity"
   ],
   "dependencies": {
+    "@sanity/document-internationalization": "^3.0.1",
     "@sanity/icons": "^2.11.8",
     "@sanity/locale-sv-se": "^1.2.10",
     "@sanity/vision": "^3.55.0",

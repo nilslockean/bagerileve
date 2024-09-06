@@ -3,6 +3,7 @@ import {structureTool} from 'sanity/structure'
 import {schemaTypes} from './schemas'
 import {svSELocale} from '@sanity/locale-sv-se'
 import {media} from 'sanity-plugin-media'
+import {documentInternationalization} from '@sanity/document-internationalization'
 
 export default defineConfig({
   name: 'default',
@@ -11,7 +12,19 @@ export default defineConfig({
   projectId: 'mz20cm4o',
   dataset: 'production',
 
-  plugins: [structureTool(), svSELocale(), media()],
+  plugins: [
+    structureTool(),
+    svSELocale(),
+    media(),
+    documentInternationalization({
+      // Required configuration
+      supportedLanguages: [
+        {id: 'sv', title: 'Swedish'},
+        {id: 'en', title: 'English'},
+      ],
+      schemaTypes: ['faq', 'orderTerms'],
+    }),
+  ],
 
   schema: {
     types: schemaTypes,

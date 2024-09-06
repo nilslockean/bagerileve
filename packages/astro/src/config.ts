@@ -2,6 +2,11 @@ import { NavArea } from "@lib/enums/NavArea";
 import type { Navigation } from "@lib/types/Navigation";
 import type { NavLink } from "@lib/types/NavLink";
 
+export enum SiteLanguage {
+  SV = "sv",
+  EN = "en",
+}
+
 export enum Slug {
   HOME = "home",
   // ASSORTMENT = "sortiment",

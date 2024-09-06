@@ -2,7 +2,7 @@
 import "../base.css";
 import Logo from "@components/Logo.astro";
 import { NavArea } from "@lib/enums/NavArea";
-import config from "../config";
+import config, { SiteLanguage } from "../config";
 import { LogoSize } from "@lib/enums/LogoSize";
 import NavLinks from "@components/NavLinks.astro";
 import OpeningHours from "@components/OpeningHours.astro";
@@ -53,7 +53,7 @@ const optimizedOgImage = await getImage({
 
 <!doctype html>
 <html
-  lang="sv-SE"
+  lang={SiteLanguage.SV}
   class="bg-orange-50 text-blue-900 dark:bg-blue-900 dark:text-orange-50 lg:text-lg leading-normal min-h-screen antialiased"
 >
   <head>
