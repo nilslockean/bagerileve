@@ -2,12 +2,30 @@
 import type { HTMLAttributes } from "astro/types";
 import config from "src/config";
 
-export type R2Object = {
+export type VideoObject = {
   id: string;
   type: string;
 };
 
-export const Videos: Record<string, R2Object[]> = {
+export enum VideoName {
+  Vackergrej = "Vackergrej",
+  Semlor = "Semlor",
+  Semla2 = "Semla2",
+  Semla1 = "Semla1",
+  Princesstarta = "Princesstarta",
+  Munk4 = "Munk4",
+  Munk3 = "Munk3",
+  Munk2 = "Munk2",
+  Munk1 = "Munk1",
+  Kanelbulle = "Kanelbulle",
+  Jordgubbstartelette = "Jordgubbstartelette",
+  Croissant = "Croissant",
+  Brod = "Brod",
+  Biskvi = "Biskvi",
+  BrodTrim = "BrodTrim",
+}
+
+export const Videos: Record<VideoName, VideoObject[]> = {
   Vackergrej: [{ id: "Vackergrej-min.mp4", type: "video/mp4" }],
   Semlor: [{ id: "Semlor-min.mp4", type: "video/mp4" }],
   Semla2: [{ id: "Semla-2-min.mp4", type: "video/mp4" }],
@@ -24,20 +42,34 @@ export const Videos: Record<string, R2Object[]> = {
   Croissant: [{ id: "Croissant-min.mp4", type: "video/mp4" }],
   Brod: [{ id: "Brod-min.mp4", type: "video/mp4" }],
   Biskvi: [{ id: "Biskvi-min.mp4", type: "video/mp4" }],
+  BrodTrim: [{ id: "Brod-trim-min.mp4", type: "video/mp4" }],
 };
 
 interface Props extends HTMLAttributes<"video"> {
-  sources: R2Object[];
+  name?: VideoName;
+  sources?: VideoObject[];
 }
 
-const { sources, ...rest } = Astro.props;
+const { sources, name, ...rest } = Astro.props;
+
+// Prefer sources prop over name
+let objects = sources;
+if (objects === undefined && name !== undefined) {
+  objects = Videos[name];
+}
+
+if (objects === undefined) {
+  throw new Error(
+    "You must provide either a name or sources to the Video component"
+  );
+}
 
 const composeUrl = (id: string) => `${config.r2BaseUrl}/${id}`;
 ---
 
 <video {...rest}>
   {
-    sources.map((object) => (
+    objects.map((object) => (
       <>
         <source src={composeUrl(object.id)} type={object.type} />
       </>

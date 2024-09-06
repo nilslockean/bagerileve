@@ -1,0 +1,6 @@
+# https://developers.cloudflare.com/pages/configuration/redirects/
+
+/om /
+/om/ /
+/kurs /kurser
+/kurs/ /kurser

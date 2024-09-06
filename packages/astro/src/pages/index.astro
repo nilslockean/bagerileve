@@ -3,29 +3,28 @@ import ButtonLink from "@components/ButtonLink.astro";
 import Section from "@components/Section.astro";
 import OpeningHours from "@components/OpeningHours.astro";
 import Layout from "../layouts/Layout.astro";
-import { Image } from "astro:assets";
 import { fetchOpeningHours } from "@lib/sanity";
 import InstagramFeed from "@components/InstagramFeed.astro";
 import breadImage from "@lib/assets/brod.jpg";
-import cinnamonBunImage from "@lib/assets/170711_0258_leve_bageri.jpg";
 import IntroText from "@components/IntroText.astro";
 import MediaBlock from "@components/MediaBlock.astro";
 import { BEHOLD_FEED_ID } from "astro:env/server";
-import Video, { Videos } from "@components/Video.astro";
+import Video, { VideoName } from "@components/Video.astro";
 import { getImage } from "astro:assets";
-import videoPoster from "@lib/assets/Brod-poster.jpg";
+import heroVideoPoster from "@lib/assets/BrodTrim-poster.jpg";
+import footerVideoPoster from "@lib/assets/Kanelbulle-poster.jpg";
 
-const optimizedVideoPoster = await getImage({
-  src: videoPoster,
+const optimizedHeroVideoPoster = await getImage({
+  src: heroVideoPoster,
+  format: "webp",
+});
+const optimizedFooterVideoPoster = await getImage({
+  src: footerVideoPoster,
   format: "webp",
 });
 
 const openingHours = await fetchOpeningHours();
 const instagramFeedId = BEHOLD_FEED_ID;
-
-const headingText = "Ett hantverksbageri i hjärtat av Malmö";
-const introText =
-  "Surdegsbröd ur ugnen på eftermiddagen och allt vi bakar är växtbaserat.";
 ---
 
 <Layout
@@ -35,31 +34,31 @@ const introText =
   htmx
   fullwidth
 >
-  <Section fullwidth class="relative aspect-video flex items-center">
+  <Section fullwidth class="relative flex items-center py-16 lg:aspect-video">
     <Video
       id="hero-video"
-      sources={Videos.Brod}
-      poster={optimizedVideoPoster.src}
+      name={VideoName.BrodTrim}
+      poster={optimizedHeroVideoPoster.src}
       muted
       playsinline
-      controls
       autoplay
-      class="w-full absolute z-10"
+      loop
+      class="h-full w-full absolute inset-y-0 inset-x-0 z-10 object-cover"
     />
 
     <!-- Color overlay -->
     <div
       id="hero-video-overlay"
-      class="absolute hidden lg:block inset-0 bg-blue-950 opacity-50 z-20 aspect-video w-full"
+      class="absolute top-0 right-0 left-0 bottom-0 inset-0 bg-blue-950 opacity-50 z-20 w-full"
     >
     </div>
 
     <div
-      class="z-30 hidden lg:flex flex-col items-start p-6 w-full max-w-screen-2xl mx-auto text-orange-50"
+      class="z-30 flex flex-col items-start p-6 w-full max-w-screen-2xl mx-auto text-orange-50"
     >
-      <h1>{headingText}</h1>
+      <h1>Ett hantverksbageri i hjärtat av Malmö</h1>
       <IntroText>
-        {introText}
+        Surdegsbröd ur ugnen på eftermiddagen och allt vi bakar är växtbaserat.
       </IntroText>
       <div>
         <ButtonLink href="/bestall" variant="primary"
@@ -70,16 +69,6 @@ const introText =
         >
       </div>
     </div>
-  </Section>
-
-  <Section class="lg:hidden">
-    <h1>{headingText}</h1>
-    <IntroText>
-      {introText}
-    </IntroText>
-    <ButtonLink href="/bestall" variant="primary"
-      >Beställ fredagsmunk</ButtonLink
-    >
   </Section>
 
   <Section id="oppettider" class="lg:mt-8 grid lg:grid-cols-2 gap-8">
@@ -146,25 +135,12 @@ const introText =
   }
 
   <Section fullwidth>
-    <Image
+    <Video
+      id="footer-video"
       class="w-full"
-      src={cinnamonBunImage}
-      alt="Butikspersonal lägger kanelbullar i en papperspåse"
+      name={VideoName.Kanelbulle}
+      poster={optimizedFooterVideoPoster.src}
+      controls
     />
   </Section>
-
-  <script>
-    // Make sure the video only autoplays when it is rendered as a background video
-    const heroVideo = document.querySelector<HTMLVideoElement>("#hero-video");
-    const heroVideoOverlay = document.querySelector<HTMLDivElement>(
-      "#hero-video-overlay"
-    );
-    const isOverlayVisible =
-      heroVideoOverlay && getComputedStyle(heroVideoOverlay).display !== "none";
-
-    if (heroVideo && isOverlayVisible) {
-      heroVideo.controls = false;
-      heroVideo.loop = true;
-    }
-  </script>
 </Layout>
