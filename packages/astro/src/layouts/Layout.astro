@@ -15,6 +15,7 @@ import { ViewTransitions } from "astro:transitions";
 import { ENABLE_WEGLOT, ENABLE_VIEW_TRANSITIONS } from "astro:env/server";
 import WeGlotScript from "@components/WeGlotScript.astro";
 import FientaEmbedScript from "@components/FientaEmbedScript.astro";
+import { getCanonicalUrl } from "@lib/canonicalUrl";
 
 interface Props {
   title: string;
@@ -44,7 +45,7 @@ const openingHours = await fetchOpeningHours();
 const { address } = config.contact;
 
 const title = `${pageTitle} • ${description}`;
-const canonical = `${config.siteUrl}${pathname}`;
+const canonical = getCanonicalUrl(config.siteUrl, pathname);
 const optimizedOgImage = await getImage({
   src: ogImage || defaultOgImage,
   format: "webp",
@@ -89,6 +90,9 @@ const optimizedOgImage = await getImage({
 
     <!-- XML Sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonical} />
 
     {!isProduction && <meta name="robots" content="noindex,nofollow" />}
     {
