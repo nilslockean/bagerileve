@@ -1,15 +1,8 @@
-import {
-  defineField,
-  type ConditionalPropertyCallbackContext,
-  type SchemaTypeDefinition,
-} from 'sanity'
+import {defineField, defineType} from 'sanity'
 import {ClockIcon, CalendarIcon} from '@sanity/icons'
 import {baseLanguage} from './localeString'
 
-const _hasParentHours = (props: ConditionalPropertyCallbackContext) =>
-  Boolean(props.document?.parent)
-
-export default <SchemaTypeDefinition>{
+export default defineType({
   name: 'opening-hours',
   type: 'document',
   title: 'Öppettider',
@@ -26,46 +19,6 @@ export default <SchemaTypeDefinition>{
       type: 'slug',
       title: 'ID*',
       validation: (Rule) => Rule.required(),
-    },
-    {
-      name: 'parent',
-      type: 'reference',
-      title: 'Överordnade öppettider',
-      to: [{type: 'opening-hours'}],
-      validation: (Rule) =>
-        Rule.custom((fields: {_ref: string}, context) => {
-          const docId = context.document?._id.replace('drafts.', '')
-          const referenceId = fields?._ref.replace('drafts.', '')
-
-          if (docId === referenceId) {
-            return 'Öppettider kan inte referera till sig själv'
-          }
-
-          return true
-        }),
-    },
-    {
-      name: 'period',
-      type: 'object',
-      title: 'Period',
-      fields: [
-        {
-          name: 'from',
-          type: 'date',
-          title: 'Från',
-        },
-        {
-          name: 'to',
-          type: 'date',
-          title: 'Till',
-        },
-        {
-          name: 'repeat',
-          type: 'boolean',
-          title: 'Upprepa varje år',
-        },
-      ],
-      hidden: (props) => !_hasParentHours(props),
     },
     {
       name: 'hours',
@@ -163,14 +116,13 @@ export default <SchemaTypeDefinition>{
             },
             prepare(selection) {
               return {
-                title: `${selection.date}: ${selection.time}`,
-                subtitle: selection.name,
+                title: `${selection.date} (${selection.name})`,
+                subtitle: selection.time,
               }
             },
           },
         },
       ],
-      // hidden: (props) => _hasParentHours(props),
     },
   ],
-}
+})
