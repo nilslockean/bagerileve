@@ -1554,16 +1554,27 @@ packages:
       "@codemirror/view": ^6.0.0
       "@lezer/common": ^1.0.0
 
+  "@codemirror/autocomplete@6.18.1":
+    resolution:
+      {
+        integrity: sha512-iWHdj/B1ethnHRTwZj+C1obmmuCzquH29EbcKr0qIjA9NfDeBDJ7vs+WOHsFeLeflE4o+dHfYndJloMKHUkWUA==,
+      }
+    peerDependencies:
+      "@codemirror/language": ^6.0.0
+      "@codemirror/state": ^6.0.0
+      "@codemirror/view": ^6.0.0
+      "@lezer/common": ^1.0.0
+
   "@codemirror/commands@6.6.0":
     resolution:
       {
         integrity: sha512-qnY+b7j1UNcTS31Eenuc/5YJB6gQOzkUoNmJQc0rznwqSRpeaWWpjkWy2C/MPTcePpsKJEM26hXrOXl1+nceXg==,
       }
 
-  "@codemirror/commands@6.6.1":
+  "@codemirror/commands@6.6.2":
     resolution:
       {
-        integrity: sha512-iBfKbyIoXS1FGdsKcZmnrxmbc8VcbMrSgD7AVrsnX+WyAYjmUDWvE93dt5D874qS4CCVu4O1JpbagHdXbbLiOw==,
+        integrity: sha512-Fq7eWOl1Rcbrfn6jD8FPCj9Auaxdm5nIK5RYOeW7ughnd/rY5AmPg6b+CfsG39ZHdwiwe8lde3q8uR7CF5S0yQ==,
       }
 
   "@codemirror/lang-javascript@6.2.2":
@@ -15113,6 +15124,13 @@ snapshots:
       "@codemirror/view": 6.33.0
       "@lezer/common": 1.2.1
 
+  "@codemirror/autocomplete@6.18.1(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.33.0)(@lezer/common@1.2.1)":
+    dependencies:
+      "@codemirror/language": 6.10.2
+      "@codemirror/state": 6.4.1
+      "@codemirror/view": 6.33.0
+      "@lezer/common": 1.2.1
+
   "@codemirror/commands@6.6.0":
     dependencies:
       "@codemirror/language": 6.10.2
@@ -15120,7 +15138,7 @@ snapshots:
       "@codemirror/view": 6.33.0
       "@lezer/common": 1.2.1
 
-  "@codemirror/commands@6.6.1":
+  "@codemirror/commands@6.6.2":
     dependencies:
       "@codemirror/language": 6.10.2
       "@codemirror/state": 6.4.1
@@ -15956,7 +15974,7 @@ snapshots:
 
   "@polka/url@1.0.0-next.24": {}
 
-  "@portabletext/editor@1.0.17(@sanity/block-tools@3.55.0(debug@4.3.6))(@sanity/schema@3.55.0(debug@4.3.6))(@sanity/types@3.55.0(debug@4.3.6))(@sanity/util@3.55.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rxjs@7.8.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))":
+  "@portabletext/editor@1.0.17(@sanity/block-tools@3.55.0(debug@4.3.6))(@sanity/schema@3.55.0(debug@4.3.6))(@sanity/types@3.55.0(debug@4.3.6))(@sanity/util@3.55.0(debug@4.3.6))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rxjs@7.8.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))":
     dependencies:
       "@portabletext/patches": 1.1.0
       "@sanity/block-tools": 3.55.0(debug@4.3.6)
@@ -16412,11 +16430,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  "@sanity/presentation@1.16.4(@sanity/client@6.21.3(debug@4.3.6))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))":
+  "@sanity/presentation@1.16.4(@sanity/client@6.21.3)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))":
     dependencies:
       "@sanity/client": 6.21.3(debug@4.3.6)
       "@sanity/icons": 3.4.0(react@18.3.1)
-      "@sanity/preview-url-secret": 1.6.20(@sanity/client@6.21.3(debug@4.3.6))
+      "@sanity/preview-url-secret": 1.6.20(@sanity/client@6.21.3)
       "@sanity/ui": 2.8.8(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       "@sanity/uuid": 3.0.2
       "@types/lodash.isequal": 4.5.8
@@ -16435,7 +16453,7 @@ snapshots:
       - react-is
       - styled-components
 
-  "@sanity/preview-url-secret@1.6.20(@sanity/client@6.21.3(debug@4.3.6))":
+  "@sanity/preview-url-secret@1.6.20(@sanity/client@6.21.3)":
     dependencies:
       "@sanity/client": 6.21.3(debug@4.3.6)
       "@sanity/uuid": 3.0.2
@@ -16549,7 +16567,7 @@ snapshots:
 
   "@sanity/visual-editing@2.1.9(@sanity/client@6.21.3)(@sveltejs/kit@2.0.0(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.2(@types/node@22.5.0)))(svelte@4.2.19)(vite@5.4.2(@types/node@22.5.0)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(svelte@4.2.19)":
     dependencies:
-      "@sanity/preview-url-secret": 1.6.20(@sanity/client@6.21.3(debug@4.3.6))
+      "@sanity/preview-url-secret": 1.6.20(@sanity/client@6.21.3)
       "@vercel/stega": 0.1.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -17875,8 +17893,8 @@ snapshots:
 
   codemirror@6.0.1(@lezer/common@1.2.1):
     dependencies:
-      "@codemirror/autocomplete": 6.18.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.33.0)(@lezer/common@1.2.1)
-      "@codemirror/commands": 6.6.1
+      "@codemirror/autocomplete": 6.18.1(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.33.0)(@lezer/common@1.2.1)
+      "@codemirror/commands": 6.6.2
       "@codemirror/language": 6.10.2
       "@codemirror/lint": 6.8.1
       "@codemirror/search": 6.5.6
@@ -21916,7 +21934,7 @@ snapshots:
       "@dnd-kit/sortable": 7.0.2(@dnd-kit/core@6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       "@dnd-kit/utilities": 3.2.2(react@18.3.1)
       "@juggle/resize-observer": 3.4.0
-      "@portabletext/editor": 1.0.17(@sanity/block-tools@3.55.0(debug@4.3.6))(@sanity/schema@3.55.0(debug@4.3.6))(@sanity/types@3.55.0(debug@4.3.6))(@sanity/util@3.55.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rxjs@7.8.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+      "@portabletext/editor": 1.0.17(@sanity/block-tools@3.55.0(debug@4.3.6))(@sanity/schema@3.55.0(debug@4.3.6))(@sanity/types@3.55.0(debug@4.3.6))(@sanity/util@3.55.0(debug@4.3.6))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rxjs@7.8.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       "@portabletext/react": 3.1.0(react@18.3.1)
       "@rexxars/react-json-inspector": 8.0.1(react@18.3.1)
       "@sanity/asset-utils": 1.3.0
@@ -21936,7 +21954,7 @@ snapshots:
       "@sanity/logos": 2.1.13(@sanity/color@3.0.6)(react@18.3.1)
       "@sanity/migrate": 3.55.0
       "@sanity/mutator": 3.55.0
-      "@sanity/presentation": 1.16.4(@sanity/client@6.21.3(debug@4.3.6))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+      "@sanity/presentation": 1.16.4(@sanity/client@6.21.3)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       "@sanity/schema": 3.55.0(debug@4.3.6)
       "@sanity/telemetry": 0.7.9(react@18.3.1)
       "@sanity/types": 3.55.0(debug@4.3.6)

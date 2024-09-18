@@ -3,6 +3,7 @@ import {structureTool} from 'sanity/structure'
 import {schemaTypes} from './schemas'
 import {svSELocale} from '@sanity/locale-sv-se'
 import {media} from 'sanity-plugin-media'
+import {visionTool} from '@sanity/vision'
 import {documentInternationalization} from '@sanity/document-internationalization'
 
 export default defineConfig({
@@ -16,6 +17,7 @@ export default defineConfig({
     structureTool(),
     svSELocale(),
     media(),
+    visionTool(),
     documentInternationalization({
       // Required configuration
       supportedLanguages: [
