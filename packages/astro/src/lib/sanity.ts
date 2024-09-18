@@ -7,9 +7,11 @@ import {
 import { OrderTermsSchema, type OrderTerms } from "./schemas/OrderTermsSchema";
 import { SiteLanguage } from "../config";
 
-export async function fetchOpeningHours(): Promise<OpeningHours> {
+export async function fetchOpeningHours(
+  language = SiteLanguage.SV
+): Promise<OpeningHours> {
   const groqJson = await sanityClient.fetch(
-    `*[_type == "opening-hours" && setId.current == "default"]{title, hours, irregular}`
+    `*[_type == "opening-hours" && setId.current == "default"]{title, irregular, "hours": hours[]{"day": day.${language}, "time": time.${language}}}`
   );
   const openingHours = OpeningHoursSchema.parse(groqJson);
 

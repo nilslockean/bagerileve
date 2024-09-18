@@ -1,5 +1,10 @@
-import type {ConditionalPropertyCallbackContext, SchemaTypeDefinition} from 'sanity'
+import {
+  defineField,
+  type ConditionalPropertyCallbackContext,
+  type SchemaTypeDefinition,
+} from 'sanity'
 import {ClockIcon, CalendarIcon} from '@sanity/icons'
+import {baseLanguage} from './localeString'
 
 const _hasParentHours = (props: ConditionalPropertyCallbackContext) =>
   Boolean(props.document?.parent)
@@ -70,15 +75,21 @@ export default <SchemaTypeDefinition>{
         {
           type: 'object',
           icon: ClockIcon,
-          fields: [
-            {
-              name: 'day',
-              type: 'string',
-              title: 'Veckodag',
+          preview: {
+            select: {
+              title: `day.${baseLanguage.id}`,
+              subtitle: `time.${baseLanguage.id}`,
             },
+          },
+          fields: [
+            defineField({
+              name: 'day',
+              type: 'localeString',
+              title: 'Veckodag',
+            }),
             {
               name: 'time',
-              type: 'string',
+              type: 'localeString',
               title: 'Öppettider',
             },
           ],
@@ -86,19 +97,36 @@ export default <SchemaTypeDefinition>{
       ],
       initialValue: [
         {
-          day: 'tisdag - fredag',
-          time: '11-18',
+          day: {
+            sv: 'tisdag - fredag',
+            en: 'Tuesday - Friday',
+          },
+          time: {
+            sv: '11-18',
+            en: '11-18',
+          },
         },
         {
-          day: 'lördag',
-          time: '9-16',
+          day: {
+            sv: 'lördag',
+            en: 'Saturday',
+          },
+          time: {
+            sv: '9-16',
+            en: '9-16',
+          },
         },
         {
-          day: 'söndag',
-          time: 'stängt',
+          day: {
+            sv: 'söndag - måndag',
+            en: 'Sunday - Monday',
+          },
+          time: {
+            sv: 'stängt',
+            en: 'closed',
+          },
         },
       ],
-      //   hidden: (props) => _hasParentHours(props),
     },
     {
       name: 'irregular',
