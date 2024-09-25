@@ -1,3 +1,0 @@
-<ul class="flex flex-col flex-wrap gap-2">
-	<slot />
-</ul>
