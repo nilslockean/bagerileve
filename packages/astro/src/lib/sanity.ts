@@ -19,9 +19,17 @@ export async function fetchOpeningHours(
   if (openingHours.irregular) {
     const now = new Date();
 
-    openingHours.irregular = openingHours.irregular.filter((irregular) => {
-      return new Date(irregular.date) >= now;
-    });
+    openingHours.irregular = openingHours.irregular
+      .filter((irregular) => {
+        return new Date(irregular.date) >= now;
+      })
+      .sort((a, b) => {
+        if (a.date === b.date) {
+          return 0;
+        }
+
+        return a.date < b.date ? -1 : 1;
+      });
   }
 
   return openingHours;

@@ -68,7 +68,7 @@ const instagramFeedId = BEHOLD_FEED_ID;
           >Beställ fredagsmunk</ButtonLink
         >
         <ButtonLink href="#oppettider" variant="outline-light"
-          >Kolla öppettider</ButtonLink
+          >Kolla öppettiderna</ButtonLink
         >
       </div>
     </div>
@@ -77,14 +77,11 @@ const instagramFeedId = BEHOLD_FEED_ID;
   <Section id="oppettider" class="lg:mt-8 grid lg:grid-cols-2 gap-8">
     <div>
       <h2>Öppettider</h2>
-      <OpeningHours data={openingHours} class="max-w-xl" irregularLimit={0} />
-      {
-        hasIrregularHours && (
-          <ButtonLink href="/kontakt#oppettider">
-            Se avvikande öppettider
-          </ButtonLink>
-        )
-      }
+      <OpeningHours data={openingHours} class="max-w-xl" irregularLimit={0}>
+        <ButtonLink href="/kontakt#oppettider" slot="has-irregular">
+          Se avvikande öppettider
+        </ButtonLink>
+      </OpeningHours>
     </div>
     <div
       hx-get="/partials/events?scope=upcoming"
