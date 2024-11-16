@@ -5,9 +5,10 @@ import type { HTMLAttributes } from "astro/types";
 interface Props extends HTMLAttributes<"div"> {
   data: OpeningHours;
   title?: string;
+  irregularLimit?: number;
 }
 
-const { data, title, class: className } = Astro.props;
+const { data, title, irregularLimit = -1, class: className } = Astro.props;
 ---
 
 {title && <h4>{title}</h4>}
@@ -25,18 +26,20 @@ const { data, title, class: className } = Astro.props;
   </table>
 
   {
-    data.irregular && data.irregular.length > 0 && (
+    data.irregular && data.irregular.length > 0 && irregularLimit !== 0 && (
       <>
         <p class="mt-4 uppercase text-sm font-futura tracking-wider mb-0">
           Avvikande öppettider:
         </p>
         <table class="table-auto w-full">
-          {data.irregular.map((row) => (
+          {data.irregular.slice(0, irregularLimit).map((row) => (
             <tr class="@xl:border-b-2 border-current last:border-none">
               <td class="py-1">
                 {row.date}
                 <br />
-                <small class="opacity-75">{row.name}</small>
+                {row.name !== undefined && (
+                  <small class="opacity-75">{row.name}</small>
+                )}
               </td>
               <td class="text-right py-1 align-baseline">{row.time}</td>
             </tr>
