@@ -8,7 +8,7 @@ export const OpeningHoursSchema = z
       irregular: z
         .array(
           z.object({
-            name: z.string(),
+            name: z.string().optional(),
             date: z.string(),
             time: z.string(),
           })
