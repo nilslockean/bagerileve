@@ -8,18 +8,19 @@ interface Props extends HTMLAttributes<"div"> {
   irregularLimit?: number;
 }
 
-const { data, title, irregularLimit = -1, class: className } = Astro.props;
+const { data, title, irregularLimit, class: className } = Astro.props;
+const hasIrregularHours = data.irregular && data.irregular.length > 0;
 ---
 
 {title && <h4>{title}</h4>}
 
 <div class:list={["@container", className]}>
-  <table class="table-auto w-full">
+  <table class="table-auto w-full text-lg">
     {
       data.hours.map((row) => (
         <tr class="border-b-2 border-current last:border-none">
-          <td class="py-1">{row.day}</td>
-          <td class="text-right py-1">{row.time}</td>
+          <td class="py-2">{row.day}</td>
+          <td class="text-right py-2">{row.time}</td>
         </tr>
       ))
     }
@@ -48,4 +49,6 @@ const { data, title, irregularLimit = -1, class: className } = Astro.props;
       </>
     )
   }
+
+  {hasIrregularHours && <slot name="has-irregular" />}
 </div>
