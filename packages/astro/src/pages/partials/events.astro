@@ -1,10 +1,12 @@
 ---
 import { fetchCourses } from "@lib/fienta";
-import Course from "@components/Course.astro";
 import { EventScopeSchema } from "@lib/schemas/EventScope.ts";
 import { z } from "astro:content";
 import { FIENTA_API_KEY } from "astro:env/server";
+import CourseList from "@components/CourseList.astro";
 
+export const partial = true;
+export const prerender = false;
 const { searchParams } = Astro.url;
 
 const BooleanSchema = z.enum(["true", "false"]);
@@ -19,34 +21,16 @@ const params = ParamsSchema.parse({
   showEmpty: searchParams.get("showEmpty"),
 });
 
-export const partial = true;
-export const prerender = false;
 const courses = await fetchCourses(params.scope, FIENTA_API_KEY);
-
-const hasCourses = courses.status === "success" && courses.courses.length > 0;
-const showEmpty = params.showEmpty === "true" && !hasCourses;
-
-let title = "Kommande kurser";
-if (params.scope === "past") {
-  title = "Tidigare kurser";
-} else if (params.scope === "all") {
-  title = "Alla kurser";
-}
 ---
 
 {
   courses.status === "success" && (
-    <>
-      {(showEmpty || hasCourses) && <h2>{title}</h2>}
-      {hasCourses && (
-        <div class="flex flex-1 gap-4 flex-wrap">
-          {courses.courses.map((course) => (
-            <Course {course} class="mt-4 max-w-prose basis-2/4 grow" />
-          ))}
-        </div>
-      )}
-      {showEmpty && <p>Inga kurser inplanerade just nu.</p>}
-    </>
+    <CourseList
+      courses={courses.courses}
+      scope={params.scope}
+      showEmpty={params.showEmpty === "true"}
+    />
   )
 }
 
