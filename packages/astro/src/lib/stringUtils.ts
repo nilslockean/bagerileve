@@ -28,12 +28,13 @@ export function prettyCourseDates(
 ) {
   const startDateString = toLocaleDateString(start, locale);
   const endDateString = toLocaleDateString(end ?? start, locale);
+  const yearString = start.getFullYear().toString();
 
   if (startDateString === endDateString || end === undefined) {
     const endTimeString = end && toLocaleTimeString(end, locale);
 
     return capitalize(
-      `${startDateString} kl. ${toLocaleTimeString(start, locale)}${
+      `${startDateString} ${yearString} kl. ${toLocaleTimeString(start, locale)}${
         endTimeString && start !== end && endTimeString !== "23:59"
           ? ` - ${endTimeString}`
           : ""
@@ -41,5 +42,5 @@ export function prettyCourseDates(
     );
   }
 
-  return capitalize(`${startDateString} - ${endDateString}`);
+  return capitalize(`${startDateString} - ${endDateString} ${yearString}`);
 }
