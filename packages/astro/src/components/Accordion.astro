@@ -6,11 +6,11 @@ import { IconName } from "@lib/enums/IconName";
 
 interface Props extends HTMLAttributes<"article"> {
   title: string;
-  id: string;
+  id?: string;
 }
 
 // Props
-const { title, id, class: className, ...rest } = Astro.props;
+const { title, class: className, ...rest } = Astro.props;
 ---
 
 <details
@@ -20,7 +20,7 @@ const { title, id, class: className, ...rest } = Astro.props;
   <summary
     class="flex w-full justify-between items-baseline gap-4 p-4 bg-orange-100 dark:bg-blue-950 transition-colors hover:bg-orange-50 dark:hover:bg-blue-900 group-open:bg-orange-50 group-open:dark:bg-blue-900"
   >
-    <h3 id={id} class="mb-0 text-2xl text-left">{title}</h3>
+    <h3 class="mb-0 text-2xl text-left">{title}</h3>
 
     <span class="transition-all group-open:rotate-45">
       <Icon name={IconName.PLUS} />

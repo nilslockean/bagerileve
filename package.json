@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm --filter \"@bagerileve/svelte\" dev",
-    "dev:frontend": "pnpm --filter \"@bagerileve/svelte\" dev",
+    "dev:frontend": "pnpm --filter \"@bagerileve/astro\" dev",
     "dev:admin": "pnpm --filter \"@bagerileve/sanity\" dev",
     "test": "pnpm --filter \"@bagerileve/*\" test",
     "prepare": "husky"
