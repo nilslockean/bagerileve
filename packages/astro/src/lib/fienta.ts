@@ -60,16 +60,21 @@ export async function fetchCourses(
         new Date(course.starts_at),
         new Date(course.ends_at)
       );
+      const year = new Date(course.starts_at).getFullYear();
 
       return {
+        slug: course.id.toString(),
         url: course.url,
         draft: !course.is_published,
         soldOut: course.sale_status === "soldOut",
+        salesEnded: course.sale_status === "salesEnded",
         title,
         description,
         // starts_at: course.starts_at,
         // ends_at: course.ends_at,
         dates,
+        year,
+        image: course.image_url,
       } satisfies Course;
     });
 

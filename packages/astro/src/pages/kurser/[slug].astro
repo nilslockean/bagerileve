@@ -1,0 +1,84 @@
+---
+import Section from "@components/Section.astro";
+import Layout from "../../layouts/Layout.astro";
+import { getImage, Image } from "astro:assets";
+import bakerImage from "@lib/assets/bagare.webp";
+import IntroText from "@components/IntroText.astro";
+import { fetchCourses } from "@lib/fienta";
+import { FIENTA_API_KEY } from "astro:env/server";
+import ButtonLink from "@components/ButtonLink.astro";
+import Button from "@components/Button.astro";
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const courses = await fetchCourses("all", FIENTA_API_KEY);
+
+const courseInfo =
+  courses.status === "success"
+    ? courses.courses.find((course) => course.slug === slug)
+    : undefined;
+
+if (!courseInfo) {
+  return Astro.rewrite("/404");
+}
+
+const { title, description, dates, soldOut, salesEnded, url, year } =
+  courseInfo;
+
+const image =
+  courseInfo.image || (await getImage({ src: bakerImage, format: "webp" })).src;
+
+const hasBooking = !soldOut && !salesEnded;
+
+const intro =
+  "Bli bättre på att få till ett gott surdegsbröd - skaffa en djupare förståelse för varför det blir som det blir och inte alltid som du tänkt dig och lär dig att göra dina egna recept.";
+---
+
+<Layout title="Kurser" metaDescription={intro} fullwidth>
+  <Section
+    fullwidth
+    class="relative flex items-center py-16 lg:aspect-video bg-fixed bg-center bg-no-repeat bg-cover"
+    style={`background-image:url('${image}');`}
+  >
+    <!-- Color overlay -->
+    <div
+      id="hero-overlay"
+      class="absolute top-0 right-0 left-0 bottom-0 inset-0 bg-blue-950 opacity-50 z-20 w-full"
+    >
+    </div>
+
+    <div
+      class="z-30 flex flex-col items-start p-6 w-full max-w-screen-2xl mx-auto text-orange-50"
+    >
+      <h1>{title}</h1>
+      <IntroText>
+        {`${dates} ${year}`}
+      </IntroText>
+      <div>
+        {
+          hasBooking ? (
+            <ButtonLink href={url}>Boka nu</ButtonLink>
+          ) : (
+            <Button disabled>
+              {salesEnded
+                ? "Biljettförsäljningen har stängt"
+                : "Tyvärr, biljetterna är slutsålda"}
+            </Button>
+          )
+        }
+      </div>
+    </div>
+  </Section>
+
+  <Section class="my-16">
+    <div class="max-w-prose text-lg" set:html={description} />
+    {hasBooking && <ButtonLink href={url}>Boka nu</ButtonLink>}
+  </Section>
+
+  <style>
+    ul {
+      @apply list-disc list-inside;
+    }
+  </style>
+</Layout>

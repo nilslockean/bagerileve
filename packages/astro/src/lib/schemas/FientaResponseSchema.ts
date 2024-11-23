@@ -17,7 +17,7 @@ const _FientaSuccessResponseSchema = z.object({
   }),
   data: z.array(
     z.object({
-      // id: z.number(),
+      id: z.number(),
       // organizer_id: z.number(),
       starts_at: z.string(),
       ends_at: z.string(),
@@ -29,7 +29,12 @@ const _FientaSuccessResponseSchema = z.object({
       ]),
       is_published: z.boolean(),
       is_public: z.boolean(),
-      // image_url: z.string().url(),
+      image_url: z
+        .string()
+        .url()
+        .transform((url) => {
+          return url.endsWith(".jpg") ? url : undefined;
+        }),
       // accent_color: z.string(),
       url: z.string().url(),
       buy_tickets_url: z.string().url(),
