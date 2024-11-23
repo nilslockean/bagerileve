@@ -70,7 +70,7 @@ export async function fetchCourses(
         salesEnded: course.sale_status === "salesEnded",
         title,
         description,
-        // starts_at: course.starts_at,
+        start: new Date(course.starts_at),
         // ends_at: course.ends_at,
         dates,
         year,

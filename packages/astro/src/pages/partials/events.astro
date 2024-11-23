@@ -14,11 +14,13 @@ const ParamsSchema = z.object({
   scope: EventScopeSchema.catch("upcoming"),
   showError: BooleanSchema.catch("false"),
   showEmpty: BooleanSchema.catch("false"),
+  title: z.string().catch("Kommande kurser"),
 });
 const params = ParamsSchema.parse({
   scope: searchParams.get("scope"),
   showError: searchParams.get("showError"),
   showEmpty: searchParams.get("showEmpty"),
+  title: searchParams.get("title"),
 });
 
 const courses = await fetchCourses(params.scope, FIENTA_API_KEY);
@@ -27,6 +29,7 @@ const courses = await fetchCourses(params.scope, FIENTA_API_KEY);
 {
   courses.status === "success" && (
     <CourseList
+      title={params.title || undefined}
       courses={courses.courses}
       scope={params.scope}
       showEmpty={params.showEmpty === "true"}
