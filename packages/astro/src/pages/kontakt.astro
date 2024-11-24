@@ -36,11 +36,7 @@ const openingHours = await fetchOpeningHours();
       <h2 class="mb-8">Vanliga frågor</h2>
       {
         faq.map(({ question, answer }, i) => (
-          <Accordion
-            id={`faq-${i}`}
-            title={question}
-            class="mb-4 last:mb-0 portable-text"
-          >
+          <Accordion title={question} class="mb-4 last:mb-0 portable-text">
             <PortableText value={answer} />
           </Accordion>
         ))

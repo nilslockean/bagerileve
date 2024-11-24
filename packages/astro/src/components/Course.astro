@@ -13,7 +13,7 @@ const { course, class: className, ...rest } = Astro.props;
 
 <ButtonLink
   {...rest}
-  href={course.url}
+  href=`/kurser/${course.slug}`
   class={cn(
     "flex flex-col gap-4 font-sans normal-case mt-0 py-6 relative",
     className
