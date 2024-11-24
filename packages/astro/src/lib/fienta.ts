@@ -1,13 +1,13 @@
-import { FientaResponseSchema } from "./schemas/FientaResponseSchema";
-import { type Courses } from "@lib/schemas/CoursesSchema.js";
+import { type CoursesResult } from "@lib/schemas/CoursesResult.js";
 import { prettyCourseDates } from "./stringUtils.ts";
 import type { EventScope } from "./schemas/EventScope.ts";
-import type { Course } from "./schemas/CourseSchema.ts";
+import type { Course } from "./schemas/Course.ts";
+import { FientaAllEventsResponseSchema } from "./schemas/FientaAllEvents.ts";
 
 export async function fetchCourses(
   scope: EventScope = "upcoming",
   apiKey: string
-): Promise<Courses> {
+): Promise<CoursesResult> {
   const fienta = new URL("https://fienta.com/api/v1/events");
   fienta.searchParams.set("organizer", "11554");
 
@@ -24,7 +24,7 @@ export async function fetchCourses(
   });
 
   const data = await response.json();
-  const result = FientaResponseSchema.parse(data);
+  const result = FientaAllEventsResponseSchema.parse(data);
 
   if ("errors" in result) {
     return {

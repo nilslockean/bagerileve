@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CourseSchema } from "./CourseSchema";
+import { CourseSchema } from "./Course";
 
 const _ErrorSchema = z.object({
   status: z.literal("error"),
@@ -8,12 +8,12 @@ const _ErrorSchema = z.object({
 
 const _SuccessSchema = z.object({
   status: z.literal("success"),
-  courses: z.array(CourseSchema),
+  courses: CourseSchema,
 });
 
-export const CoursesSchema = z.discriminatedUnion("status", [
+export const CourseResultSchema = z.discriminatedUnion("status", [
   _ErrorSchema,
   _SuccessSchema,
 ]);
 
-export type Courses = z.infer<typeof CoursesSchema>;
+export type CourseResult = z.infer<typeof CourseResultSchema>;
