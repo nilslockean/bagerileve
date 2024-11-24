@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const ErrorResponseSchema = z.object({
+export const ErrorResponseSchema = z.object({
   errors: z.array(
     z.object({
       code: z.union([z.number(), z.string()]),
@@ -9,6 +9,7 @@ const ErrorResponseSchema = z.object({
     })
   ),
 });
+export type ErrorResponse = z.infer<typeof ErrorResponseSchema>;
 
 function composeSuccessSchema<T extends z.ZodTypeAny>(dataSchema: T) {
   return z.object({

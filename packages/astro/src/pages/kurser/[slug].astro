@@ -4,11 +4,11 @@ import Layout from "../../layouts/Layout.astro";
 import { getImage } from "astro:assets";
 import bakerImage from "@lib/assets/bagare.webp";
 import IntroText from "@components/IntroText.astro";
-import { fetchCourse } from "@lib/fienta";
 import { FIENTA_API_KEY } from "astro:env/server";
 import ButtonLink from "@components/ButtonLink.astro";
 import Button from "@components/Button.astro";
 import Hero from "@components/Hero.astro";
+import { FientaAPI } from "@lib/api/FientaAPI";
 
 export const prerender = false;
 
@@ -18,7 +18,8 @@ if (isNaN(id)) {
   return Astro.rewrite("/404");
 }
 
-const course = await fetchCourse(id, FIENTA_API_KEY);
+const api = new FientaAPI(FIENTA_API_KEY, import.meta.env.PROD);
+const course = await api.getCourse(id);
 const courseInfo = course.status === "success" ? course.course : undefined;
 
 if (!courseInfo) {

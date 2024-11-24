@@ -1,10 +1,11 @@
 import { z } from "zod";
 import { CourseSchema } from "./Course";
 
-const _ErrorSchema = z.object({
+export const CourseErrorSchema = z.object({
   status: z.literal("error"),
   message: z.string(),
 });
+export type CourseError = z.infer<typeof CourseErrorSchema>;
 
 const _SuccessSchema = z.object({
   status: z.literal("success"),
@@ -12,7 +13,7 @@ const _SuccessSchema = z.object({
 });
 
 export const CourseResultSchema = z.discriminatedUnion("status", [
-  _ErrorSchema,
+  CourseErrorSchema,
   _SuccessSchema,
 ]);
 
