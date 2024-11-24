@@ -74,7 +74,7 @@ const orderTerms = await fetchOrderTerms();
   <Section>
     <h2 class="mb-8">Beställningsvillkor</h2>
     {
-      orderTerms.map(({ title, content, sortOrder }) => (
+      orderTerms.map(({ title, content }) => (
         <Accordion title={title} class="mb-4 last:mb-0 portable-text">
           <PortableText value={content} />
         </Accordion>

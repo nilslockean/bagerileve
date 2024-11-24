@@ -25,9 +25,6 @@ const optimizedFooterVideoPoster = await getImage({
 });
 
 const openingHours = await fetchOpeningHours();
-const hasIrregularHours =
-  openingHours.irregular && openingHours.irregular.length > 0;
-
 const instagramFeedId = BEHOLD_FEED_ID;
 ---
 

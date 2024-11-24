@@ -24,8 +24,7 @@ if (!courseInfo) {
   return Astro.rewrite("/404");
 }
 
-const { title, description, dates, soldOut, salesEnded, url, year } =
-  courseInfo;
+const { title, description, dates, soldOut, salesEnded, url } = courseInfo;
 
 const hasBooking = !soldOut && !salesEnded;
 const intro = `${dates}`;
