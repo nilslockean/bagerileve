@@ -4,28 +4,29 @@ import Layout from "../../layouts/Layout.astro";
 import { getImage } from "astro:assets";
 import bakerImage from "@lib/assets/bagare.webp";
 import IntroText from "@components/IntroText.astro";
-import { fetchCourses } from "@lib/fienta";
 import { FIENTA_API_KEY } from "astro:env/server";
 import ButtonLink from "@components/ButtonLink.astro";
 import Button from "@components/Button.astro";
 import Hero from "@components/Hero.astro";
+import { FientaAPI } from "@lib/api/FientaAPI";
 
 export const prerender = false;
 
 const { slug } = Astro.params;
-const courses = await fetchCourses("all", FIENTA_API_KEY);
+const id = Number(slug);
+if (isNaN(id)) {
+  return Astro.rewrite("/404");
+}
 
-const courseInfo =
-  courses.status === "success"
-    ? courses.courses.find((course) => course.slug === slug)
-    : undefined;
+const api = new FientaAPI(FIENTA_API_KEY, import.meta.env.PROD);
+const course = await api.getCourse(id);
+const courseInfo = course.status === "success" ? course.course : undefined;
 
 if (!courseInfo) {
   return Astro.rewrite("/404");
 }
 
-const { title, description, dates, soldOut, salesEnded, url, year } =
-  courseInfo;
+const { title, description, dates, soldOut, salesEnded, url } = courseInfo;
 
 const hasBooking = !soldOut && !salesEnded;
 const intro = `${dates}`;

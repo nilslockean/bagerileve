@@ -35,7 +35,7 @@ const openingHours = await fetchOpeningHours();
     <div class="max-w-prose">
       <h2 class="mb-8">Vanliga frågor</h2>
       {
-        faq.map(({ question, answer }, i) => (
+        faq.map(({ question, answer }) => (
           <Accordion title={question} class="mb-4 last:mb-0 portable-text">
             <PortableText value={answer} />
           </Accordion>
