@@ -3,7 +3,7 @@ import { FientaEventDetailsSchema } from "./FientaEventDetails";
 import { composeResponseSchema } from "./FientaResponseSchema";
 
 export const FientaSingleEventResponseSchema = composeResponseSchema(
-  z.array(FientaEventDetailsSchema)
+  FientaEventDetailsSchema
 );
 
 export type FientaSingleEventResponse = z.infer<

@@ -8,7 +8,7 @@ const _ErrorSchema = z.object({
 
 const _SuccessSchema = z.object({
   status: z.literal("success"),
-  courses: CourseSchema,
+  course: CourseSchema,
 });
 
 export const CourseResultSchema = z.discriminatedUnion("status", [

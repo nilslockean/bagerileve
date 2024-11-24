@@ -3,7 +3,7 @@ import { z } from "zod";
 const ErrorResponseSchema = z.object({
   errors: z.array(
     z.object({
-      code: z.string(),
+      code: z.union([z.number(), z.string()]),
       user_message: z.string(),
       internal_message: z.string(),
     })
