@@ -3,7 +3,6 @@ import ButtonLink from "@components/ButtonLink.astro";
 import Section from "@components/Section.astro";
 import OpeningHours from "@components/OpeningHours.astro";
 import Layout from "../layouts/Layout.astro";
-import { fetchOpeningHours } from "@lib/sanity";
 import InstagramFeed from "@components/InstagramFeed.astro";
 import breadImage from "@lib/assets/brod.jpg";
 import IntroText from "@components/IntroText.astro";
@@ -14,6 +13,7 @@ import { getImage } from "astro:assets";
 import heroVideoPoster from "@lib/assets/BrodTrim-poster.jpg";
 import footerVideoPoster from "@lib/assets/Kanelbulle-poster.jpg";
 import Hero from "@components/Hero.astro";
+import { sanityAPI } from "@lib/sanityAPI";
 
 const optimizedHeroVideoPoster = await getImage({
   src: heroVideoPoster,
@@ -24,7 +24,7 @@ const optimizedFooterVideoPoster = await getImage({
   format: "webp",
 });
 
-const openingHours = await fetchOpeningHours();
+const openingHours = await sanityAPI.getOpeningHours();
 const instagramFeedId = BEHOLD_FEED_ID;
 ---
 

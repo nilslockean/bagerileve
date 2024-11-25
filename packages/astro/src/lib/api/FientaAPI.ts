@@ -7,17 +7,25 @@ import type { CourseError, CourseResult } from "@lib/schemas/CourseResult.ts";
 import { FientaSingleEventResponseSchema } from "@lib/schemas/FientaSingleEvent.ts";
 import type { FientaEventDetails } from "@lib/schemas/FientaEventDetails.ts";
 import type { ErrorResponse } from "@lib/schemas/FientaResponseSchema";
+import { HttpClient } from "@lib/HttpClient";
+import type { IHttpClient } from "@lib/types/IHttpClient";
 
 export class FientaAPI {
   private apiKey: string;
   private isProd: boolean;
+  private httpClient = new HttpClient();
+
   private baseUrl = "https://fienta.com/api/v1";
   private organzerId = "11554";
   private beginning = "1970-01-01 01:00:00";
 
-  constructor(apiKey: string, isProd: boolean) {
+  constructor(apiKey: string, isProd: boolean, httpClient?: IHttpClient) {
     this.apiKey = apiKey;
     this.isProd = isProd;
+
+    if (httpClient) {
+      this.httpClient = httpClient;
+    }
   }
 
   private getURL(path: string): URL {
@@ -78,13 +86,10 @@ export class FientaAPI {
 
   async getCourse(id: number): Promise<CourseResult> {
     const url = this.getURL(`/events/${id}`);
-    const response = await fetch(url, {
-      method: "GET",
+    const json = await this.httpClient.get(url, {
       headers: this.headers,
     });
-
-    const data = await response.json();
-    const result = FientaSingleEventResponseSchema.parse(data);
+    const result = FientaSingleEventResponseSchema.parse(json);
 
     if ("errors" in result) {
       return this.composeErrorResult(result);
@@ -102,13 +107,10 @@ export class FientaAPI {
       url.searchParams.set("starts_from", this.beginning);
     }
 
-    const response = await fetch(url, {
-      method: "GET",
+    const json = await this.httpClient.get(url, {
       headers: this.headers,
     });
-
-    const data = await response.json();
-    const result = FientaAllEventsResponseSchema.parse(data);
+    const result = FientaAllEventsResponseSchema.parse(json);
 
     if ("errors" in result) {
       return this.composeErrorResult(result);
