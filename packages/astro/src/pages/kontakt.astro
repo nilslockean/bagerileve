@@ -7,7 +7,7 @@ import Link from "@components/Link.astro";
 import OpeningHours from "@components/OpeningHours.astro";
 import Section from "@components/Section.astro";
 import { IconName } from "@lib/enums/IconName";
-import { fetchFaq, fetchOpeningHours } from "@lib/sanity";
+import { sanityAPI } from "@lib/sanityAPI";
 import { PortableText } from "astro-portabletext";
 import config from "src/config";
 import Layout from "src/layouts/Layout.astro";
@@ -18,8 +18,8 @@ const phoneLink = `tel:${contact.phone
   .replace(/[\s-]/g, "")}`;
 const emailLink = `mailto:${contact.email}`;
 
-const faq = await fetchFaq();
-const openingHours = await fetchOpeningHours();
+const faq = await sanityAPI.getFaq();
+const openingHours = await sanityAPI.getOpeningHours();
 ---
 
 <Layout
