@@ -9,6 +9,7 @@ import {
   OpeningHoursSchema,
   type OpeningHours,
 } from "@lib/schemas/OpeningHoursSchema";
+import { capitalize } from "@lib/stringUtils";
 
 export class SanityAPI {
   private client: ISanityClient;
@@ -33,7 +34,7 @@ export class SanityAPI {
     return this._now ?? new Date();
   }
 
-  public set now(value: Date) {
+  public set now(value: Date | undefined) {
     this._now = value;
   }
 
@@ -77,6 +78,19 @@ export class SanityAPI {
           }
 
           return a.date < b.date ? -1 : 1;
+        })
+        .map((irregular) => {
+          if (irregular.formattedDate) {
+            return irregular;
+          }
+
+          const formatter = new Intl.DateTimeFormat("sv-SE", {
+            dateStyle: "full",
+          });
+          const formattedDate = formatter.format(new Date(irregular.date));
+          irregular.formattedDate = capitalize(formattedDate);
+
+          return irregular;
         });
     }
 

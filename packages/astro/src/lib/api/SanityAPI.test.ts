@@ -37,6 +37,7 @@ const api = new SanityAPI(sanityClient, "12345", "test");
 
 beforeEach(() => {
   sanityClient.returnData = {};
+  api.now = undefined;
 });
 
 describe("SanityAPI", () => {
@@ -95,9 +96,29 @@ describe("SanityAPI", () => {
     const result = await api.getOpeningHours();
     expect(result.title).toEqual(title);
     expect(result.hours).toStrictEqual(hours);
-    expect(result.irregular).toStrictEqual([
-      { date: "2023-12-24", time: "stängt" },
-      { date: "2023-12-25", time: "10-15" },
-    ]);
+    expect(result.irregular?.length).toBe(2);
+    expect(result.irregular![0].date).toEqual("2023-12-24");
+    expect(result.irregular![1].date).toEqual("2023-12-25");
+  });
+
+  test("should format format irregular dates correctly", async () => {
+    const title = "Test";
+    const hours = [{ day: "tisdag - fredag", time: "11-18" }];
+    const irregular = [{ date: "2022-02-01", time: "10-15" }];
+
+    api.now = new Date("2021-01-01");
+    sanityClient.returnData = [
+      {
+        title,
+        hours,
+        irregular,
+      },
+    ];
+
+    const result = await api.getOpeningHours();
+    expect(result.irregular![0].date).toEqual("2022-02-01");
+    expect(result.irregular![0].formattedDate).toEqual(
+      "Tisdag 1 februari 2022"
+    );
   });
 });
