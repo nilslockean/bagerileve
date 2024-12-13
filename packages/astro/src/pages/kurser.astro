@@ -4,7 +4,6 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import bakerImage from "@lib/assets/bagare.webp";
 import IntroText from "@components/IntroText.astro";
-import Accordion from "@components/Accordion.astro";
 
 const intro =
   "Bli bättre på att få till ett gott surdegsbröd - skaffa en djupare förståelse för varför det blir som det blir och inte alltid som du tänkt dig och lär dig att göra dina egna recept.";
@@ -58,14 +57,12 @@ const intro =
   </Section>
 
   <Section>
-    <Accordion id="past-courses" title="Tidigare kurser" class="mb-4 last:mb-0">
-      <div
-        hx-get="/partials/events?scope=past&title="
-        hx-trigger="toggle from:#past-courses once"
-      >
-        Hämtar tidigare kurser...
-      </div>
-    </Accordion>
+    <div
+      hx-get="/partials/events?scope=past&title=Tidigare kurser"
+      hx-trigger="revealed"
+    >
+      Hämtar tidigare kurser...
+    </div>
   </Section>
 
   <style>
