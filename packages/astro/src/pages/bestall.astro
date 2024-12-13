@@ -2,20 +2,20 @@
 import ButtonLink from "@components/ButtonLink.astro";
 import Section from "@components/Section.astro";
 import Layout from "src/layouts/Layout.astro";
-import { fetchOrderTerms } from "@lib/sanity";
 import Accordion from "@components/Accordion.astro";
 import { PortableText } from "astro-portabletext";
 import IntroText from "@components/IntroText.astro";
 import Video, { VideoName } from "@components/Video.astro";
 import { getImage } from "astro:assets";
 import videoPoster from "@lib/assets/Munk-4-poster.jpg";
+import { sanityAPI } from "@lib/sanityAPI";
 
 const optimizedVideoPoster = await getImage({
   src: videoPoster,
   format: "webp",
 });
 
-const orderTerms = await fetchOrderTerms();
+const orderTerms = await sanityAPI.getOrderTerms();
 ---
 
 <Layout

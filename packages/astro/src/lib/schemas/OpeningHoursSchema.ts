@@ -11,6 +11,7 @@ export const OpeningHoursSchema = z
             name: z.string().optional(),
             date: z.string(),
             time: z.string(),
+            formattedDate: z.string().optional(),
           })
         )
         .optional(),
