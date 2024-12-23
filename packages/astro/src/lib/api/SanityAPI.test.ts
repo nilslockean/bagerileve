@@ -84,7 +84,8 @@ describe("SanityAPI", () => {
       { date: "2023-12-25", time: "10-15" },
     ];
 
-    api.now = new Date("2023-02-01");
+    // Should include today's date
+    api.now = new Date("2023-12-24 14:45:26");
     sanityClient.returnData = [
       {
         title,

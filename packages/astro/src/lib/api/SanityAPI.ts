@@ -38,6 +38,13 @@ export class SanityAPI {
     this._now = value;
   }
 
+  private get today(): Date {
+    const now = new Date(this.now);
+    now.setHours(0, 0, 0, 0);
+
+    return now;
+  }
+
   public getAsset(filename: string): string {
     return `${this.assetBaseUrl}/${this.projectId}/${this.dataset}/${filename}`;
   }
@@ -70,7 +77,11 @@ export class SanityAPI {
     if (openingHours.irregular) {
       openingHours.irregular = openingHours.irregular
         .filter((irregular) => {
-          return new Date(irregular.date) >= this.now;
+          // Compare start of day to include irregular hours that start today
+          const irregularDate = new Date(irregular.date);
+          irregularDate.setHours(0, 0, 0, 0);
+
+          return new Date(irregular.date) >= this.today;
         })
         .sort((a, b) => {
           if (a.date === b.date) {
