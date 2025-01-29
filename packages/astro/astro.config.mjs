@@ -58,6 +58,18 @@ export default defineConfig({
           optional: true,
           default: false,
         }),
+        ENABLE_POSTHOG: envField.boolean({
+          context: "server",
+          access: "public",
+          optional: true,
+          default: true,
+        }),
+        POSTHOG_PROJECT_API_KEY: envField.string({
+          context: "server",
+          access: "public",
+          optional: true,
+          default: "phc_FpOtrZTQsFj3URscXo70ak6KyVRM1kAe5t8zqmS0r9r",
+        }),
       },
     },
   },
