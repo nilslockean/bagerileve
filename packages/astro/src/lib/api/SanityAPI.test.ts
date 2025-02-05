@@ -1,29 +1,7 @@
-import type { IHttpClient } from "@lib/types/IHttpClient";
-import { FientaAPI } from "./FientaAPI";
 import { test, describe, beforeEach } from "vitest";
 import { expect } from "vitest";
 import type { ISanityClient } from "@lib/types/ISanityClient";
 import { SanityAPI } from "./SanityAPI";
-
-const exampleCourse = {
-  id: 96677,
-  starts_at: "2024-08-31T16:30:00+03:00",
-  ends_at: "2024-09-01T16:00:00+03:00",
-  sale_status: "soldOut",
-  is_published: true,
-  is_public: true,
-  url: "https://example.com",
-  buy_tickets_url: "https://example.com",
-  image_url: "https://example.com/image.jpg",
-  translations: {
-    sv: {
-      title: "Test",
-      description: "Test description",
-      duration_string: "7h",
-      notes_about_time: null,
-    },
-  },
-};
 
 class MockSanityClient implements ISanityClient {
   public returnData: unknown = {};
