@@ -16,6 +16,7 @@ import {
   ENABLE_VIEW_TRANSITIONS,
   ENABLE_POSTHOG,
   POSTHOG_PROJECT_API_KEY,
+  WEGLOT_API_KEY,
 } from "astro:env/server";
 import WeGlotScript from "@components/WeGlotScript.astro";
 import FientaEmbedScript from "@components/FientaEmbedScript.astro";
@@ -114,7 +115,11 @@ const optimizedOgImage = await getImage({
     }
 
     <FientaEmbedScript />
-    {ENABLE_WEGLOT && <WeGlotScript />}
+    {
+      ENABLE_WEGLOT && WEGLOT_API_KEY && (
+        <WeGlotScript apiKey={WEGLOT_API_KEY} />
+      )
+    }
     {ENABLE_VIEW_TRANSITIONS && <ViewTransitions />}
     {ENABLE_POSTHOG && <Posthog projectApiKey={POSTHOG_PROJECT_API_KEY} />}
   </head>
