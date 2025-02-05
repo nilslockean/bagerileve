@@ -52,6 +52,12 @@ export default defineConfig({
           optional: true,
           default: false,
         }),
+        WEGLOT_API_KEY: envField.string({
+          context: "server",
+          access: "public",
+          optional: true,
+          default: "wg_137e3716c0aa4f3c19e9f429cfbb510b2",
+        }),
         ENABLE_VIEW_TRANSITIONS: envField.boolean({
           context: "server",
           access: "public",
