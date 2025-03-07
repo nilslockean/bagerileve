@@ -9,6 +9,7 @@ import Video, { VideoName } from "@components/Video.astro";
 import { getImage } from "astro:assets";
 import videoPoster from "@lib/assets/Munk-4-poster.jpg";
 import { sanityAPI } from "@lib/sanityAPI";
+import GartnerFilm from "@components/GartnerFilm.astro";
 
 const optimizedVideoPoster = await getImage({
   src: videoPoster,
@@ -31,12 +32,15 @@ const orderTerms = await sanityAPI.getOrderTerms();
       garanterad en munk!
     </IntroText>
     <div class="grid lg:grid-cols-2 gap-8">
-      <Video
-        name={VideoName.Munk4}
-        class="w-full"
-        controls
-        poster={optimizedVideoPoster.src}
-      />
+      <div>
+        <Video
+          name={VideoName.Munk4}
+          class="w-full"
+          controls
+          poster={optimizedVideoPoster.src}
+        />
+        <GartnerFilm />
+      </div>
 
       <div>
         <div class="p-4 border-4 border-current max-w-prose">
