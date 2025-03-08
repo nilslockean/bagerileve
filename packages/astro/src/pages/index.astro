@@ -14,6 +14,7 @@ import heroVideoPoster from "@lib/assets/BrodTrim-poster.jpg";
 import footerVideoPoster from "@lib/assets/Kanelbulle-poster.jpg";
 import Hero from "@components/Hero.astro";
 import { sanityAPI } from "@lib/sanityAPI";
+import GartnerFilm from "@components/GartnerFilm.astro";
 
 const optimizedHeroVideoPoster = await getImage({
   src: heroVideoPoster,
@@ -117,6 +118,7 @@ const instagramFeedId = BEHOLD_FEED_ID;
   }
 
   <Section fullwidth>
+    <GartnerFilm class="pl-4 pb-0" />
     <Video
       id="footer-video"
       class="w-full"
