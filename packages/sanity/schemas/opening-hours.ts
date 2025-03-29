@@ -1,6 +1,5 @@
 import {defineField, defineType} from 'sanity'
 import {ClockIcon, CalendarIcon} from '@sanity/icons'
-import {baseLanguage} from './localeString'
 
 export default defineType({
   name: 'opening-hours',
@@ -30,54 +29,43 @@ export default defineType({
           icon: ClockIcon,
           preview: {
             select: {
-              title: `day.${baseLanguage.id}`,
-              subtitle: `time.${baseLanguage.id}`,
+              title: `day`,
+              subtitle: `time`,
             },
           },
           fields: [
             defineField({
               name: 'day',
-              type: 'localeString',
+              type: 'string',
               title: 'Veckodag',
             }),
             {
               name: 'time',
-              type: 'localeString',
+              type: 'string',
               title: 'Öppettider',
+              hidden: ({parent}) => parent.closed,
+            },
+            {
+              name: 'closed',
+              type: 'boolean',
+              title: 'Stängt',
+              initialValue: false,
             },
           ],
         },
       ],
       initialValue: [
         {
-          day: {
-            sv: 'tisdag - fredag',
-            en: 'Tuesday - Friday',
-          },
-          time: {
-            sv: '11-18',
-            en: '11-18',
-          },
+          day: 'tisdag - fredag',
+          time: '11-18',
         },
         {
-          day: {
-            sv: 'lördag',
-            en: 'Saturday',
-          },
-          time: {
-            sv: '9-16',
-            en: '9-16',
-          },
+          day: 'lördag',
+          time: '9-16',
         },
         {
-          day: {
-            sv: 'söndag - måndag',
-            en: 'Sunday - Monday',
-          },
-          time: {
-            sv: 'stängt',
-            en: 'closed',
-          },
+          day: 'söndag - måndag',
+          closed: true,
         },
       ],
     },
@@ -97,10 +85,16 @@ export default defineType({
               validation: (Rule) => Rule.required(),
             },
             {
+              name: 'closed',
+              type: 'boolean',
+              title: 'Stängt',
+              initialValue: false,
+            },
+            {
               name: 'time',
               type: 'string',
               title: 'Öppettider',
-              validation: (Rule) => Rule.required(),
+              hidden: ({parent}) => parent.closed,
             },
             {
               name: 'name',
@@ -113,11 +107,12 @@ export default defineType({
               date: 'date',
               name: 'name',
               time: 'time',
+              closed: 'closed',
             },
             prepare(selection) {
               return {
                 title: `${selection.date} (${selection.name})`,
-                subtitle: selection.time,
+                subtitle: selection.closed ? 'stängt' : selection.time,
               }
             },
           },

@@ -18,11 +18,5 @@ export default <SchemaTypeDefinition>{
       type: 'array',
       of: [{type: 'block'}],
     },
-    {
-      title: 'Språk',
-      name: 'language',
-      type: 'string',
-      readOnly: true,
-    },
   ],
 }
