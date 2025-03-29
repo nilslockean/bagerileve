@@ -29,8 +29,15 @@ export default defineType({
           icon: ClockIcon,
           preview: {
             select: {
-              title: `day`,
-              subtitle: `time`,
+              day: 'day',
+              time: 'time',
+              closed: 'closed',
+            },
+            prepare({day, time, closed}) {
+              return {
+                title: day,
+                subtitle: closed ? 'stängt' : time,
+              }
             },
           },
           fields: [
