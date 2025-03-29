@@ -1,5 +1,4 @@
 import type { ISanityClient } from "@lib/types/ISanityClient";
-import { SiteLanguage } from "src/config";
 import {
   OrderTermsSchema,
   type OrderTerms,
@@ -49,30 +48,27 @@ export class SanityAPI {
     return `${this.assetBaseUrl}/${this.projectId}/${this.dataset}/${filename}`;
   }
 
-  public async getOrderTerms(language = SiteLanguage.SV): Promise<OrderTerms> {
+  public async getOrderTerms(): Promise<OrderTerms> {
     const groqJson = await this.client.fetch(
-      `*[_type == "orderTerms" && language == "${language}"]{title, content, sortOrder} | order(sortOrder asc) `
+      `*[_type == "orderTerms"]{title, content, sortOrder} | order(sortOrder asc) `
     );
     const orderTerms = OrderTermsSchema.parse(groqJson);
     return orderTerms;
   }
 
-  public async getFaq(language = SiteLanguage.SV): Promise<Faq> {
+  public async getFaq(): Promise<Faq> {
     const groqJson = await this.client.fetch(
-      `*[_type == "faq" && language == "${language}"]{question, answer}`
+      `*[_type == "faq"] {question, answer}`
     );
     const faq = FaqSchema.parse(groqJson);
     return faq;
   }
 
-  public async getOpeningHours(
-    language = SiteLanguage.SV
-  ): Promise<OpeningHours> {
+  public async getOpeningHours(): Promise<OpeningHours> {
     const groqJson = await this.client.fetch(
-      `*[_type == "opening-hours" && setId.current == "default"]{title, irregular, "hours": hours[]{"day": day.${language}, "time": time.${language}}}`
+      `*[_type == "opening-hours" && setId.current == "default"]{title, irregular, hours}`
     );
     const openingHours = OpeningHoursSchema.parse(groqJson);
-
     // Filter out any irregular opening hours that are in the past
     if (openingHours.irregular) {
       openingHours.irregular = openingHours.irregular
@@ -104,6 +100,8 @@ export class SanityAPI {
           return irregular;
         });
     }
+
+    console.log(openingHours.irregular);
 
     return openingHours;
   }

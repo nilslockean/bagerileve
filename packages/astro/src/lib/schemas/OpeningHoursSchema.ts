@@ -4,14 +4,21 @@ export const OpeningHoursSchema = z
   .array(
     z.object({
       title: z.string(),
-      hours: z.array(z.object({ day: z.string(), time: z.string() })),
+      hours: z.array(
+        z.object({
+          day: z.string(),
+          time: z.string().optional().nullable(),
+          closed: z.boolean().default(false),
+        })
+      ),
       irregular: z
         .array(
           z.object({
-            name: z.string().optional(),
+            name: z.string().optional().nullable(),
             date: z.string(),
-            time: z.string(),
-            formattedDate: z.string().optional(),
+            time: z.string().optional().nullable(),
+            closed: z.boolean().default(false),
+            formattedDate: z.string().optional().nullable(),
           })
         )
         .optional(),
