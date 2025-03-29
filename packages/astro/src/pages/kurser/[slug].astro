@@ -45,7 +45,9 @@ const image =
     <div>
       {
         hasBooking ? (
-          <ButtonLink href={url}>Boka nu</ButtonLink>
+          <ButtonLink href={url} data-cta="primary">
+            Boka nu
+          </ButtonLink>
         ) : (
           <Button disabled>
             {salesEnded
