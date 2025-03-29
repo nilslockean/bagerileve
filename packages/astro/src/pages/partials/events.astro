@@ -1,6 +1,6 @@
 ---
-import { EventScopeSchema } from "@lib/schemas/EventScope.ts";
-import { z } from "astro:content";
+import { EventScopeSchema } from "@lib/schemas/EventScope";
+import { z } from "zod";
 import { FIENTA_API_KEY } from "astro:env/server";
 import CourseList from "@components/CourseList.astro";
 import { FientaAPI } from "@lib/api/FientaAPI";

@@ -10,7 +10,7 @@ import { getNavLinks } from "@lib/navigation";
 import Link from "@components/Link.astro";
 import defaultOgImage from "@lib/assets/og.png";
 import { getImage } from "astro:assets";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import {
   ENABLE_WEGLOT,
   ENABLE_VIEW_TRANSITIONS,
@@ -120,7 +120,7 @@ const optimizedOgImage = await getImage({
         <WeGlotScript apiKey={WEGLOT_API_KEY} />
       )
     }
-    {ENABLE_VIEW_TRANSITIONS && <ViewTransitions />}
+    {ENABLE_VIEW_TRANSITIONS && <ClientRouter />}
     {ENABLE_POSTHOG && <Posthog projectApiKey={POSTHOG_PROJECT_API_KEY} />}
   </head>
   <body>

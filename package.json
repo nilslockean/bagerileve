@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm --filter \"@bagerileve/svelte\" dev",
+    "dev": "pnpm dev:frontend && pnpm dev:backend",
     "dev:frontend": "pnpm --filter \"@bagerileve/astro\" dev",
-    "dev:admin": "pnpm --filter \"@bagerileve/sanity\" dev",
+    "dev:backend": "pnpm --filter \"@bagerileve/sanity\" dev",
     "test": "pnpm --filter \"@bagerileve/*\" test",
     "prepare": "husky"
   },

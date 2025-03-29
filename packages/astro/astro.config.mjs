@@ -1,4 +1,3 @@
-import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
 import sanity from "@sanity/astro";
 import { defineConfig } from "astro/config";
@@ -11,7 +10,6 @@ import { SANITY_PROJECT_ID, SANITY_DATASET } from "@bagerileve/shared";
 // https://astro.build/config
 export default defineConfig({
   site: "https://bagerileve.se",
-  output: "hybrid",
   adapter: cloudflare({
     platformProxy: {
       enabled: true,
@@ -19,7 +17,6 @@ export default defineConfig({
     imageService: "passthrough",
   }),
   integrations: [
-    svelte(),
     tailwind({
       applyBaseStyles: false,
     }),
@@ -34,49 +31,48 @@ export default defineConfig({
       filter: (page) => !page.includes("/partials/"),
     }),
   ],
-  experimental: {
-    env: {
-      schema: {
-        BEHOLD_FEED_ID: envField.string({
-          context: "server",
-          access: "public",
-          optional: true,
-        }),
-        FIENTA_API_KEY: envField.string({
-          context: "server",
-          access: "secret",
-        }),
-        ENABLE_WEGLOT: envField.boolean({
-          context: "server",
-          access: "public",
-          optional: true,
-          default: false,
-        }),
-        WEGLOT_API_KEY: envField.string({
-          context: "server",
-          access: "public",
-          optional: true,
-          default: "wg_137e3716c0aa4f3c19e9f429cfbb510b2",
-        }),
-        ENABLE_VIEW_TRANSITIONS: envField.boolean({
-          context: "server",
-          access: "public",
-          optional: true,
-          default: false,
-        }),
-        ENABLE_POSTHOG: envField.boolean({
-          context: "server",
-          access: "public",
-          optional: true,
-          default: true,
-        }),
-        POSTHOG_PROJECT_API_KEY: envField.string({
-          context: "server",
-          access: "public",
-          optional: true,
-          default: "phc_FpOtrZTQsFj3URscXo70ak6KyVRM1kAe5t8zqmS0r9r",
-        }),
-      },
+  env: {
+    schema: {
+      BEHOLD_FEED_ID: envField.string({
+        context: "server",
+        access: "public",
+        optional: true,
+      }),
+      FIENTA_API_KEY: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+      ENABLE_WEGLOT: envField.boolean({
+        context: "server",
+        access: "public",
+        optional: true,
+        default: false,
+      }),
+      WEGLOT_API_KEY: envField.string({
+        context: "server",
+        access: "public",
+        optional: true,
+        default: "wg_137e3716c0aa4f3c19e9f429cfbb510b2",
+      }),
+      ENABLE_VIEW_TRANSITIONS: envField.boolean({
+        context: "server",
+        access: "public",
+        optional: true,
+        default: false,
+      }),
+      ENABLE_POSTHOG: envField.boolean({
+        context: "server",
+        access: "public",
+        optional: true,
+        default: true,
+      }),
+      POSTHOG_PROJECT_API_KEY: envField.string({
+        context: "server",
+        access: "public",
+        optional: true,
+        default: "phc_FpOtrZTQsFj3URscXo70ak6KyVRM1kAe5t8zqmS0r9r",
+      }),
     },
   },
+  experimental: {},
 });
