@@ -53,12 +53,12 @@ describe("SanityAPI", () => {
     const hours = [
       { day: "tisdag - fredag", time: "11-18" },
       { day: "lördag", time: "9-16" },
-      { day: "söndag - måndag", time: "stängt" },
+      { day: "söndag - måndag", closed: true },
     ];
     const irregular = [
       { date: "2022-02-01", time: "10-15" },
       { date: "2022-12-31", time: "10-15" },
-      { date: "2023-12-24", time: "stängt" },
+      { date: "2023-12-24", closed: true },
       { date: "2023-12-25", time: "10-15" },
     ];
 
@@ -74,7 +74,11 @@ describe("SanityAPI", () => {
 
     const result = await api.getOpeningHours();
     expect(result.title).toEqual(title);
-    expect(result.hours).toStrictEqual(hours);
+    expect(result.hours).toStrictEqual([
+      { day: "tisdag - fredag", time: "11-18" },
+      { day: "lördag", time: "9-16" },
+      { day: "söndag - måndag", closed: true },
+    ]);
     expect(result.irregular?.length).toBe(2);
     expect(result.irregular![0].date).toEqual("2023-12-24");
     expect(result.irregular![1].date).toEqual("2023-12-25");

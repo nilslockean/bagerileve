@@ -8,7 +8,7 @@ export const OpeningHoursSchema = z
         z.object({
           day: z.string(),
           time: z.string().optional().nullable(),
-          closed: z.boolean().default(false),
+          closed: z.boolean().optional(),
         })
       ),
       irregular: z
@@ -17,7 +17,7 @@ export const OpeningHoursSchema = z
             name: z.string().optional().nullable(),
             date: z.string(),
             time: z.string().optional().nullable(),
-            closed: z.boolean().default(false),
+            closed: z.boolean().optional(),
             formattedDate: z.string().optional().nullable(),
           })
         )
