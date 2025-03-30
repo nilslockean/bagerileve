@@ -1,11 +1,11 @@
-import {BasketIcon} from '@sanity/icons'
+import {OlistIcon} from '@sanity/icons'
 import {SchemaTypeDefinition} from 'sanity'
 
 export default <SchemaTypeDefinition>{
   name: 'orderTerms',
   type: 'document',
   title: 'Beställningsvillkor',
-  icon: BasketIcon,
+  icon: OlistIcon,
   fields: [
     {
       name: 'title',
@@ -22,12 +22,6 @@ export default <SchemaTypeDefinition>{
       title: 'Ordning',
       name: 'sortOrder',
       type: 'number',
-    },
-    {
-      title: 'Språk',
-      name: 'language',
-      type: 'string',
-      readOnly: true,
     },
   ],
   orderings: [

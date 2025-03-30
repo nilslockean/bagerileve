@@ -20,7 +20,7 @@ const hasIrregularHours = data.irregular && data.irregular.length > 0;
       data.hours.map((row) => (
         <tr class="border-b-2 border-current last:border-none">
           <td class="py-2">{row.day}</td>
-          <td class="text-right py-2">{row.time}</td>
+          <td class="text-right py-2">{row.closed ? "stängt" : row.time}</td>
         </tr>
       ))
     }
@@ -42,7 +42,9 @@ const hasIrregularHours = data.irregular && data.irregular.length > 0;
                   <small class="opacity-75">{row.name}</small>
                 )}
               </td>
-              <td class="text-right py-1 align-baseline">{row.time}</td>
+              <td class="text-right py-1 align-baseline">
+                {row.closed ? "stängt" : row.time}
+              </td>
             </tr>
           ))}
         </table>
