@@ -187,12 +187,22 @@ export default defineType({
     }),
     // End content
 
+    // Start max quantity per order
+    defineField({
+      name: 'maxQuantityPerOrder',
+      type: 'number',
+      title: 'Max antal per order',
+      description: 'Max antal av produkten som kan köpas i en beställning (0 = obegränsat)',
+      initialValue: 5,
+      validation: (Rule) => Rule.positive(),
+    }),
+
     // Start enabled
     defineField({
       name: 'enabled',
       type: 'boolean',
       title: 'Aktiverad',
-      description: 'Visa produkten på hemsidan',
+      description: 'Visa produkten på hemsidan?',
       initialValue: true,
     }),
     // End enabled
