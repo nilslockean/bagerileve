@@ -2,35 +2,13 @@
 
 <a id="readme-top"></a>
 
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-
-<br />
-<div align="center">
-    <img src="./images/logo.png" alt="Logo" width="304" height="159">
-
-<h3 align="center">Bageri Leve</h3>
-
-  <p align="center">
-    Website for artisan bakery Leve in Malmö, Sweden. Optimised for speed and simplicity.
-  </p>
-</div>
-
-<!-- ABOUT THE PROJECT -->
-
-## About The Project
-
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+# Bageri Leve
 
-### Built With
+Website for artisan bakery Leve in Malmö, Sweden. Optimised for speed and simplicity.
+
+**Built with:**
 
 - [![Sanity][Sanity]][Sanity-url]
 - [![Astro][Astro.build]][Astro-url]
