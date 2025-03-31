@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm dev:frontend && pnpm dev:backend",
     "dev:frontend": "pnpm --filter \"@bagerileve/astro\" dev",
     "dev:backend": "pnpm --filter \"@bagerileve/sanity\" dev",
     "test": "pnpm --filter \"@bagerileve/*\" test",
