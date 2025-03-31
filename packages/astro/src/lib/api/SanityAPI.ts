@@ -101,8 +101,6 @@ export class SanityAPI {
         });
     }
 
-    console.log(openingHours.irregular);
-
     return openingHours;
   }
 }

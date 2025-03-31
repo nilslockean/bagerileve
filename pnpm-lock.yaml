@@ -67,6 +67,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      htmx.org:
+        specifier: 2.0.4
+        version: 2.0.4
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -7081,6 +7084,12 @@ packages:
     resolution:
       {
         integrity: sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg==,
+      }
+
+  htmx.org@2.0.4:
+    resolution:
+      {
+        integrity: sha512-HLxMCdfXDOJirs3vBZl/ZLoY+c7PfM4Ahr2Ad4YXh6d22T5ltbTXFFkpx9Tgb2vvmWFMbIc3LqN2ToNkZJvyYQ==,
       }
 
   http-cache-semantics@4.1.1:
@@ -17502,6 +17511,8 @@ snapshots:
       void-elements: 3.1.0
 
   html-void-elements@3.0.0: {}
+
+  htmx.org@2.0.4: {}
 
   http-cache-semantics@4.1.1: {}
 

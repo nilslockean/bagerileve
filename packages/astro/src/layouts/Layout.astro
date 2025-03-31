@@ -23,6 +23,7 @@ import FientaEmbedScript from "@components/FientaEmbedScript.astro";
 import { getCanonicalUrl } from "@lib/canonicalUrl";
 import { sanityAPI } from "@lib/sanityAPI";
 import Posthog from "@components/Posthog.astro";
+import HtmxScript from "@components/HtmxScript.astro";
 
 interface Props {
   title: string;
@@ -102,17 +103,7 @@ const optimizedOgImage = await getImage({
     <link rel="canonical" href={canonical} />
 
     {!isProduction && <meta name="robots" content="noindex,nofollow" />}
-    {
-      htmx && (
-        <script
-          is:inline
-          src="https://unpkg.com/htmx.org@2.0.2"
-          integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
-          crossorigin="anonymous"
-          defer
-        />
-      )
-    }
+    {htmx && <HtmxScript />}
 
     <FientaEmbedScript />
     {
