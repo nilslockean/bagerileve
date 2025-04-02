@@ -1,0 +1,66 @@
+---
+import Section from "@components/Section.astro";
+import Layout from "../../layouts/Layout.astro";
+import { getImage } from "astro:assets";
+import bakerImage from "@lib/assets/bagare.webp";
+import IntroText from "@components/IntroText.astro";
+import { FIENTA_API_KEY } from "astro:env/server";
+import ButtonLink from "@components/ButtonLink.astro";
+import Button from "@components/Button.astro";
+import Hero from "@components/Hero.astro";
+import { FientaAPI } from "@lib/api/FientaAPI";
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const id = Number(slug);
+if (isNaN(id)) {
+  return Astro.rewrite("/404");
+}
+
+const api = new FientaAPI(FIENTA_API_KEY, import.meta.env.PROD);
+const course = await api.getCourse(id);
+const courseInfo = course.status === "success" ? course.course : undefined;
+
+if (!courseInfo) {
+  return Astro.rewrite("/404");
+}
+
+const { title, description, dates, soldOut, salesEnded, url } = courseInfo;
+
+const hasBooking = !soldOut && !salesEnded;
+const intro = `${dates}`;
+
+// Fall back on baker image if no course image is available
+const image =
+  courseInfo.image || (await getImage({ src: bakerImage, format: "webp" })).src;
+---
+
+<Layout title={title} metaDescription={intro} fullwidth>
+  <Hero image={image}>
+    <h1>{title}</h1>
+    <IntroText>
+      {intro}
+    </IntroText>
+    <div>
+      {
+        hasBooking ? (
+          <ButtonLink href={url} data-cta="primary">
+            Boka nu
+          </ButtonLink>
+        ) : (
+          <Button disabled>
+            {salesEnded
+              ? "Biljettförsäljningen har stängt"
+              : "Tyvärr, biljetterna är slutsålda"}
+          </Button>
+        )
+      }
+    </div>
+  </Hero>
+
+  <Section class="my-16">
+    <div class="max-w-prose text-lg" set:html={description} />
+    {hasBooking && <ButtonLink href={url}>Boka nu</ButtonLink>}
+  </Section>
+</Layout>

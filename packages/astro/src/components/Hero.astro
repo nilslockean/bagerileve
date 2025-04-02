@@ -1,0 +1,62 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Section from "./Section.astro";
+import type { VideoName } from "./Video.astro";
+import Video from "./Video.astro";
+import { cn } from "@lib/cn";
+
+interface Props extends HTMLAttributes<"section"> {
+  video?: VideoName;
+  videoPoster?: string;
+  image?: string;
+  center?: boolean;
+}
+
+const {
+  video,
+  videoPoster,
+  class: className,
+  image,
+  center,
+  ...rest
+} = Astro.props;
+const style = image ? `background-image:url('${image}');` : null;
+---
+
+<Section
+  {...rest}
+  fullwidth
+  class="relative flex items-center py-16 lg:aspect-video bg-fixed bg-center bg-no-repeat bg-cover"
+  style={style}
+>
+  {
+    video && (
+      <Video
+        name={video}
+        poster={videoPoster}
+        muted
+        playsinline
+        autoplay
+        loop
+        class="h-full w-full absolute inset-y-0 inset-x-0 z-10 object-cover"
+      />
+    )
+  }
+
+  <!-- Color overlay -->
+  <div
+    class="absolute top-0 right-0 left-0 bottom-0 inset-0 bg-blue-950 opacity-50 z-20 w-full"
+  >
+  </div>
+
+  <div
+    class={cn(
+      "z-30 flex flex-col items-start p-6 w-full max-w-screen-xl mx-auto text-orange-50",
+      {
+        "text-center items-center": center,
+      }
+    )}
+  >
+    <slot />
+  </div>
+</Section>

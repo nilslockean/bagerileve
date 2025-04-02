@@ -1,5 +1,6 @@
 ---
 import Accordion from "@components/Accordion.astro";
+import ButtonLink from "@components/ButtonLink.astro";
 import IconList from "@components/IconList.astro";
 import IconListItem from "@components/IconListItem.astro";
 import IntroText from "@components/IntroText.astro";
@@ -7,7 +8,7 @@ import Link from "@components/Link.astro";
 import OpeningHours from "@components/OpeningHours.astro";
 import Section from "@components/Section.astro";
 import { IconName } from "@lib/enums/IconName";
-import { fetchFaq, fetchOpeningHours } from "@lib/sanity";
+import { sanityAPI } from "@lib/sanityAPI";
 import { PortableText } from "astro-portabletext";
 import config from "src/config";
 import Layout from "src/layouts/Layout.astro";
@@ -18,8 +19,8 @@ const phoneLink = `tel:${contact.phone
   .replace(/[\s-]/g, "")}`;
 const emailLink = `mailto:${contact.email}`;
 
-const faq = await fetchFaq();
-const openingHours = await fetchOpeningHours();
+const faq = await sanityAPI.getFaq();
+const openingHours = await sanityAPI.getOpeningHours();
 ---
 
 <Layout
@@ -35,12 +36,8 @@ const openingHours = await fetchOpeningHours();
     <div class="max-w-prose">
       <h2 class="mb-8">Vanliga frågor</h2>
       {
-        faq.map(({ question, answer }, i) => (
-          <Accordion
-            id={`faq-${i}`}
-            title={question}
-            class="mb-4 last:mb-0 portable-text"
-          >
+        faq.map(({ question, answer }) => (
+          <Accordion title={question} class="mb-4 last:mb-0 portable-text">
             <PortableText value={answer} />
           </Accordion>
         ))
@@ -52,35 +49,55 @@ const openingHours = await fetchOpeningHours();
     </div>
   </Section>
 
-  <Section>
-    <h2>Kontaktuppgifter</h2>
-    <p class="mb-4">
-      Vill du beställa något går det fint att ringa till oss. Vi svarar i
-      telefon tisdag-lördag hela dagarna om inget annat anges här.
-    </p>
-    <p class="mb-4">
-      Vi tar inte emot munkbeställningar på fredagar, bara fram till torsdag
-      kväll. Det går inte att beställa via e-post.
-    </p>
-    <IconList>
-      <IconListItem icon={IconName.PHONE}>
-        <Link href={phoneLink}> {contact.phone}</Link>
-      </IconListItem>
-      <IconListItem icon={IconName.ENVELOPE}>
-        <Link href={emailLink}>{contact.email}</Link>
-      </IconListItem>
-      <IconListItem icon={IconName.MAP_PIN}>
-        <p>
-          {contact.address.street}
-          <br />{contact.address.zip}
-          {contact.address.city}
-        </p>
-      </IconListItem>
-    </IconList>
-    <div class="flex flex-wrap gap-2 mt-4">
-      <Link href={contact.address.googleMaps}>Google Maps</Link>
-      <span>/</span>
-      <Link href={contact.address.appleMaps}>Apple Maps</Link>
+  <Section class="lg:mt-8 grid lg:grid-cols-2 gap-8">
+    <div class="bg-orange-100 dark:bg-blue-950 max-w-prose p-6 lg:p-12">
+      <h2>Söker du jobb?</h2>
+      <p>
+        Skulle det dyka upp lediga tjänster annonseras detta på Instagram.
+        Skicka in din ansökan till <Link href="mailto:jobb@bagerileve.se"
+          >jobb@bagerileve.se</Link
+        >när en tjänst dyker upp om du är intresserad.
+      </p>
+      <ButtonLink
+        href="https://www.instagram.com/bagerileve"
+        target="_blank"
+        rel="noreferrer"
+        variant="outline"
+        class="border-4"
+      >
+        Följ @bagerileve
+      </ButtonLink>
+    </div>
+    <div>
+      <h2>Kontaktuppgifter</h2>
+      <p class="mb-4">
+        Vill du beställa något går det fint att ringa till oss. Vi svarar i
+        telefon tisdag-lördag hela dagarna om inget annat anges här.
+      </p>
+      <p class="mb-4">
+        Vi tar inte emot munkbeställningar på fredagar, bara fram till torsdag
+        kväll. Det går inte att beställa via e-post.
+      </p>
+      <IconList>
+        <IconListItem icon={IconName.PHONE}>
+          <Link href={phoneLink}> {contact.phone}</Link>
+        </IconListItem>
+        <IconListItem icon={IconName.ENVELOPE}>
+          <Link href={emailLink}>{contact.email}</Link>
+        </IconListItem>
+        <IconListItem icon={IconName.MAP_PIN}>
+          <p>
+            {contact.address.street}
+            <br />{contact.address.zip}
+            {contact.address.city}
+          </p>
+        </IconListItem>
+      </IconList>
+      <div class="flex flex-wrap gap-2 mt-4">
+        <Link href={contact.address.googleMaps}>Google Maps</Link>
+        <span>/</span>
+        <Link href={contact.address.appleMaps}>Apple Maps</Link>
+      </div>
     </div>
   </Section>
 </Layout>

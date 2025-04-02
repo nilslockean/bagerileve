@@ -2,20 +2,21 @@
 import ButtonLink from "@components/ButtonLink.astro";
 import Section from "@components/Section.astro";
 import Layout from "src/layouts/Layout.astro";
-import { fetchOrderTerms } from "@lib/sanity";
 import Accordion from "@components/Accordion.astro";
 import { PortableText } from "astro-portabletext";
 import IntroText from "@components/IntroText.astro";
 import Video, { VideoName } from "@components/Video.astro";
 import { getImage } from "astro:assets";
 import videoPoster from "@lib/assets/Munk-4-poster.jpg";
+import { sanityAPI } from "@lib/sanityAPI";
+import GartnerFilm from "@components/GartnerFilm.astro";
 
 const optimizedVideoPoster = await getImage({
   src: videoPoster,
   format: "webp",
 });
 
-const orderTerms = await fetchOrderTerms();
+const orderTerms = await sanityAPI.getOrderTerms();
 ---
 
 <Layout
@@ -31,12 +32,15 @@ const orderTerms = await fetchOrderTerms();
       garanterad en munk!
     </IntroText>
     <div class="grid lg:grid-cols-2 gap-8">
-      <Video
-        name={VideoName.Munk4}
-        class="w-full"
-        controls
-        poster={optimizedVideoPoster.src}
-      />
+      <div>
+        <Video
+          name={VideoName.Munk4}
+          class="w-full"
+          controls
+          poster={optimizedVideoPoster.src}
+        />
+        <GartnerFilm />
+      </div>
 
       <div>
         <div class="p-4 border-4 border-current max-w-prose">
@@ -65,6 +69,7 @@ const orderTerms = await fetchOrderTerms();
           href="https://web.trueapp.se/bagerileve/store1/"
           target="_blank"
           rel="noreferrer"
+          data-cta="primary"
         >
           Till online-beställningen
         </ButtonLink>
@@ -74,12 +79,8 @@ const orderTerms = await fetchOrderTerms();
   <Section>
     <h2 class="mb-8">Beställningsvillkor</h2>
     {
-      orderTerms.map(({ title, content, sortOrder }) => (
-        <Accordion
-          id={`order-term-${sortOrder}`}
-          title={title}
-          class="mb-4 last:mb-0 portable-text"
-        >
+      orderTerms.map(({ title, content }) => (
+        <Accordion title={title} class="mb-4 last:mb-0 portable-text">
           <PortableText value={content} />
         </Accordion>
       ))

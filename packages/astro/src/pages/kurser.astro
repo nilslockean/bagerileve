@@ -56,6 +56,15 @@ const intro =
     </div>
   </Section>
 
+  <Section>
+    <div
+      hx-get="/partials/events?scope=past&title=Tidigare kurser"
+      hx-trigger="revealed"
+    >
+      Hämtar tidigare kurser...
+    </div>
+  </Section>
+
   <style>
     p {
       @apply max-w-prose;

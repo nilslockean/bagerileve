@@ -1,0 +1,25 @@
+---
+import { cn } from "@lib/cn";
+import type { ButtonVariant } from "@lib/types/ButtonVariant";
+import type { HTMLAttributes } from "astro/types";
+import { buttonStyles } from "@lib/buttonStyles";
+
+interface Props extends HTMLAttributes<"button"> {
+  variant?: ButtonVariant;
+}
+
+const { variant = "default", class: className, ...rest } = Astro.props;
+---
+
+<button
+  {...rest}
+  class={cn(
+    buttonStyles(variant),
+    {
+      "cursor-not-allowed": rest.disabled,
+    },
+    className
+  )}
+>
+  <slot />
+</button>

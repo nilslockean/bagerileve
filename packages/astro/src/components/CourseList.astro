@@ -1,0 +1,39 @@
+---
+import type { Course as ICourse } from "@lib/schemas/Course";
+import Course from "./Course.astro";
+import type { EventScope } from "@lib/schemas/EventScope";
+
+interface Props {
+  courses: ICourse[];
+  showEmpty: boolean;
+  scope: EventScope;
+  title?: string;
+}
+
+const { courses, showEmpty, title, scope } = Astro.props;
+const hasCourses = courses.length > 0;
+const showTitle = hasCourses || (!hasCourses && showEmpty);
+
+// Sort courses by descending start date if not upcoming
+if (scope !== "upcoming") {
+  courses.sort((a, b) => {
+    if (a.start === b.start) {
+      return 0;
+    }
+
+    return a.start > b.start ? -1 : 1;
+  });
+}
+---
+
+{showTitle && <h2>{title}</h2>}
+{
+  hasCourses && (
+    <div class="flex flex-1 gap-4 flex-wrap">
+      {courses.map((course) => (
+        <Course {course} class="mt-4 max-w-prose basis-2/4 grow" />
+      ))}
+    </div>
+  )
+}
+{showEmpty && !hasCourses && <p>Inga kurser inplanerade just nu.</p>}

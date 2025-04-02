@@ -6,16 +6,24 @@ import config, { SiteLanguage } from "../config";
 import { LogoSize } from "@lib/enums/LogoSize";
 import NavLinks from "@components/NavLinks.astro";
 import OpeningHours from "@components/OpeningHours.astro";
-import { fetchOpeningHours } from "@lib/sanity";
 import { getNavLinks } from "@lib/navigation";
 import Link from "@components/Link.astro";
 import defaultOgImage from "@lib/assets/og.png";
 import { getImage } from "astro:assets";
-import { ViewTransitions } from "astro:transitions";
-import { ENABLE_WEGLOT, ENABLE_VIEW_TRANSITIONS } from "astro:env/server";
+import { ClientRouter } from "astro:transitions";
+import {
+  ENABLE_WEGLOT,
+  ENABLE_VIEW_TRANSITIONS,
+  ENABLE_POSTHOG,
+  POSTHOG_PROJECT_API_KEY,
+  WEGLOT_API_KEY,
+} from "astro:env/server";
 import WeGlotScript from "@components/WeGlotScript.astro";
 import FientaEmbedScript from "@components/FientaEmbedScript.astro";
 import { getCanonicalUrl } from "@lib/canonicalUrl";
+import { sanityAPI } from "@lib/sanityAPI";
+import Posthog from "@components/Posthog.astro";
+import HtmxScript from "@components/HtmxScript.astro";
 
 interface Props {
   title: string;
@@ -41,7 +49,7 @@ const isProduction = import.meta.env.PROD;
 const _getNavLinks = (area: NavArea) =>
   getNavLinks(area, config.navigation, pathname);
 
-const openingHours = await fetchOpeningHours();
+const openingHours = await sanityAPI.getOpeningHours();
 const { address } = config.contact;
 
 const title = `${pageTitle} • ${description}`;
@@ -95,21 +103,16 @@ const optimizedOgImage = await getImage({
     <link rel="canonical" href={canonical} />
 
     {!isProduction && <meta name="robots" content="noindex,nofollow" />}
-    {
-      htmx && (
-        <script
-          is:inline
-          src="https://unpkg.com/htmx.org@2.0.2"
-          integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
-          crossorigin="anonymous"
-          defer
-        />
-      )
-    }
+    {htmx && <HtmxScript />}
 
     <FientaEmbedScript />
-    {ENABLE_WEGLOT && <WeGlotScript />}
-    {ENABLE_VIEW_TRANSITIONS && <ViewTransitions />}
+    {
+      ENABLE_WEGLOT && WEGLOT_API_KEY && (
+        <WeGlotScript apiKey={WEGLOT_API_KEY} />
+      )
+    }
+    {ENABLE_VIEW_TRANSITIONS && <ClientRouter />}
+    {ENABLE_POSTHOG && <Posthog projectApiKey={POSTHOG_PROJECT_API_KEY} />}
   </head>
   <body>
     <header

@@ -3,7 +3,6 @@ import ButtonLink from "@components/ButtonLink.astro";
 import Section from "@components/Section.astro";
 import OpeningHours from "@components/OpeningHours.astro";
 import Layout from "../layouts/Layout.astro";
-import { fetchOpeningHours } from "@lib/sanity";
 import InstagramFeed from "@components/InstagramFeed.astro";
 import breadImage from "@lib/assets/brod.jpg";
 import IntroText from "@components/IntroText.astro";
@@ -13,6 +12,9 @@ import Video, { VideoName } from "@components/Video.astro";
 import { getImage } from "astro:assets";
 import heroVideoPoster from "@lib/assets/BrodTrim-poster.jpg";
 import footerVideoPoster from "@lib/assets/Kanelbulle-poster.jpg";
+import Hero from "@components/Hero.astro";
+import { sanityAPI } from "@lib/sanityAPI";
+import GartnerFilm from "@components/GartnerFilm.astro";
 
 const optimizedHeroVideoPoster = await getImage({
   src: heroVideoPoster,
@@ -23,10 +25,7 @@ const optimizedFooterVideoPoster = await getImage({
   format: "webp",
 });
 
-const openingHours = await fetchOpeningHours();
-const hasIrregularHours =
-  openingHours.irregular && openingHours.irregular.length > 0;
-
+const openingHours = await sanityAPI.getOpeningHours();
 const instagramFeedId = BEHOLD_FEED_ID;
 ---
 
@@ -37,42 +36,22 @@ const instagramFeedId = BEHOLD_FEED_ID;
   htmx
   fullwidth
 >
-  <Section fullwidth class="relative flex items-center py-16 lg:aspect-video">
-    <Video
-      id="hero-video"
-      name={VideoName.BrodTrim}
-      poster={optimizedHeroVideoPoster.src}
-      muted
-      playsinline
-      autoplay
-      loop
-      class="h-full w-full absolute inset-y-0 inset-x-0 z-10 object-cover"
-    />
-
-    <!-- Color overlay -->
-    <div
-      id="hero-video-overlay"
-      class="absolute top-0 right-0 left-0 bottom-0 inset-0 bg-blue-950 opacity-50 z-20 w-full"
-    >
+  <Hero video={VideoName.BrodTrim} videoPoster={optimizedHeroVideoPoster.src}>
+    <h1>Ett hantverksbageri i hjärtat av Malmö</h1>
+    <IntroText>
+      Surdegsbröd ur ugnen på eftermiddagen och allt vi bakar är växtbaserat.
+    </IntroText>
+    <div>
+      <ButtonLink href="/bestall" variant="primary" data-cta="primary"
+        >Beställ fredagsmunk</ButtonLink
+      >
+      <ButtonLink
+        href="#oppettider"
+        variant="outline-light"
+        data-cta="secondary">Kolla öppettiderna</ButtonLink
+      >
     </div>
-
-    <div
-      class="z-30 flex flex-col items-start p-6 w-full max-w-screen-2xl mx-auto text-orange-50"
-    >
-      <h1>Ett hantverksbageri i hjärtat av Malmö</h1>
-      <IntroText>
-        Surdegsbröd ur ugnen på eftermiddagen och allt vi bakar är växtbaserat.
-      </IntroText>
-      <div>
-        <ButtonLink href="/bestall" variant="primary"
-          >Beställ fredagsmunk</ButtonLink
-        >
-        <ButtonLink href="#oppettider" variant="outline-light"
-          >Kolla öppettiderna</ButtonLink
-        >
-      </div>
-    </div>
-  </Section>
+  </Hero>
 
   <Section id="oppettider" class="lg:mt-8 grid lg:grid-cols-2 gap-8">
     <div>
@@ -141,6 +120,7 @@ const instagramFeedId = BEHOLD_FEED_ID;
   }
 
   <Section fullwidth>
+    <GartnerFilm class="pl-4 pb-0" />
     <Video
       id="footer-video"
       class="w-full"

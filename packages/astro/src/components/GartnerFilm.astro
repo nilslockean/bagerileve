@@ -1,0 +1,21 @@
+---
+import { cn } from "@lib/cn";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"p"> {
+  text?: string;
+}
+
+const {
+  text = "Film av Gartner Film",
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<p {...rest} class={cn("p-2 px-0 text-sm", className)}>
+  <a
+    href="https://gartnerfilm.se"
+    class="opacity-80 hover:opacity-100 underline">{text}</a
+  >
+</p>

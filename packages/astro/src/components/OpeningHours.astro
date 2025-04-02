@@ -20,7 +20,7 @@ const hasIrregularHours = data.irregular && data.irregular.length > 0;
       data.hours.map((row) => (
         <tr class="border-b-2 border-current last:border-none">
           <td class="py-2">{row.day}</td>
-          <td class="text-right py-2">{row.time}</td>
+          <td class="text-right py-2">{row.closed ? "stängt" : row.time}</td>
         </tr>
       ))
     }
@@ -34,15 +34,17 @@ const hasIrregularHours = data.irregular && data.irregular.length > 0;
         </p>
         <table class="table-auto w-full">
           {data.irregular.slice(0, irregularLimit).map((row) => (
-            <tr class="@xl:border-b-2 border-current last:border-none">
+            <tr class="border-b @xl:border-b-2 border-current last:border-none">
               <td class="py-1">
-                {row.date}
+                {row.formattedDate || row.date}
                 <br />
                 {row.name !== undefined && (
                   <small class="opacity-75">{row.name}</small>
                 )}
               </td>
-              <td class="text-right py-1 align-baseline">{row.time}</td>
+              <td class="text-right py-1 align-baseline">
+                {row.closed ? "stängt" : row.time}
+              </td>
             </tr>
           ))}
         </table>
