@@ -200,6 +200,24 @@ export default defineType({
       initialValue: 5,
       validation: (Rule) => Rule.positive(),
     }),
+    // End max quantity per order
+
+    // Start pickp date limitation
+    defineField({
+      name: 'pickupDates',
+      title: 'Begränsa datum för upphämtning',
+      description:
+        'Ange datum som produkten kan hämtas. Om inget datum anges kan produkten hämtas under ordinarie öppettider, med minst två dagars framförhållning.',
+      type: 'array',
+      of: [
+        {
+          name: 'date',
+          type: 'date',
+          title: 'Datum',
+          validation: (Rule) => Rule.required(),
+        },
+      ],
+    }),
 
     // Start outOfStock
     defineField({
