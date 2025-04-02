@@ -1,7 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {ComponentIcon} from '@sanity/icons'
 import {BasketIcon} from '@sanity/icons'
-import {EyeClosedIcon} from '@sanity/icons'
 import {TagIcon} from '@sanity/icons'
 
 const currenyFormatter = new Intl.NumberFormat('sv-SE', {
@@ -31,14 +30,19 @@ export default defineType({
       title: 'title',
       images: 'images',
       prices: 'prices',
-      enabled: 'enabled',
+      outOfStock: 'outOfStock',
     },
     prepare(selection) {
+      let title = selection.title
+      if (selection.outOfStock) {
+        title += ` (fullbokad)`
+      }
+
       return {
-        title: selection.title,
+        title: title,
         icon: ComponentIcon,
         subtitle: formatPrice(selection.prices),
-        media: !selection.enabled ? EyeClosedIcon : selection.images?.[0],
+        media: selection.images?.[0],
       }
     },
   },
@@ -196,15 +200,33 @@ export default defineType({
       initialValue: 5,
       validation: (Rule) => Rule.positive(),
     }),
+    // End max quantity per order
 
-    // Start enabled
+    // Start pickp date limitation
     defineField({
-      name: 'enabled',
-      type: 'boolean',
-      title: 'Aktiverad',
-      description: 'Visa produkten på hemsidan?',
-      initialValue: true,
+      name: 'pickupDates',
+      title: 'Begränsa datum för upphämtning',
+      description:
+        'Ange datum som produkten kan hämtas. Om inget datum anges kan produkten hämtas under ordinarie öppettider, med minst två dagars framförhållning.',
+      type: 'array',
+      of: [
+        {
+          name: 'date',
+          type: 'date',
+          title: 'Datum',
+          validation: (Rule) => Rule.required(),
+        },
+      ],
     }),
-    // End enabled
+
+    // Start outOfStock
+    defineField({
+      name: 'outOfStock',
+      type: 'boolean',
+      title: 'Fullbokad',
+      description: 'Kryssa i om produkten är slut i lager och inte ska gå att beställa.',
+      initialValue: false,
+    }),
+    // End outOfStock
   ],
 })
