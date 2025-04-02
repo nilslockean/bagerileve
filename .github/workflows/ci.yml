@@ -16,30 +16,52 @@ jobs:
       matrix:
         node-version: [20]
     steps:
+      # Checkout repository
       - uses: actions/checkout@v4
+
+      # Install pnpm (add caching to avoid repeated downloads)
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9
+
+      # Setup Node with caching enabled
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+          cache: "pnpm" # Use pnpm's cache for dependencies
+
+      # Cache .pnpm-store
+      - name: Cache pnpm store
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      # Install dependencies (leveraging cache)
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
+
+      # Save secrets to .dev.vars and .env
       - name: Save secrets to .dev.vars and .env
         run: |
-          touch .dev.vars
-          echo "FIENTA_API_KEY=${{ secrets.FIENTA_API_KEY }}" >> .dev.vars
+          echo "FIENTA_API_KEY=${{ secrets.FIENTA_API_KEY }}" > .dev.vars
           cp .dev.vars .env
-          echo ".dev.vars file contents:"
-          cat .dev.vars
-          echo ".env file contents:"
-          cat .env
+
+      # Build Astro
       - name: Build Astro
         run: pnpm build
+
+      # Install Playwright Browsers (optimized to skip if already installed)
       - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
+        run: |
+          if [ ! -d ~/.cache/ms-playwright ]; then
+            pnpm exec playwright install --with-deps
+          fi
+
+      # Run all tests
       - name: Run all tests
         run: pnpm test
