@@ -1,7 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {ComponentIcon} from '@sanity/icons'
 import {BasketIcon} from '@sanity/icons'
-import {EyeClosedIcon} from '@sanity/icons'
 import {TagIcon} from '@sanity/icons'
 
 const currenyFormatter = new Intl.NumberFormat('sv-SE', {
@@ -31,14 +30,19 @@ export default defineType({
       title: 'title',
       images: 'images',
       prices: 'prices',
-      enabled: 'enabled',
+      outOfStock: 'outOfStock',
     },
     prepare(selection) {
+      let title = selection.title
+      if (selection.outOfStock) {
+        title += ` (fullbokad)`
+      }
+
       return {
-        title: selection.title,
+        title: title,
         icon: ComponentIcon,
         subtitle: formatPrice(selection.prices),
-        media: !selection.enabled ? EyeClosedIcon : selection.images?.[0],
+        media: selection.images?.[0],
       }
     },
   },
@@ -197,14 +201,14 @@ export default defineType({
       validation: (Rule) => Rule.positive(),
     }),
 
-    // Start enabled
+    // Start outOfStock
     defineField({
-      name: 'enabled',
+      name: 'outOfStock',
       type: 'boolean',
-      title: 'Aktiverad',
-      description: 'Visa produkten på hemsidan?',
-      initialValue: true,
+      title: 'Fullbokad',
+      description: 'Kryssa i om produkten är slut i lager och inte ska gå att beställa.',
+      initialValue: false,
     }),
-    // End enabled
+    // End outOfStock
   ],
 })
