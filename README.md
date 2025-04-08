@@ -12,7 +12,6 @@ Website for artisan bakery Leve in Malmö, Sweden. Optimised for speed and simpl
 
 - [![Sanity][Sanity]][Sanity-url]
 - [![Astro][Astro.build]][Astro-url]
-- [![HTMX][HTMX]][HTMX-url]
 - [![PostHog][PostHog]][PostHog-url]
 - [![Cloudflare][Cloudflare]][Cloudflare-url]
 - [![Tailwind][Tailwind]][Tailwind-url]
@@ -78,8 +77,6 @@ Nils Lockean - nils@lockean.se
 [Astro-url]: https://astro.build/
 [Sanity]: https://img.shields.io/badge/Sanity-20232A?style=for-the-badge&logo=sanity
 [Sanity-url]: https://www.sanity.io/
-[HTMX]: https://img.shields.io/badge/HTMX-20232A?style=for-the-badge&logo=htmx
-[HTMX-url]: https://htmx.org/
 [PostHog]: https://img.shields.io/badge/PostHog-20232A?style=for-the-badge&logo=posthog
 [PostHog-url]: https://posthog.com/
 [Zod]: https://img.shields.io/badge/Zod-20232A?style=for-the-badge&logo=zod

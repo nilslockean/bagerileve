@@ -23,13 +23,11 @@ import FientaEmbedScript from "@components/FientaEmbedScript.astro";
 import { getCanonicalUrl } from "@lib/canonicalUrl";
 import { sanityAPI } from "@lib/sanityAPI";
 import Posthog from "@components/Posthog.astro";
-import HtmxScript from "@components/HtmxScript.astro";
 
 interface Props {
   title: string;
   metaDescription: string;
   description?: string;
-  htmx?: boolean;
   fullwidth?: boolean;
   ogImage?: ImageMetadata;
 }
@@ -38,7 +36,6 @@ const {
   title: pageTitle,
   description = config.siteTitle,
   metaDescription,
-  htmx,
   fullwidth,
   ogImage,
 } = Astro.props;
@@ -103,7 +100,6 @@ const optimizedOgImage = await getImage({
     <link rel="canonical" href={canonical} />
 
     {!isProduction && <meta name="robots" content="noindex,nofollow" />}
-    {htmx && <HtmxScript />}
 
     <FientaEmbedScript />
     {
