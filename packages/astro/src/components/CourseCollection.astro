@@ -1,0 +1,37 @@
+---
+import { type EventScope } from "@lib/schemas/EventScope";
+import { FIENTA_API_KEY } from "astro:env/server";
+import CourseList from "@components/CourseList.astro";
+import { FientaAPI } from "@lib/api/FientaAPI";
+
+interface Props {
+  showEmpty: boolean;
+  scope: EventScope;
+  title?: string;
+  showError?: boolean;
+}
+const { showEmpty, scope, title, showError } = Astro.props;
+
+const api = new FientaAPI(FIENTA_API_KEY, import.meta.env.PROD);
+const courses = await api.getCourses(scope);
+---
+
+{
+  courses.status === "success" && (
+    <CourseList
+      title={title || undefined}
+      courses={courses.courses}
+      scope={scope}
+      showEmpty={showEmpty}
+    />
+  )
+}
+
+{
+  courses.status === "error" && showError && (
+    <>
+      <p>Problem med att hämta kurser:</p>
+      <p>{courses.message}</p>
+    </>
+  )
+}
