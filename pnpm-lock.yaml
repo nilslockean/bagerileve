@@ -67,9 +67,6 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
-      htmx.org:
-        specifier: 2.0.4
-        version: 2.0.4
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -7084,12 +7081,6 @@ packages:
     resolution:
       {
         integrity: sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg==,
-      }
-
-  htmx.org@2.0.4:
-    resolution:
-      {
-        integrity: sha512-HLxMCdfXDOJirs3vBZl/ZLoY+c7PfM4Ahr2Ad4YXh6d22T5ltbTXFFkpx9Tgb2vvmWFMbIc3LqN2ToNkZJvyYQ==,
       }
 
   http-cache-semantics@4.1.1:
@@ -14807,11 +14798,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  "@sanity/presentation@1.16.4(@sanity/client@6.21.3(debug@4.3.6))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))":
+  "@sanity/presentation@1.16.4(@sanity/client@6.21.3)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))":
     dependencies:
       "@sanity/client": 6.21.3(debug@4.3.6)
       "@sanity/icons": 3.4.0(react@18.3.1)
-      "@sanity/preview-url-secret": 1.6.20(@sanity/client@6.21.3(debug@4.3.6))
+      "@sanity/preview-url-secret": 1.6.20(@sanity/client@6.21.3)
       "@sanity/ui": 2.8.8(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       "@sanity/uuid": 3.0.2
       "@types/lodash.isequal": 4.5.8
@@ -14830,7 +14821,7 @@ snapshots:
       - react-is
       - styled-components
 
-  "@sanity/preview-url-secret@1.6.20(@sanity/client@6.21.3(debug@4.3.6))":
+  "@sanity/preview-url-secret@1.6.20(@sanity/client@6.21.3)":
     dependencies:
       "@sanity/client": 6.21.3(debug@4.3.6)
       "@sanity/uuid": 3.0.2
@@ -14944,7 +14935,7 @@ snapshots:
 
   "@sanity/visual-editing@2.1.9(@sanity/client@6.21.3)(@sveltejs/kit@2.0.0(@sveltejs/vite-plugin-svelte@5.0.3(svelte@4.2.19)(vite@5.4.2(@types/node@22.5.0)))(svelte@4.2.19)(vite@5.4.2(@types/node@22.5.0)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(svelte@4.2.19)":
     dependencies:
-      "@sanity/preview-url-secret": 1.6.20(@sanity/client@6.21.3(debug@4.3.6))
+      "@sanity/preview-url-secret": 1.6.20(@sanity/client@6.21.3)
       "@vercel/stega": 0.1.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -17512,8 +17503,6 @@ snapshots:
 
   html-void-elements@3.0.0: {}
 
-  htmx.org@2.0.4: {}
-
   http-cache-semantics@4.1.1: {}
 
   http-errors@2.0.0:
@@ -19720,7 +19709,7 @@ snapshots:
       "@sanity/logos": 2.1.13(@sanity/color@3.0.6)(react@18.3.1)
       "@sanity/migrate": 3.55.0
       "@sanity/mutator": 3.55.0
-      "@sanity/presentation": 1.16.4(@sanity/client@6.21.3(debug@4.3.6))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+      "@sanity/presentation": 1.16.4(@sanity/client@6.21.3)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       "@sanity/schema": 3.55.0(debug@4.3.6)
       "@sanity/telemetry": 0.7.9(react@18.3.1)
       "@sanity/types": 3.55.0(debug@4.3.6)

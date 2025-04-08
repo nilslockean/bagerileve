@@ -4,12 +4,13 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import bakerImage from "@lib/assets/bagare.webp";
 import IntroText from "@components/IntroText.astro";
+import CourseCollection from "@components/CourseCollection.astro";
 
 const intro =
   "Bli bättre på att få till ett gott surdegsbröd - skaffa en djupare förståelse för varför det blir som det blir och inte alltid som du tänkt dig och lär dig att göra dina egna recept.";
 ---
 
-<Layout title="Kurser" metaDescription={intro} htmx>
+<Layout title="Kurser" metaDescription={intro}>
   <Section>
     <h1>Du kan baka, du är inte rädd</h1>
     <IntroText>{intro}</IntroText>
@@ -48,21 +49,27 @@ const intro =
   </Section>
 
   <Section>
-    <div
-      hx-get="/partials/events?scope=upcoming&showEmpty=true&showError=true"
-      hx-trigger="load"
+    <CourseCollection
+      server:defer
+      showEmpty
+      showError
+      scope="upcoming"
+      title="Kommande kurser"
     >
-      Hämtar kommande kurser...
-    </div>
+      <p slot="fallback">Hämtar kommande kurser...</p>
+    </CourseCollection>
   </Section>
 
   <Section>
-    <div
-      hx-get="/partials/events?scope=past&title=Tidigare kurser"
-      hx-trigger="revealed"
+    <CourseCollection
+      server:defer
+      showEmpty
+      showError
+      scope="past"
+      title="Tidigare kurser"
     >
-      Hämtar tidigare kurser...
-    </div>
+      <p slot="fallback">Hämtar tidigare kurser...</p>
+    </CourseCollection>
   </Section>
 
   <style>

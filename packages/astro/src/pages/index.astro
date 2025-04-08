@@ -15,6 +15,7 @@ import footerVideoPoster from "@lib/assets/Kanelbulle-poster.jpg";
 import Hero from "@components/Hero.astro";
 import { sanityAPI } from "@lib/sanityAPI";
 import GartnerFilm from "@components/GartnerFilm.astro";
+import CourseCollection from "@components/CourseCollection.astro";
 
 const optimizedHeroVideoPoster = await getImage({
   src: heroVideoPoster,
@@ -33,7 +34,6 @@ const instagramFeedId = BEHOLD_FEED_ID;
   title="Bageri Leve"
   description="Bageriet som vänder på bröddygnet"
   metaDescription="Bageri Leve på Östra Rönneholmsvägen 6 i Malmö. Vi vill revolutionera bageribranschen och satsa på nybakat bröd till kvällen istället för på morgonen. Med bästa ekologiska ingredienserna som finns gör vi bröd på traditionellt sätt, utan att tillsätta modern bagerijäst."
-  htmx
   fullwidth
 >
   <Hero video={VideoName.BrodTrim} videoPoster={optimizedHeroVideoPoster.src}>
@@ -62,12 +62,15 @@ const instagramFeedId = BEHOLD_FEED_ID;
         </ButtonLink>
       </OpeningHours>
     </div>
-    <div
-      hx-get="/partials/events?scope=upcoming"
-      hx-trigger="load"
-      class="empty:hidden"
-    >
-      Hämtar kommande kurser...
+    <div class="empty:hidden">
+      <CourseCollection
+        server:defer
+        showEmpty={false}
+        scope="upcoming"
+        title="Kommande kurser"
+      >
+        <p slot="fallback">Hämtar kommande kurser...</p>
+      </CourseCollection>
     </div>
   </Section>
 
