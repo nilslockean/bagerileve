@@ -109,6 +109,8 @@ const optimizedOgImage = await getImage({
     }
     {ENABLE_VIEW_TRANSITIONS && <ClientRouter />}
     {ENABLE_POSTHOG && <Posthog projectApiKey={POSTHOG_PROJECT_API_KEY} />}
+
+    <slot name="head" />
   </head>
   <body>
     <header

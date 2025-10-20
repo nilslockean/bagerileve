@@ -64,6 +64,11 @@ export class SanityAPI {
     return faq;
   }
 
+  public async query(query: string): Promise<unknown> {
+    const groqJson = await this.client.fetch(query);
+    return groqJson;
+  }
+
   public async getOpeningHours(): Promise<OpeningHours> {
     const groqJson = await this.client.fetch(
       `*[_type == "opening-hours" && setId.current == "default"]{title, irregular, hours}`

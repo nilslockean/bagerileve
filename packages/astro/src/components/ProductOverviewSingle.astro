@@ -1,0 +1,35 @@
+---
+import { cn } from "@lib/cn";
+import type { Product } from "@lib/schemas/Product";
+import type { HTMLAttributes } from "astro/types";
+import { Image } from "astro:assets";
+import { urlFor } from "@lib/sanityAPI";
+import { formatPrice } from "@lib/stringUtils";
+import { buttonStyles } from "@lib/buttonStyles";
+import { getProductUrl } from "src/config";
+
+interface Props extends HTMLAttributes<"a"> {
+  product: Product;
+}
+
+const { product, ...rest } = Astro.props;
+const featuredImage = product.images[0];
+const prices = product.prices.map(({ price }) => price);
+const { outOfStock } = product;
+---
+
+<a {...rest} href={getProductUrl(product.id)} class="max-w-prose">
+  <Image
+    src={urlFor(featuredImage.asset).width(770).height(580).url()}
+    alt={featuredImage.alt}
+    inferSize
+    class="border-4 rounded-xl mb-3 block"
+  />
+  <h3 class="h3 mb-2">
+    {product.title}
+  </h3>
+  <p>{formatPrice(prices)}</p>
+  <span class={cn(buttonStyles("default", "small"), "mt-0")}
+    >{outOfStock ? "Slut i lager" : "Beställ"}</span
+  >
+</a>

@@ -1,0 +1,19 @@
+---
+import { cn } from "@lib/cn";
+import type { Product } from "@lib/schemas/Product";
+import type { HTMLAttributes } from "astro/types";
+import ProductOverviewSingle from "./ProductOverviewSingle.astro";
+
+interface Props extends HTMLAttributes<"div"> {
+  products: Product[];
+}
+
+const { products, class: className, ...rest } = Astro.props;
+---
+
+<div
+  {...rest}
+  class={cn("grid md:grid-cols-2 lg:grid-cols-3 gap-8 gap-y-16", className)}
+>
+  {products.map((product) => <ProductOverviewSingle product={product} />)}
+</div>
