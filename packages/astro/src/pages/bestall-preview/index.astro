@@ -1,0 +1,43 @@
+---
+import Section from "@components/Section.astro";
+import Layout from "src/layouts/Layout.astro";
+import IntroText from "@components/IntroText.astro";
+import { getCollection } from "astro:content";
+import ProductOverview from "@components/ProductOverview.astro";
+import Link from "@components/Link.astro";
+
+const products = await getCollection("products");
+---
+
+<Layout
+  title="Beställ"
+  metaDescription="Beställ dina bakverk online och hämta upp i butik."
+>
+  <meta name="robots" content="noindex, nofollow" slot="head" />
+  <Section>
+    <h1>Beställ bakverk direkt från bageriet</h1>
+    <IntroText class="mb-8">
+      Tårtor, bullar, munkar och annat gott - bakat här hos oss, precis som
+      vanligt. Välj vad du vill ha och hämta det när det passar. Enkelt, utan
+      krångel, och alltid nybakat.
+    </IntroText>
+  </Section>
+  <Section>
+    <h2 class="mb-8">Produkter</h2>
+    <ProductOverview products={products.map(({ data }) => data)} />
+  </Section>
+  <Section>
+    <h2>Så funkar det</h2>
+    <p>
+      Vi bakar allt på beställning, så beställ helst senast dagen innan du vill
+      hämta. Hämta i butiken under <Link href="/kontakt">våra öppettider</Link> och
+      betala smidigt med kort här på sidan.
+    </p>
+  </Section>
+
+  <style>
+    p {
+      @apply max-w-prose;
+    }
+  </style>
+</Layout>

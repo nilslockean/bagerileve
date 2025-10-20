@@ -12,6 +12,7 @@ export enum Slug {
   // ASSORTMENT = "sortiment",
   COURSES = "kurser",
   ORDER = "bestallning",
+  SHOP = "bestall",
   // ABOUT = "om",
   CONTACT = "kontakt",
   PRIVACY_POLICY = "gdpr",
@@ -59,6 +60,10 @@ export const PageMap: Record<Slug, NavLink> = Object.freeze({
     label: "Logga in",
     path: "https://leve.sanity.studio",
   },
+  [Slug.SHOP]: {
+    label: "Beställ",
+    path: "/bestall-preview",
+  },
 });
 
 const config: SiteConfig = {
@@ -95,5 +100,24 @@ const config: SiteConfig = {
     orgNumber: "559097-6030",
   },
 };
+
+// Shop URL helper functions
+export const SHOP_BASE_PATH = PageMap.bestall.path;
+
+export function getShopUrl() {
+  return SHOP_BASE_PATH;
+}
+
+export function getProductUrl(slug: string) {
+  return `${SHOP_BASE_PATH}/${slug}`;
+}
+
+export function getCheckoutUrl() {
+  return `${SHOP_BASE_PATH}/kassa`;
+}
+
+export function getThankYouUrl() {
+  return `${SHOP_BASE_PATH}/tack`;
+}
 
 export default config;

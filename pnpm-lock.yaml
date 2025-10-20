@@ -52,6 +52,9 @@ importers:
       "@sanity/client":
         specifier: ^6.21.3
         version: 6.21.3(debug@4.3.6)
+      "@sanity/image-url":
+        specifier: ^1.2.0
+        version: 1.2.0
       "@sanity/visual-editing":
         specifier: ^2.1.9
         version: 2.1.9(@sanity/client@6.21.3)(@sveltejs/kit@2.0.0(@sveltejs/vite-plugin-svelte@5.0.3(svelte@4.2.19)(vite@5.4.2(@types/node@22.5.0)))(svelte@4.2.19)(vite@5.4.2(@types/node@22.5.0)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(svelte@4.2.19)
@@ -3410,10 +3413,10 @@ packages:
     peerDependencies:
       react: ^18.3 || >=19.0.0-rc
 
-  "@sanity/image-url@1.0.2":
+  "@sanity/image-url@1.2.0":
     resolution:
       {
-        integrity: sha512-C4+jb2ny3ZbMgEkLd7Z3C75DsxcTEoE+axXQJsQ75ou0AKWGdVsP351hqK6mJUUxn5HCSlu3vznoh7Yljye4cQ==,
+        integrity: sha512-pYRhti+lDi22it+npWXkEGuYyzbXJLF+d0TYLiyWbKu46JHhYhTDKkp6zmGu4YKF5cXUjT6pnUjFsaf2vlB9nQ==,
       }
     engines: { node: ">=10.0.0" }
 
@@ -14705,7 +14708,7 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  "@sanity/image-url@1.0.2": {}
+  "@sanity/image-url@1.2.0": {}
 
   "@sanity/import@3.37.5":
     dependencies:
@@ -14798,11 +14801,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  "@sanity/presentation@1.16.4(@sanity/client@6.21.3)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))":
+  "@sanity/presentation@1.16.4(@sanity/client@6.21.3(debug@4.3.6))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))":
     dependencies:
       "@sanity/client": 6.21.3(debug@4.3.6)
       "@sanity/icons": 3.4.0(react@18.3.1)
-      "@sanity/preview-url-secret": 1.6.20(@sanity/client@6.21.3)
+      "@sanity/preview-url-secret": 1.6.20(@sanity/client@6.21.3(debug@4.3.6))
       "@sanity/ui": 2.8.8(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       "@sanity/uuid": 3.0.2
       "@types/lodash.isequal": 4.5.8
@@ -14821,7 +14824,7 @@ snapshots:
       - react-is
       - styled-components
 
-  "@sanity/preview-url-secret@1.6.20(@sanity/client@6.21.3)":
+  "@sanity/preview-url-secret@1.6.20(@sanity/client@6.21.3(debug@4.3.6))":
     dependencies:
       "@sanity/client": 6.21.3(debug@4.3.6)
       "@sanity/uuid": 3.0.2
@@ -14935,7 +14938,7 @@ snapshots:
 
   "@sanity/visual-editing@2.1.9(@sanity/client@6.21.3)(@sveltejs/kit@2.0.0(@sveltejs/vite-plugin-svelte@5.0.3(svelte@4.2.19)(vite@5.4.2(@types/node@22.5.0)))(svelte@4.2.19)(vite@5.4.2(@types/node@22.5.0)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(svelte@4.2.19)":
     dependencies:
-      "@sanity/preview-url-secret": 1.6.20(@sanity/client@6.21.3)
+      "@sanity/preview-url-secret": 1.6.20(@sanity/client@6.21.3(debug@4.3.6))
       "@vercel/stega": 0.1.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -19703,13 +19706,13 @@ snapshots:
       "@sanity/eventsource": 5.0.2
       "@sanity/export": 3.41.0
       "@sanity/icons": 3.4.0(react@18.3.1)
-      "@sanity/image-url": 1.0.2
+      "@sanity/image-url": 1.2.0
       "@sanity/import": 3.37.5
       "@sanity/insert-menu": 1.0.8(@sanity/types@3.55.0(debug@4.3.6))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       "@sanity/logos": 2.1.13(@sanity/color@3.0.6)(react@18.3.1)
       "@sanity/migrate": 3.55.0
       "@sanity/mutator": 3.55.0
-      "@sanity/presentation": 1.16.4(@sanity/client@6.21.3)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+      "@sanity/presentation": 1.16.4(@sanity/client@6.21.3(debug@4.3.6))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       "@sanity/schema": 3.55.0(debug@4.3.6)
       "@sanity/telemetry": 0.7.9(react@18.3.1)
       "@sanity/types": 3.55.0(debug@4.3.6)
