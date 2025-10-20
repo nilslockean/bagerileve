@@ -13,12 +13,9 @@ interface Props extends HTMLAttributes<"article"> {
 const { title, class: className, ...rest } = Astro.props;
 ---
 
-<details
-  {...rest}
-  class={cn("border-4 border-orange-100 dark:border-blue-950 group", className)}
->
+<details {...rest} class={cn("border-4 border-blue-950 group", className)}>
   <summary
-    class="flex w-full justify-between items-baseline gap-4 p-4 bg-orange-100 dark:bg-blue-950 transition-colors hover:bg-orange-50 dark:hover:bg-blue-900 group-open:bg-orange-50 group-open:dark:bg-blue-900"
+    class="flex w-full justify-between items-baseline gap-4 p-4 bg-blue-950 transition-colors hover:bg-blue-900 group-open:bg-blue-900"
   >
     <h3 class="mb-0 text-2xl text-left">{title}</h3>
 
