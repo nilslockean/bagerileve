@@ -10,10 +10,10 @@ export const FientaEventDetailsSchema = z.object({
   is_public: z.boolean(),
   image_url: z
     .string()
-    .url()
     .transform((url) => {
       return url.endsWith(".jpg") ? url : undefined;
-    }),
+    })
+    .optional(),
   // accent_color: z.string(),
   url: z.string().url(),
   buy_tickets_url: z.string().url(),
