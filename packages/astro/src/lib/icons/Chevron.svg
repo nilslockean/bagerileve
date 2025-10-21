@@ -1,0 +1,11 @@
+<svg
+  class="h-4 w-4"
+  viewBox="0 0 20 20"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  aria-hidden="true"
+>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M7 5l5 5-5 5"
+  ></path>
+</svg>

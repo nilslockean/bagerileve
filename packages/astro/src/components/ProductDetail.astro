@@ -1,0 +1,31 @@
+---
+import Section from "@components/Section.astro";
+import { PortableText } from "astro-portabletext";
+import Link from "@components/Link.astro";
+import { getShopUrl } from "src/config";
+import type { HTMLAttributes } from "astro/types";
+import type { Product } from "@lib/schemas/Product";
+import Breadcrumbs from "./Breadcrumbs.astro";
+
+interface Props extends HTMLAttributes<"section"> {
+  product: Product;
+}
+
+const { product, class: className, ...rest } = Astro.props;
+---
+
+<Section {...rest}>
+  <h1>{product.title}</h1>
+
+  <Breadcrumbs
+    trail={[
+      { label: "Hem", href: "/" },
+      { label: "Beställ", href: getShopUrl() },
+      { label: product.title },
+    ]}
+  />
+
+  <div class="max-w-prose">
+    <PortableText value={product.content} />
+  </div>
+</Section>

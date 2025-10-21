@@ -3,4 +3,5 @@ export enum IconName {
   PHONE = "phone",
   ENVELOPE = "envelope",
   MAP_PIN = "map-pin",
+  CHEVRON = "chevron",
 }

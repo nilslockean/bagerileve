@@ -1,10 +1,7 @@
 ---
-import Section from "@components/Section.astro";
 import Layout from "../../layouts/Layout.astro";
 import { getEntry } from "astro:content";
-import { PortableText } from "astro-portabletext";
-import Link from "@components/Link.astro";
-import { getShopUrl } from "src/config";
+import ProductDetail from "@components/ProductDetail.astro";
 
 export const prerender = false;
 
@@ -20,24 +17,5 @@ if (!entry) {
   title={entry.data.title}
   metaDescription="Beställ dina fredagsmunkar i förväg och hämta enkelt upp vid vald tid."
 >
-  <Section>
-    <h1>{entry.data.title}</h1>
-    <!-- Breadcrumbs -->
-    <nav class="opacity-75 hover:opacity-100 transition-opacity pb-8">
-      <Link class="inline-block" href="/">Hem</Link>
-      <span class="mx-1">/</span>
-      <Link class="inline-block" href={getShopUrl()}>Beställ</Link>
-      <span class="mx-1">/</span>
-      <span class="opacity-75">{entry.data.title}</span>
-    </nav>
-    <!-- <Image
-      src={featuredImageUrl}
-      alt={featuredImage.alt}
-      width={1000}
-      height={1000}
-    /> -->
-    <div class="max-w-prose">
-      <PortableText value={entry.data.content} />
-    </div>
-  </Section>
+  <ProductDetail product={entry.data} />
 </Layout>
