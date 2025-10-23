@@ -8,12 +8,14 @@ import type { Product } from "@lib/schemas/Product";
 import Breadcrumbs from "@components/Breadcrumbs.astro";
 import { urlFor } from "@lib/sanityAPI";
 import { Image } from "astro:assets";
-import { capitalize, formatPrice } from "@lib/stringUtils";
+import { formatPrice } from "@lib/stringUtils";
 import ProductPickupDateSelector from "./PickupDateSelector.astro";
 import ProductOutOfStock from "./OutOfStock.astro";
-import { z } from "zod";
 import ProductVariantSelector from "./VariantSelector.astro";
 import ProductQtySelector from "./QtySelector.astro";
+import { PICKUP_DATE_MIN_OFFSET } from "astro:env/server";
+import { PICKUP_DATE_MAX_OFFSET } from "astro:env/server";
+import { getDatesInRange, getDateString } from "@lib/dateUtils";
 
 interface Props extends HTMLAttributes<"section"> {
   product: Product;
@@ -22,14 +24,17 @@ interface Props extends HTMLAttributes<"section"> {
 
 const { product, now, class: className, ...rest } = Astro.props;
 const featuredImage = product.images[0];
-const availablePickupDates = z
-  .array(z.string().date())
-  .parse(product.pickupDates || ["2025-10-23", "2025-10-29"])
-  .filter((dateStr) => {
-    // Filter out past dates
-    const date = new Date(dateStr);
-    return date > now;
-  });
+
+const pickupDateMin = new Date();
+const pickupDateMax = new Date();
+pickupDateMin.setDate(now.getDate() + PICKUP_DATE_MIN_OFFSET);
+pickupDateMax.setDate(now.getDate() + PICKUP_DATE_MAX_OFFSET);
+
+const availablePickupDates = getDatesInRange(
+  getDateString(pickupDateMin),
+  getDateString(pickupDateMax)
+);
+
 const disabled = product.outOfStock || availablePickupDates.length === 0;
 const buttonActionDescription = disabled ? "Ej tillgänlig" : "Beställ";
 const buttonLabel =
