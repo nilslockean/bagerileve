@@ -1,0 +1,61 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import type { Product } from "@lib/schemas/Product";
+import { capitalize } from "@lib/stringUtils";
+
+interface Props extends HTMLAttributes<"fieldset"> {
+  product: Product;
+  availablePickupDates: string[];
+}
+
+const {
+  product,
+  availablePickupDates,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const dateFormatter = new Intl.DateTimeFormat("sv-SE", {
+  dateStyle: "full",
+});
+function formatDate(dateStr: string) {
+  const formattedDate = dateFormatter.format(new Date(dateStr));
+  return capitalize(formattedDate);
+}
+---
+
+<fieldset {...rest}>
+  <legend>Tillgänglighet</legend>
+  {
+    product.pickupDates && product.pickupDates.length > 0 ? (
+      <p>{product.title} endast att hämta under specifika datum.</p>
+    ) : (
+      <>
+        <p>
+          {product.title} går att hämta under våra öppettider med minst två
+          dagars framförhållning, och max en månad in i framtiden.
+        </p>
+      </>
+    )
+  }
+
+  <select>
+    <option value="" selected={availablePickupDates.length !== 1}>
+      {
+        availablePickupDates.length === 0
+          ? "Inga datum tillgängliga"
+          : "Välj datum för upphämtning"
+      }
+    </option>
+    {
+      availablePickupDates.map((dateStr, i) => (
+        <option
+          value={dateStr}
+          selected={availablePickupDates.length === 1 && i === 0}
+        >
+          {formatDate(dateStr)}
+        </option>
+      ))
+    }
+  </select>
+</fieldset>

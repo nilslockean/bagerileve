@@ -1,0 +1,97 @@
+---
+import Section from "@components/Section.astro";
+import { PortableText } from "astro-portabletext";
+import Button from "@components/Button.astro";
+import { getShopUrl } from "src/config";
+import type { HTMLAttributes } from "astro/types";
+import type { Product } from "@lib/schemas/Product";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { urlFor } from "@lib/sanityAPI";
+import { Image } from "astro:assets";
+import { capitalize, formatPrice } from "@lib/stringUtils";
+import ProductPickupDateSelector from "./PickupDateSelector.astro";
+import ProductOutOfStock from "./OutOfStock.astro";
+import { z } from "zod";
+import ProductVariantSelector from "./VariantSelector.astro";
+import ProductQtySelector from "./QtySelector.astro";
+
+interface Props extends HTMLAttributes<"section"> {
+  product: Product;
+  now: Date;
+}
+
+const { product, now, class: className, ...rest } = Astro.props;
+const featuredImage = product.images[0];
+const availablePickupDates = z
+  .array(z.string().date())
+  .parse(product.pickupDates || ["2025-10-23", "2025-10-29"])
+  .filter((dateStr) => {
+    // Filter out past dates
+    const date = new Date(dateStr);
+    return date > now;
+  });
+const disabled = product.outOfStock || availablePickupDates.length === 0;
+const buttonActionDescription = disabled ? "Ej tillgänlig" : "Beställ";
+const buttonLabel =
+  product.prices.length === 1
+    ? `${formatPrice([product.prices[0].price])} - ${buttonActionDescription}`
+    : buttonActionDescription;
+---
+
+<Section {...rest}>
+  <Breadcrumbs
+    trail={[
+      { label: "Hem", href: "/" },
+      { label: "Beställ", href: getShopUrl() },
+      { label: product.title },
+    ]}
+  />
+
+  <h1 class="mt-8 mb-16">{product.title}</h1>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12">
+    <!-- Image and description -->
+    <div class="col-span-2">
+      <Image
+        src={urlFor(featuredImage.asset).width(1980).height(1485).url()}
+        alt={featuredImage.alt}
+        inferSize
+        class="border-4 rounded-xl mb-6 block"
+      />
+      <div class="max-w-prose">
+        <PortableText value={product.content} />
+      </div>
+    </div>
+
+    <!-- Aside, add to cart button, variant and date selector -->
+    <div class="bg-blue-950 p-8 w-full">
+      <form>
+        {
+          product.outOfStock ? (
+            <ProductOutOfStock {product} />
+          ) : (
+            <ProductPickupDateSelector {product} {availablePickupDates} />
+          )
+        }
+
+        <ProductVariantSelector prices={product.prices} />
+
+        {!disabled && <ProductQtySelector max={product.maxQuantityPerOrder} />}
+
+        <fieldset>
+          {
+            disabled ? (
+              <Button type="button" variant="outline" class="w-full" disabled>
+                {buttonLabel}
+              </Button>
+            ) : (
+              <Button type="submit" variant="primary" class="w-full">
+                {buttonLabel}
+              </Button>
+            )
+          }
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</Section>

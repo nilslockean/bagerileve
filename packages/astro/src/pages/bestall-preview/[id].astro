@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getEntry } from "astro:content";
-import ProductDetail from "@components/ProductDetail.astro";
+import ProductDetail from "@components/ProductDetail/index.astro";
 
 export const prerender = false;
 
@@ -17,5 +17,5 @@ if (!entry) {
   title={entry.data.title}
   metaDescription="Beställ dina fredagsmunkar i förväg och hämta enkelt upp vid vald tid."
 >
-  <ProductDetail product={entry.data} />
+  <ProductDetail product={entry.data} now={new Date()} />
 </Layout>
