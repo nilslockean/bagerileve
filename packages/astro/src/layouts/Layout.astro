@@ -140,7 +140,7 @@ const optimizedOgImage = await getImage({
         </div>
         <div>
           <p class="h4 mb-4">Öppettider</p>
-          <OpeningHours data={openingHours} irregularLimit={0}>
+          <OpeningHours data={openingHours} irregularLimit={0} consolidated>
             <p class="mt-4" slot="has-irregular">
               <Link href="/kontakt#oppettider">Se avvikande öppettider </Link>
             </p>

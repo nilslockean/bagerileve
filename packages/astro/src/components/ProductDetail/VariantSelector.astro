@@ -1,0 +1,47 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import type { Product } from "@lib/schemas/Product";
+import { cn } from "@lib/cn";
+import { formatPrice } from "@lib/stringUtils";
+
+interface Props extends HTMLAttributes<"fieldset"> {
+  prices: Product["prices"];
+}
+
+const { prices, class: className, ...rest } = Astro.props;
+
+// This component is only visible if there are multiple pricing options.
+// It should always be rendered in the DOM in order to simplify backend logic.
+const isHidden = prices.length === 1;
+---
+
+<fieldset
+  {...rest}
+  class={cn(
+    {
+      hidden: isHidden,
+    },
+    className
+  )}
+  hidden={isHidden}
+>
+  <legend>Priser</legend>
+  {
+    prices.map(({ price, description }, i) => (
+      <p>
+        <label>
+          <input
+            type="radio"
+            name="price"
+            id={`price_option_${i}`}
+            value={price}
+            checked={i === 0}
+          />
+          <span>
+            {description} - {formatPrice([price])}
+          </span>
+        </label>
+      </p>
+    ))
+  }
+</fieldset>

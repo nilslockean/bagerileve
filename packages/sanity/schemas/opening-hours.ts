@@ -1,6 +1,35 @@
 import {defineField, defineType} from 'sanity'
 import {ClockIcon, CalendarIcon} from '@sanity/icons'
 
+function composeWeekdayField(name: string, title: string, day: number) {
+  return defineField({
+    name: name,
+    type: 'object',
+    title: title,
+    fields: [
+      {
+        name: 'time',
+        type: 'string',
+        title: 'Öppettider',
+        hidden: ({parent}) => parent && parent.closed,
+      },
+      {
+        name: 'closed',
+        type: 'boolean',
+        title: 'Stängt',
+        initialValue: false,
+      },
+      {
+        name: 'day',
+        type: 'number',
+        hidden: true,
+        readOnly: true,
+        initialValue: day,
+      },
+    ],
+  })
+}
+
 export default defineType({
   name: 'opening-hours',
   type: 'document',
@@ -18,6 +47,20 @@ export default defineType({
       type: 'slug',
       title: 'ID*',
       validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'days',
+      type: 'object',
+      title: 'Veckodagar',
+      fields: [
+        composeWeekdayField('mon', 'Måndag', 1),
+        composeWeekdayField('tue', 'Tisdag', 2),
+        composeWeekdayField('wed', 'Onsdag', 3),
+        composeWeekdayField('thu', 'Torsdag', 4),
+        composeWeekdayField('fri', 'Fredag', 5),
+        composeWeekdayField('sat', 'Lördag', 6),
+        composeWeekdayField('sun', 'Söndag', 0),
+      ],
     },
     {
       name: 'hours',

@@ -1,0 +1,41 @@
+---
+import { IconName } from "@lib/enums/IconName";
+import Icon from "./Icon.astro";
+import Link from "./Link.astro";
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "@lib/cn";
+
+interface Props extends HTMLAttributes<"nav"> {
+  trail: { label: string; href?: string }[];
+}
+
+const { trail, class: className, ...rest } = Astro.props;
+---
+
+<nav
+  {...rest}
+  class={cn(
+    "text-sm opacity-75 hover:opacity-100 transition-opacity",
+    className
+  )}
+  aria-label="Breadcrumb"
+>
+  <ol class="flex items-center space-x-2 list-none mx-0">
+    {
+      trail.map(({ label, href }, i) => (
+        <>
+          {/* Separator (chevron) */}
+          {i !== 0 && (
+            <li aria-hidden="true" class="inline-block opacity-50">
+              <Icon name={IconName.CHEVRON} />
+            </li>
+          )}
+          {/* Breadcrumb */}
+          <li class="inline-flex items-center">
+            {href ? <Link {href}>{label}</Link> : <span>{label}</span>}
+          </li>
+        </>
+      ))
+    }
+  </ol>
+</nav>

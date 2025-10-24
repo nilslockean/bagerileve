@@ -1,4 +1,9 @@
 ---
+import {
+  consolidateOpeningHours,
+  formatConsolidatedDays,
+  formatDay,
+} from "@lib/openingHoursUtils";
 import type { OpeningHours } from "@lib/schemas/OpeningHoursSchema";
 import type { HTMLAttributes } from "astro/types";
 
@@ -6,10 +11,18 @@ interface Props extends HTMLAttributes<"div"> {
   data: OpeningHours;
   title?: string;
   irregularLimit?: number;
+  consolidated?: boolean;
 }
 
-const { data, title, irregularLimit, class: className } = Astro.props;
+const {
+  data,
+  title,
+  irregularLimit,
+  consolidated,
+  class: className,
+} = Astro.props;
 const hasIrregularHours = data.irregular && data.irregular.length > 0;
+const consolidatedHours = consolidateOpeningHours(data.days);
 ---
 
 {title && <h4>{title}</h4>}
@@ -17,12 +30,23 @@ const hasIrregularHours = data.irregular && data.irregular.length > 0;
 <div class:list={["@container", className]}>
   <table class="table-auto w-full text-lg">
     {
-      data.hours.map((row) => (
-        <tr class="border-b-2 border-current last:border-none">
-          <td class="py-2">{row.day}</td>
-          <td class="text-right py-2">{row.closed ? "stängt" : row.time}</td>
-        </tr>
-      ))
+      consolidated
+        ? consolidatedHours.map((row) => (
+            <tr class="border-b-2 border-current last:border-none">
+              <td class="py-2">{formatConsolidatedDays(row)}</td>
+              <td class="text-right py-2">
+                {row.closed ? "stängt" : row.time}
+              </td>
+            </tr>
+          ))
+        : Object.values(data.days).map((row) => (
+            <tr class="border-b-2 border-current last:border-none">
+              <td class="py-2">{formatDay(row.day)}</td>
+              <td class="text-right py-2">
+                {row.closed ? "stängt" : row.time}
+              </td>
+            </tr>
+          ))
     }
   </table>
 

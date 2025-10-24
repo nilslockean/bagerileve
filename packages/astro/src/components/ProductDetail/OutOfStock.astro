@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import type { Product } from "@lib/schemas/Product";
+
+interface Props extends HTMLAttributes<"fieldset"> {
+  product: Product;
+}
+
+const { product, class: className, ...rest } = Astro.props;
+---
+
+<fieldset {...rest}>
+  <legend>Tillgänglighet</legend>
+  <p>
+    {product.title} går dessvärre inte att beställa just nu. Titta tillbaka snart!
+  </p>
+</fieldset>

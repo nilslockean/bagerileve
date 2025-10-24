@@ -66,4 +66,24 @@
   .portable-text a {
     @apply decoration-2 underline aria-current:no-underline;
   }
+
+  /* Forms */
+  fieldset {
+    @apply mb-6;
+  }
+  legend {
+    @apply uppercase tracking-widest mb-3;
+  }
+  select {
+    @apply w-full border-4 rounded-none border-orange-100 bg-blue-900 p-3 text-orange-100 appearance-none focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700;
+  }
+  label:has(input[type="radio"]) {
+    @apply flex cursor-pointer items-center gap-3 border-4 border-orange-100 bg-blue-900 p-3 hover:border-orange-200;
+  }
+  input[type="radio"] {
+    @apply h-5 w-5 accent-orange-100 focus:ring-orange-200;
+  }
+  input[type="number"] {
+    @apply w-24 border-4 border-orange-100 bg-blue-900 p-3 text-orange-100 focus:border-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-300;
+  }
 }

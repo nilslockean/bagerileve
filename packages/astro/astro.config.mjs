@@ -72,6 +72,18 @@ export default defineConfig({
         optional: true,
         default: "phc_FpOtrZTQsFj3URscXo70ak6KyVRM1kAe5t8zqmS0r9r",
       }),
+      PICKUP_DATE_MIN_OFFSET: envField.number({
+        context: "server",
+        access: "public",
+        optional: false,
+        default: 2,
+      }),
+      PICKUP_DATE_MAX_OFFSET: envField.number({
+        context: "server",
+        access: "public",
+        optional: false,
+        default: 30,
+      }),
     },
   },
   experimental: {},
