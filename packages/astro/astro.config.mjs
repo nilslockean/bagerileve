@@ -84,6 +84,12 @@ export default defineConfig({
         optional: false,
         default: 30,
       }),
+      MODE: envField.string({
+        context: "server",
+        access: "public",
+        optional: false,
+        default: import.meta.env.MODE,
+      }),
     },
   },
   experimental: {},
