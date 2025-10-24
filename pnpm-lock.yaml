@@ -70,6 +70,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      groq:
+        specifier: ^4.11.0
+        version: 4.11.0
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -6845,6 +6848,13 @@ packages:
         integrity: sha512-oDMnjsIfEMtGfPJOMFx+6qS8fdX8YIRYbslF/VE6H77kKGOGOlrMK81diphkoiV0/xg0mS++gf9fCGbdasZIRQ==,
       }
     engines: { node: ">=18" }
+
+  groq@4.11.0:
+    resolution:
+      {
+        integrity: sha512-QodgHV/GLLZ7ZZF0rdTLIIMZsMxCrPkv9nvHQfuVi8EhHphTCvyCjrjU0M8jLJx4fi0NdDAAoOngDQc1Vlqidw==,
+      }
+    engines: { node: ">=20.19 <22 || >=22.12" }
 
   gunzip-maybe@1.4.2:
     resolution:
@@ -17264,6 +17274,8 @@ snapshots:
       - supports-color
 
   groq@3.55.0: {}
+
+  groq@4.11.0: {}
 
   gunzip-maybe@1.4.2:
     dependencies:
