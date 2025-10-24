@@ -30,3 +30,9 @@ export function getDatesInRange(start: string, end: string, z = zod) {
 
   return dates;
 }
+
+export function addDays(offset: number, baseDate = new Date()) {
+  const result = new Date(baseDate);
+  result.setDate(baseDate.getDate() + offset);
+  return result;
+}

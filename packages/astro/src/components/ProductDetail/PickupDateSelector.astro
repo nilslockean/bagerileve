@@ -7,11 +7,15 @@ import { PICKUP_DATE_MAX_OFFSET } from "astro:env/server";
 
 interface Props extends HTMLAttributes<"fieldset"> {
   product: Product;
-  defaultPickupDates: string[];
+  availablePickupDates: string[];
 }
 
-const { product, defaultPickupDates, class: className, ...rest } = Astro.props;
-const pickupDates = product.pickupDates || defaultPickupDates;
+const {
+  product,
+  availablePickupDates,
+  class: className,
+  ...rest
+} = Astro.props;
 const dateFormatter = new Intl.DateTimeFormat("sv-SE", {
   dateStyle: "full",
 });
@@ -25,7 +29,7 @@ function formatDate(dateStr: string) {
   <legend>Tillgänglighet</legend>
   {
     product.pickupDates && product.pickupDates.length > 0 ? (
-      <p>{product.title} endast att hämta under specifika datum.</p>
+      <p>{product.title} går endast att hämta under specifika datum.</p>
     ) : (
       <>
         <p>
@@ -39,16 +43,19 @@ function formatDate(dateStr: string) {
   }
 
   <select>
-    <option value="" selected={pickupDates.length !== 1}>
+    <option value="" selected={availablePickupDates.length !== 1}>
       {
-        pickupDates.length === 0
+        availablePickupDates.length === 0
           ? "Inga datum tillgängliga"
           : "Välj datum för upphämtning"
       }
     </option>
     {
-      pickupDates.map((dateStr, i) => (
-        <option value={dateStr} selected={pickupDates.length === 1 && i === 0}>
+      availablePickupDates.map((dateStr, i) => (
+        <option
+          value={dateStr}
+          selected={availablePickupDates.length === 1 && i === 0}
+        >
           {formatDate(dateStr)}
         </option>
       ))
