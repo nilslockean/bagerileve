@@ -5,7 +5,6 @@ import mdx from "@astrojs/mdx";
 import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
-import { SANITY_PROJECT_ID, SANITY_DATASET } from "@bagerileve/shared";
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,8 +20,8 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     sanity({
-      projectId: SANITY_PROJECT_ID,
-      dataset: SANITY_DATASET,
+      projectId: "mz20cm4o",
+      dataset: import.meta.env.PROD ? "production" : "preview",
       apiVersion: "2024-01-21",
       useCdn: false,
     }),
