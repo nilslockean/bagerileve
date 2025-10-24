@@ -2,6 +2,8 @@
 import type { HTMLAttributes } from "astro/types";
 import type { Product } from "@lib/schemas/Product";
 import { capitalize } from "@lib/stringUtils";
+import { PICKUP_DATE_MIN_OFFSET } from "astro:env/server";
+import { PICKUP_DATE_MAX_OFFSET } from "astro:env/server";
 
 interface Props extends HTMLAttributes<"fieldset"> {
   product: Product;
@@ -9,7 +11,7 @@ interface Props extends HTMLAttributes<"fieldset"> {
 }
 
 const { product, defaultPickupDates, class: className, ...rest } = Astro.props;
-
+const pickupDates = product.pickupDates || defaultPickupDates;
 const dateFormatter = new Intl.DateTimeFormat("sv-SE", {
   dateStyle: "full",
 });
@@ -27,27 +29,26 @@ function formatDate(dateStr: string) {
     ) : (
       <>
         <p>
-          {product.title} går att hämta under våra öppettider med minst två
-          dagars framförhållning, och max 30 dagar in i framtiden.
+          {product.title} går att hämta under våra öppettider med minst{" "}
+          {PICKUP_DATE_MIN_OFFSET}
+          dagars framförhållning, och max {PICKUP_DATE_MAX_OFFSET} dagar in i
+          framtiden.
         </p>
       </>
     )
   }
 
   <select>
-    <option value="" selected={defaultPickupDates.length !== 1}>
+    <option value="" selected={pickupDates.length !== 1}>
       {
-        defaultPickupDates.length === 0
+        pickupDates.length === 0
           ? "Inga datum tillgängliga"
           : "Välj datum för upphämtning"
       }
     </option>
     {
-      defaultPickupDates.map((dateStr, i) => (
-        <option
-          value={dateStr}
-          selected={defaultPickupDates.length === 1 && i === 0}
-        >
+      pickupDates.map((dateStr, i) => (
+        <option value={dateStr} selected={pickupDates.length === 1 && i === 0}>
           {formatDate(dateStr)}
         </option>
       ))
