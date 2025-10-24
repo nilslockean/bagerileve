@@ -13,9 +13,6 @@ import ProductPickupDateSelector from "./PickupDateSelector.astro";
 import ProductOutOfStock from "./OutOfStock.astro";
 import ProductVariantSelector from "./VariantSelector.astro";
 import ProductQtySelector from "./QtySelector.astro";
-import { PICKUP_DATE_MIN_OFFSET } from "astro:env/server";
-import { PICKUP_DATE_MAX_OFFSET } from "astro:env/server";
-import { getDatesInRange, getDateString } from "@lib/dateUtils";
 
 interface Props extends HTMLAttributes<"section"> {
   product: Product;
