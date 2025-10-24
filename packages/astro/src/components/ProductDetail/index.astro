@@ -13,21 +13,20 @@ import ProductPickupDateSelector from "./PickupDateSelector.astro";
 import ProductOutOfStock from "./OutOfStock.astro";
 import ProductVariantSelector from "./VariantSelector.astro";
 import ProductQtySelector from "./QtySelector.astro";
-import { PICKUP_DATE_MIN_OFFSET } from "astro:env/server";
-import { PICKUP_DATE_MAX_OFFSET } from "astro:env/server";
-import { getDatesInRange, getDateString } from "@lib/dateUtils";
 
 interface Props extends HTMLAttributes<"section"> {
   product: Product;
-  defaultPickupDates: string[];
+  availablePickupDates: string[];
 }
 
-const { product, defaultPickupDates, class: className, ...rest } = Astro.props;
+const {
+  product,
+  availablePickupDates,
+  class: className,
+  ...rest
+} = Astro.props;
 const featuredImage = product.images[0];
-const disabled =
-  product.outOfStock ||
-  defaultPickupDates.length === 0 ||
-  product.pickupDates?.length === 0;
+const disabled = product.outOfStock || availablePickupDates.length === 0;
 
 const buttonActionDescription = disabled ? "Ej tillgänlig" : "Beställ";
 const buttonLabel =
@@ -68,7 +67,7 @@ const buttonLabel =
           product.outOfStock ? (
             <ProductOutOfStock {product} />
           ) : (
-            <ProductPickupDateSelector {product} {defaultPickupDates} />
+            <ProductPickupDateSelector {product} {availablePickupDates} />
           )
         }
 

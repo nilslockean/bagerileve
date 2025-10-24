@@ -5,7 +5,7 @@ import ProductDetail from "@components/ProductDetail/index.astro";
 import { sanityAPI } from "@lib/sanityAPI";
 import { PICKUP_DATE_MIN_OFFSET } from "astro:env/server";
 import { PICKUP_DATE_MAX_OFFSET } from "astro:env/server";
-import { getDateString } from "@lib/dateUtils";
+import { getDateString, addDays } from "@lib/dateUtils";
 
 export const prerender = false;
 
@@ -16,20 +16,18 @@ if (!entry) {
   return Astro.rewrite("/404");
 }
 
-const now = new Date();
-const pickupDateMin = new Date();
-const pickupDateMax = new Date();
-pickupDateMin.setDate(now.getDate() + PICKUP_DATE_MIN_OFFSET);
-pickupDateMax.setDate(now.getDate() + PICKUP_DATE_MAX_OFFSET);
+const pickupDateMin = addDays(PICKUP_DATE_MIN_OFFSET);
+const pickupDateMax = addDays(PICKUP_DATE_MAX_OFFSET);
 const defaultPickupDates = await sanityAPI.getOpenDaysInRange(
   getDateString(pickupDateMin),
   getDateString(pickupDateMax)
 );
+const availablePickupDates = entry.data.pickupDates || defaultPickupDates;
 ---
 
 <Layout
   title={entry.data.title}
   metaDescription="Beställ dina fredagsmunkar i förväg och hämta enkelt upp vid vald tid."
 >
-  <ProductDetail product={entry.data} {defaultPickupDates} />
+  <ProductDetail product={entry.data} {availablePickupDates} />
 </Layout>
