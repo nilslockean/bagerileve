@@ -1,5 +1,11 @@
 import { z } from "zod";
 
+const WeekdaySchema = z.object({
+  day: z.number(),
+  time: z.string().optional().nullable(),
+  closed: z.boolean().optional(),
+});
+
 export const OpeningHoursSchema = z
   .array(
     z.object({
@@ -11,6 +17,15 @@ export const OpeningHoursSchema = z
           closed: z.boolean().optional(),
         })
       ),
+      days: z.object({
+        mon: WeekdaySchema,
+        tue: WeekdaySchema,
+        wed: WeekdaySchema,
+        thu: WeekdaySchema,
+        fri: WeekdaySchema,
+        sat: WeekdaySchema,
+        sun: WeekdaySchema,
+      }),
       irregular: z
         .array(
           z.object({

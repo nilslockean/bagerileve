@@ -9,6 +9,7 @@ import {
   type OpeningHours,
 } from "@lib/schemas/OpeningHoursSchema";
 import { capitalize } from "@lib/stringUtils";
+import { getDatesInRange } from "@lib/dateUtils";
 
 export class SanityAPI {
   private client: ISanityClient;
@@ -71,7 +72,7 @@ export class SanityAPI {
 
   public async getOpeningHours(): Promise<OpeningHours> {
     const groqJson = await this.client.fetch(
-      `*[_type == "opening-hours" && setId.current == "default"]{title, irregular, hours}`
+      `*[_type == "opening-hours" && setId.current == "default"]{title, irregular, hours, days}`
     );
     const openingHours = OpeningHoursSchema.parse(groqJson);
     // Filter out any irregular opening hours that are in the past
@@ -107,5 +108,28 @@ export class SanityAPI {
     }
 
     return openingHours;
+  }
+
+  public async getOpenDaysInRange(start: string, end: string) {
+    const datesInRange = getDatesInRange(start, end);
+    const openingHours = await this.getOpeningHours();
+    const closedWeekdays = Object.values(openingHours.days)
+      .filter(({ closed }) => closed)
+      .map(({ day }) => day);
+    const closedHolidays = (openingHours.irregular || [])
+      .filter(({ closed }) => closed)
+      .map(({ date }) => date);
+
+    return datesInRange.filter((dateStr) => {
+      // Filter out closed irregular opening hours first
+      if (closedHolidays.includes(dateStr)) {
+        return false;
+      }
+
+      // Check if the weekday index of current date is in list of closed weekdays
+      const date = new Date(dateStr);
+      const weekday = date.getDay();
+      return !closedWeekdays.includes(weekday);
+    });
   }
 }

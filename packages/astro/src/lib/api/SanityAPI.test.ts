@@ -12,6 +12,42 @@ class MockSanityClient implements ISanityClient {
 }
 const sanityClient = new MockSanityClient();
 const api = new SanityAPI(sanityClient, "12345", "test");
+const DEFAULT_WEEKDAYS = {
+  fri: {
+    closed: false,
+    day: 5,
+    time: "11-18",
+  },
+  mon: {
+    closed: true,
+    day: 1,
+  },
+  sat: {
+    closed: false,
+    day: 6,
+    time: "9-16",
+  },
+  sun: {
+    closed: false,
+    day: 0,
+    time: "9-16",
+  },
+  thu: {
+    closed: false,
+    day: 4,
+    time: "11-18",
+  },
+  tue: {
+    closed: false,
+    day: 2,
+    time: "11-18",
+  },
+  wed: {
+    closed: false,
+    day: 3,
+    time: "11-18",
+  },
+};
 
 beforeEach(() => {
   sanityClient.returnData = {};
@@ -61,6 +97,7 @@ describe("SanityAPI", () => {
       { date: "2023-12-24", closed: true },
       { date: "2023-12-25", time: "10-15" },
     ];
+    const days = DEFAULT_WEEKDAYS;
 
     // Should include today's date
     api.now = new Date("2023-12-24 14:45:26");
@@ -69,6 +106,7 @@ describe("SanityAPI", () => {
         title,
         hours,
         irregular,
+        days,
       },
     ];
 
@@ -88,6 +126,7 @@ describe("SanityAPI", () => {
     const title = "Test";
     const hours = [{ day: "tisdag - fredag", time: "11-18" }];
     const irregular = [{ date: "2022-02-01", time: "10-15" }];
+    const days = DEFAULT_WEEKDAYS;
 
     api.now = new Date("2021-01-01");
     sanityClient.returnData = [
@@ -95,6 +134,7 @@ describe("SanityAPI", () => {
         title,
         hours,
         irregular,
+        days,
       },
     ];
 

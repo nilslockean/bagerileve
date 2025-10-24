@@ -19,23 +19,16 @@ import { getDatesInRange, getDateString } from "@lib/dateUtils";
 
 interface Props extends HTMLAttributes<"section"> {
   product: Product;
-  now: Date;
+  defaultPickupDates: string[];
 }
 
-const { product, now, class: className, ...rest } = Astro.props;
+const { product, defaultPickupDates, class: className, ...rest } = Astro.props;
 const featuredImage = product.images[0];
+const disabled =
+  product.outOfStock ||
+  defaultPickupDates.length === 0 ||
+  product.pickupDates?.length === 0;
 
-const pickupDateMin = new Date();
-const pickupDateMax = new Date();
-pickupDateMin.setDate(now.getDate() + PICKUP_DATE_MIN_OFFSET);
-pickupDateMax.setDate(now.getDate() + PICKUP_DATE_MAX_OFFSET);
-
-const availablePickupDates = getDatesInRange(
-  getDateString(pickupDateMin),
-  getDateString(pickupDateMax)
-);
-
-const disabled = product.outOfStock || availablePickupDates.length === 0;
 const buttonActionDescription = disabled ? "Ej tillgänlig" : "Beställ";
 const buttonLabel =
   product.prices.length === 1
@@ -75,7 +68,7 @@ const buttonLabel =
           product.outOfStock ? (
             <ProductOutOfStock {product} />
           ) : (
-            <ProductPickupDateSelector {product} {availablePickupDates} />
+            <ProductPickupDateSelector {product} {defaultPickupDates} />
           )
         }
 

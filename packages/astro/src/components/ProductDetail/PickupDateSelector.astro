@@ -5,15 +5,10 @@ import { capitalize } from "@lib/stringUtils";
 
 interface Props extends HTMLAttributes<"fieldset"> {
   product: Product;
-  availablePickupDates: string[];
+  defaultPickupDates: string[];
 }
 
-const {
-  product,
-  availablePickupDates,
-  class: className,
-  ...rest
-} = Astro.props;
+const { product, defaultPickupDates, class: className, ...rest } = Astro.props;
 
 const dateFormatter = new Intl.DateTimeFormat("sv-SE", {
   dateStyle: "full",
@@ -40,18 +35,18 @@ function formatDate(dateStr: string) {
   }
 
   <select>
-    <option value="" selected={availablePickupDates.length !== 1}>
+    <option value="" selected={defaultPickupDates.length !== 1}>
       {
-        availablePickupDates.length === 0
+        defaultPickupDates.length === 0
           ? "Inga datum tillgängliga"
           : "Välj datum för upphämtning"
       }
     </option>
     {
-      availablePickupDates.map((dateStr, i) => (
+      defaultPickupDates.map((dateStr, i) => (
         <option
           value={dateStr}
-          selected={availablePickupDates.length === 1 && i === 0}
+          selected={defaultPickupDates.length === 1 && i === 0}
         >
           {formatDate(dateStr)}
         </option>
