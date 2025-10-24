@@ -1,6 +1,7 @@
 import { sanityAPI } from "@lib/sanityAPI";
 import { ProductSchema } from "@lib/schemas/Product";
 import { defineCollection, z } from "astro:content";
+import groq from "groq";
 
 const LoaderJSONSchema = z
   .object({
@@ -13,7 +14,16 @@ const LoaderJSONSchema = z
 const products = defineCollection({
   loader: async () => {
     const json = await sanityAPI.query(
-      `*[_type == "product"] { 'id': slug.current, maxQuantityPerOrder, title, content, images, prices, outOfStock, pickupDates }`
+      groq`*[_type == "product"] {
+        'id': slug.current,
+        maxQuantityPerOrder,
+        title,
+        content,
+        images,
+        prices,
+        outOfStock,
+        'pickupDates': pickupDates[@ > now()] | order(date asc)
+      }`
     );
     return z.array(LoaderJSONSchema).parse(json);
   },
