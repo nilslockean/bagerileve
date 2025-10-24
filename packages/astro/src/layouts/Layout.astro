@@ -24,6 +24,7 @@ import FientaEmbedScript from "@components/FientaEmbedScript.astro";
 import { getCanonicalUrl } from "@lib/canonicalUrl";
 import { sanityAPI } from "@lib/sanityAPI";
 import Posthog from "@components/Posthog.astro";
+import { MODE } from "astro:env/server";
 
 interface Props {
   title: string;
