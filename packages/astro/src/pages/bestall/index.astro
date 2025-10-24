@@ -10,6 +10,11 @@ import { getImage } from "astro:assets";
 import videoPoster from "@lib/assets/Munk-4-poster.jpg";
 import { sanityAPI } from "@lib/sanityAPI";
 import GartnerFilm from "@components/GartnerFilm.astro";
+import { MODE } from "astro:env/server";
+
+if (MODE !== "production") {
+  return Astro.rewrite("/bestall-preview");
+}
 
 const optimizedVideoPoster = await getImage({
   src: videoPoster,
