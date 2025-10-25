@@ -1,10 +1,15 @@
-import tailwind from "@astrojs/tailwind";
 import sanity from "@sanity/astro";
-import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
+import tailwindcss from "@tailwindcss/vite";
+
+console.log("META ENV", {
+  PROD: import.meta.env.PROD,
+  MODE: import.meta.env.MODE,
+  DEV: import.meta.env.DEV,
+});
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,13 +20,13 @@ export default defineConfig({
     },
     imageService: "passthrough",
   }),
+  vite: {
+    plugins: [tailwindcss()],
+  },
   integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
     sanity({
       projectId: "mz20cm4o",
-      dataset: import.meta.env.PROD ? "production" : "preview",
+      dataset: import.meta.env.MODE === "production" ? "production" : "preview",
       apiVersion: "2024-01-21",
       useCdn: false,
     }),

@@ -1,6 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-futura: "Futura Heavy", sans-serif;
+  --font-sans: "Gothic725 Bd BT", sans-serif;
+}
 
 @layer base {
   @font-face {

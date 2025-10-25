@@ -16,9 +16,9 @@
     "packages/*"
   ],
   "devDependencies": {
-    "husky": "^9.1.4",
-    "lint-staged": "^15.2.9",
-    "prettier": "3.3.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "prettier": "3.6.2",
     "prettier-plugin-astro": "^0.14.1"
   },
   "lint-staged": {
