@@ -27,7 +27,7 @@ export default defineConfig({
   integrations: [
     sanity({
       projectId: "mz20cm4o",
-      dataset: process.env.NODE_ENV ? "production" : "preview",
+      dataset: process.env.NODE_ENV === "production" ? "production" : "preview",
       apiVersion: "2024-01-21",
       useCdn: false,
     }),
