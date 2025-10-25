@@ -8,7 +8,7 @@ export function getDateString(date: Date) {
 // Returns all dates starting and ending with the provided dates
 // in YYYY-MM-DD format
 export function getDatesInRange(start: string, end: string, z = zod) {
-  const schema = z.tuple([z.string().date(), z.string().date()]);
+  const schema = z.tuple([z.iso.date(), z.iso.date()]);
   const [startDateStr, endDateStr] = schema.parse([start, end]);
   const startDate = new Date(startDateStr);
   const endDate = new Date(endDateStr);

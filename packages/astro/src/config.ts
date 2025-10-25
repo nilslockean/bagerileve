@@ -57,7 +57,7 @@ export const PageMap: Record<Slug, NavLink> = Object.freeze({
   // },
   [Slug.ADMIN]: {
     label: "Logga in",
-    path: "https://leve.sanity.studio",
+    path: "https://leve.sanity.studio/production",
   },
 });
 

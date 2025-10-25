@@ -12,7 +12,10 @@ interface Props {
 }
 const { showEmpty, scope, title, showError } = Astro.props;
 
-const api = new FientaAPI(FIENTA_API_KEY, import.meta.env.PROD);
+const api = new FientaAPI(
+  FIENTA_API_KEY,
+  import.meta.env.MODE === "production"
+);
 const courses = await api.getCourses(scope);
 ---
 

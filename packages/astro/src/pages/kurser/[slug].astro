@@ -18,7 +18,10 @@ if (isNaN(id)) {
   return Astro.rewrite("/404");
 }
 
-const api = new FientaAPI(FIENTA_API_KEY, import.meta.env.PROD);
+const api = new FientaAPI(
+  FIENTA_API_KEY,
+  import.meta.env.MODE === "production"
+);
 const course = await api.getCourse(id);
 const courseInfo = course.status === "success" ? course.course : undefined;
 

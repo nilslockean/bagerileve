@@ -15,14 +15,12 @@ export const FientaEventDetailsSchema = z.object({
     })
     .optional(),
   // accent_color: z.string(),
-  url: z.string().url(),
-  buy_tickets_url: z.string().url(),
+  url: z.url(),
+  buy_tickets_url: z.url(),
   translations: z.object({
     sv: z.object({
       title: z.string(),
-      description: z.string({
-        description: "HTML",
-      }),
+      description: z.string(),
       duration_string: z.string(),
       notes_about_time: z.string().nullable(),
       // venue: z.string(),

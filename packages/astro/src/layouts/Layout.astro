@@ -17,7 +17,6 @@ import {
   ENABLE_POSTHOG,
   POSTHOG_PROJECT_API_KEY,
   WEGLOT_API_KEY,
-  MODE,
 } from "astro:env/server";
 import WeGlotScript from "@components/WeGlotScript.astro";
 import FientaEmbedScript from "@components/FientaEmbedScript.astro";
@@ -42,7 +41,7 @@ const {
 } = Astro.props;
 const { pathname } = Astro.url;
 
-const isProduction = MODE === "production";
+const isProduction = import.meta.env.MODE === "production";
 
 const _getNavLinks = (area: NavArea) =>
   getNavLinks(area, config.navigation, pathname);
@@ -165,7 +164,7 @@ const optimizedOgImage = await getImage({
       <hr class="my-8" />
       <nav class="flex gap-3" aria-label="Juridisk information">
         <NavLinks links={_getNavLinks(NavArea.COLOPHON)} />
-        <span class="hidden">{MODE}</span>
+        <span class="hidden">{import.meta.env.MODE}</span>
       </nav>
     </footer>
   </body>
