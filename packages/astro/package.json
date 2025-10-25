@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",
-    "build:development": "astro check && astro build --mode development",
+    "build:development": "cross-env NODE_ENV=development astro check && cross-env NODE_ENV=development astro build --mode development",
     "preview": "pnpm wrangler pages dev ./dist",
     "astro": "astro",
     "test": "pnpm test:unit && pnpm test:e2e",
@@ -42,6 +42,7 @@
   "devDependencies": {
     "@playwright/test": "^1.56.1",
     "@types/node": "^24.9.1",
+    "cross-env": "^10.1.0",
     "sharp": "^0.34.4",
     "vite": "^7.1.12",
     "vite-tsconfig-paths": "^5.1.4",

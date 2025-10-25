@@ -9,6 +9,7 @@ console.log("META ENV", {
   PROD: import.meta.env.PROD,
   MODE: import.meta.env.MODE,
   DEV: import.meta.env.DEV,
+  NODE_ENV: process.env.NODE_ENV,
 });
 
 // https://astro.build/config
@@ -26,7 +27,7 @@ export default defineConfig({
   integrations: [
     sanity({
       projectId: "mz20cm4o",
-      dataset: import.meta.env.MODE === "production" ? "production" : "preview",
+      dataset: process.env.NODE_ENV ? "production" : "preview",
       apiVersion: "2024-01-21",
       useCdn: false,
     }),

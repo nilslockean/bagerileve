@@ -164,7 +164,7 @@ const optimizedOgImage = await getImage({
       <hr class="my-8" />
       <nav class="flex gap-3" aria-label="Juridisk information">
         <NavLinks links={_getNavLinks(NavArea.COLOPHON)} />
-        <span class="hidden">{MODE}</span>
+        <span class="hidden">{import.meta.env.MODE}</span>
       </nav>
     </footer>
   </body>
