@@ -17,7 +17,6 @@ import {
   ENABLE_POSTHOG,
   POSTHOG_PROJECT_API_KEY,
   WEGLOT_API_KEY,
-  MODE,
 } from "astro:env/server";
 import WeGlotScript from "@components/WeGlotScript.astro";
 import FientaEmbedScript from "@components/FientaEmbedScript.astro";
@@ -42,7 +41,7 @@ const {
 } = Astro.props;
 const { pathname } = Astro.url;
 
-const isProduction = MODE === "production";
+const isProduction = import.meta.env.MODE === "production";
 
 const _getNavLinks = (area: NavArea) =>
   getNavLinks(area, config.navigation, pathname);
