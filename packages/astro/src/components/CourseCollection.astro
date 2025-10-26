@@ -3,6 +3,7 @@ import { type EventScope } from "@lib/schemas/EventScope";
 import { FIENTA_API_KEY } from "astro:env/server";
 import CourseList from "@components/CourseList.astro";
 import { FientaAPI } from "@lib/api/FientaAPI";
+import { isProduction } from "@lib/envUtils";
 
 interface Props {
   showEmpty: boolean;
@@ -12,10 +13,7 @@ interface Props {
 }
 const { showEmpty, scope, title, showError } = Astro.props;
 
-const api = new FientaAPI(
-  FIENTA_API_KEY,
-  import.meta.env.MODE === "production"
-);
+const api = new FientaAPI(FIENTA_API_KEY, isProduction());
 const courses = await api.getCourses(scope);
 ---
 

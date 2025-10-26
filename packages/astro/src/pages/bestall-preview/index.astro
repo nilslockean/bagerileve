@@ -5,6 +5,11 @@ import IntroText from "@components/IntroText.astro";
 import { getCollection } from "astro:content";
 import ProductOverview from "@components/ProductOverview.astro";
 import Link from "@components/Link.astro";
+import { isProduction } from "@lib/envUtils";
+
+if (isProduction()) {
+  return Astro.rewrite("/404");
+}
 
 const products = await getCollection("products");
 ---
