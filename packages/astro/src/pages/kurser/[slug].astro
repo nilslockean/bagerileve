@@ -9,6 +9,7 @@ import ButtonLink from "@components/ButtonLink.astro";
 import Button from "@components/Button.astro";
 import Hero from "@components/Hero.astro";
 import { FientaAPI } from "@lib/api/FientaAPI";
+import { isProduction } from "@lib/envUtils";
 
 export const prerender = false;
 
@@ -18,10 +19,7 @@ if (isNaN(id)) {
   return Astro.rewrite("/404");
 }
 
-const api = new FientaAPI(
-  FIENTA_API_KEY,
-  import.meta.env.MODE === "production"
-);
+const api = new FientaAPI(FIENTA_API_KEY, isProduction());
 const course = await api.getCourse(id);
 const courseInfo = course.status === "success" ? course.course : undefined;
 

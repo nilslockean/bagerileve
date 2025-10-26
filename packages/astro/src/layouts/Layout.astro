@@ -23,6 +23,7 @@ import FientaEmbedScript from "@components/FientaEmbedScript.astro";
 import { getCanonicalUrl } from "@lib/canonicalUrl";
 import { sanityAPI } from "@lib/sanityAPI";
 import Posthog from "@components/Posthog.astro";
+import { isProduction } from "@lib/envUtils";
 
 interface Props {
   title: string;
@@ -40,8 +41,6 @@ const {
   ogImage,
 } = Astro.props;
 const { pathname } = Astro.url;
-
-const isProduction = import.meta.env.MODE === "production";
 
 const _getNavLinks = (area: NavArea) =>
   getNavLinks(area, config.navigation, pathname);
@@ -99,7 +98,7 @@ const optimizedOgImage = await getImage({
     <!-- Canonical URL -->
     <link rel="canonical" href={canonical} />
 
-    {!isProduction && <meta name="robots" content="noindex,nofollow" />}
+    {!isProduction() && <meta name="robots" content="noindex,nofollow" />}
 
     <FientaEmbedScript />
     {
