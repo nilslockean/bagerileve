@@ -2,8 +2,10 @@
 import type { HTMLAttributes } from "astro/types";
 import type { Product } from "@lib/schemas/Product";
 import { capitalize } from "@lib/stringUtils";
-import { PICKUP_DATE_MIN_OFFSET } from "astro:env/server";
-import { PICKUP_DATE_MAX_OFFSET } from "astro:env/server";
+import {
+  PICKUP_DATE_MIN_OFFSET,
+  PICKUP_DATE_MAX_OFFSET,
+} from "astro:env/server";
 
 interface Props extends HTMLAttributes<"fieldset"> {
   product: Product;
