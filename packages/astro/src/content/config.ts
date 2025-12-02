@@ -22,7 +22,7 @@ const products = defineCollection({
         images,
         prices,
         outOfStock,
-        'pickupDates': pickupDates[@ > now()] | order(date asc)
+        pickupDates
       }`
     );
     return z.array(LoaderJSONSchema).parse(json);

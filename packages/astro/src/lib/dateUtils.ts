@@ -36,3 +36,17 @@ export function addDays(offset: number, baseDate = new Date()) {
   result.setDate(baseDate.getDate() + offset);
   return result;
 }
+
+export function isDateInFuture(
+  input: string | Date,
+  baseDate = new Date()
+): boolean {
+  const timestamp =
+    typeof input === "string" ? Date.parse(input) : input.getTime();
+
+  if (Number.isNaN(timestamp)) {
+    throw new Error(`Invalid input parameter: ${input}`);
+  }
+
+  return timestamp > baseDate.getTime();
+}
