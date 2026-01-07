@@ -1,5 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {ClockIcon, CalendarIcon} from '@sanity/icons'
+import * as z from 'zod'
 
 function composeWeekdayField(name: string, title: string, day: number) {
   return defineField({
@@ -11,7 +12,7 @@ function composeWeekdayField(name: string, title: string, day: number) {
         name: 'time',
         type: 'string',
         title: 'Öppettider',
-        hidden: ({parent}) => parent && parent.closed,
+        hidden: ({parent}) => parent?.closed,
       },
       {
         name: 'closed',
@@ -93,7 +94,7 @@ export default defineType({
               name: 'time',
               type: 'string',
               title: 'Öppettider',
-              hidden: ({parent}) => parent.closed,
+              hidden: ({parent}) => parent?.closed,
             },
             {
               name: 'closed',
@@ -127,12 +128,38 @@ export default defineType({
         {
           type: 'object',
           icon: CalendarIcon,
+          validation: (rule) =>
+            rule.custom((f, context) => {
+              const Field = z.object({_key: z.string(), date: z.iso.date()})
+              const parent = z.array(Field).safeParse(context.parent)
+              if (!parent.success) {
+                console.warn('Parent schema parse error:', parent.error)
+                return true
+              }
+
+              const field = Field.safeParse(f)
+              if (!field.success) {
+                console.warn('Field schema parse error', field.error)
+                return true
+              }
+
+              const isDouble = parent.data
+                .filter((item) => item._key !== field.data._key)
+                .map((item) => item.date)
+                .includes(field.data.date)
+
+              if (!isDouble) {
+                return true
+              }
+
+              return 'Detta datum har redan en avvikande öppettid'
+            }),
           fields: [
             {
               name: 'date',
               type: 'date',
               title: 'Datum',
-              validation: (Rule) => Rule.required(),
+              validation: (rule) => rule.required(),
             },
             {
               name: 'closed',
@@ -144,7 +171,7 @@ export default defineType({
               name: 'time',
               type: 'string',
               title: 'Öppettider',
-              hidden: ({parent}) => parent.closed,
+              hidden: ({parent}) => parent?.closed,
             },
             {
               name: 'name',
@@ -161,8 +188,8 @@ export default defineType({
             },
             prepare(selection) {
               return {
-                title: `${selection.date} (${selection.name})`,
-                subtitle: selection.closed ? 'stängt' : selection.time,
+                title: composeTitle(selection.date, selection.name),
+                subtitle: selection?.closed ? 'stängt' : selection?.time,
               }
             },
           },
@@ -171,3 +198,15 @@ export default defineType({
     },
   ],
 })
+
+function composeTitle(date?: string, name?: string) {
+  if (!date) {
+    return 'Ange datum'
+  }
+
+  if (!name) {
+    return date
+  }
+
+  return `${date} (${name})`
+}
