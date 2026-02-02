@@ -9,10 +9,16 @@ import Breadcrumbs from "@components/Breadcrumbs.astro";
 import { urlFor } from "@lib/sanityAPI";
 import { Image } from "astro:assets";
 import { formatPrice } from "@lib/stringUtils";
-import ProductPickupDateSelector from "./PickupDateSelector.astro";
+import ProductPickupDate from "./PickupDate.astro";
 import ProductOutOfStock from "./OutOfStock.astro";
 import ProductVariantSelector from "./VariantSelector.astro";
 import ProductQtySelector from "./QtySelector.astro";
+import { actions } from "astro:actions";
+import ButtonLink from "@components/ButtonLink.astro";
+
+const result = Astro.getActionResult(actions.addToCart);
+const addedToCart = result && !result.error;
+const errorMessage = result?.error?.message;
 
 interface Props extends HTMLAttributes<"section"> {
   product: Product;
@@ -46,6 +52,27 @@ const buttonLabel =
 
   <h1 class="mt-8 mb-16">{product.title}</h1>
 
+  {
+    addedToCart && (
+      <div class="bg-white/10 w-full px-6 py-4 mb-12 flex flex-wrap gap-6 justify-between items-center">
+        <p class="m-0">
+          <strong>{product.title}</strong> lades till i din varukorg
+        </p>
+        <ButtonLink href="/kassa" variant="outline" class="text-current m-0">
+          Gå till kassan
+        </ButtonLink>
+      </div>
+    )
+  }
+
+  {
+    errorMessage && (
+      <div class="bg-red-200 border border-red-400 text-red-900 w-full px-6 py-4 mb-12">
+        {errorMessage}
+      </div>
+    )
+  }
+
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12">
     <!-- Image and description -->
     <div class="col-span-2">
@@ -62,12 +89,14 @@ const buttonLabel =
 
     <!-- Aside, add to cart button, variant and date selector -->
     <div class="bg-blue-950 p-8 w-full">
-      <form>
+      <form method="POST" action={actions.addToCart}>
+        <input name="productId" value={product.id} class="hidden" />
+
         {
           product.outOfStock ? (
             <ProductOutOfStock {product} />
           ) : (
-            <ProductPickupDateSelector {product} {availablePickupDates} />
+            <ProductPickupDate {product} />
           )
         }
 
