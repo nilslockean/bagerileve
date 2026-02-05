@@ -12,8 +12,9 @@ export const cartSchema = z.object({
 });
 
 export type Cart = z.infer<typeof cartSchema>;
+type CartItem = z.infer<typeof cartItemSchema>;
 
-type CartTotal = {
+export type CartTotal = {
   total: number;
   tax: number;
 };
@@ -37,6 +38,40 @@ export function getCart(cookies: AstroCookies): Cart {
   cookies.delete(CART_COOKIE);
 
   return EMPTY_CART;
+}
+
+export function addToCart(cart: Cart, item: CartItem, maxQty?: number): Cart {
+  // Total quantity of this product already in cart (all price options)
+  const qtyInCart = cart.items
+    .filter((i) => i.productId === item.productId)
+    .reduce((sum, i) => sum + i.qty, 0);
+
+  const qtyLimit =
+    maxQty !== undefined ? Math.max(maxQty - qtyInCart, 0) : item.qty;
+
+  const qtyToAdd =
+    maxQty !== undefined ? Math.min(item.qty, qtyLimit) : item.qty;
+
+  // Nothing to add → return cart unchanged
+  if (qtyToAdd <= 0) {
+    return cart;
+  }
+
+  // Find items in cart with same id and price option
+  const existing = cart.items.find(
+    (i) => i.productId === item.productId && i.price === item.price
+  );
+
+  if (existing) {
+    existing.qty += qtyToAdd;
+  } else {
+    cart.items.push({
+      ...item,
+      qty: qtyToAdd,
+    });
+  }
+
+  return cart;
 }
 
 export function setCart(cookies: AstroCookies, cart: Cart) {
