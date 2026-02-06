@@ -175,4 +175,24 @@ describe("addToCart", () => {
       qty: 2,
     });
   });
+
+  test("adds to cart if maxQty is 0 (unlimited)", () => {
+    console.log({ EMPTY_CART: JSON.stringify(EMPTY_CART) });
+    const cart = addToCart(
+      EMPTY_CART,
+      {
+        productId: "test-1",
+        price: 1,
+        qty: 100,
+      },
+      0
+    );
+
+    expect(cart.items).toHaveLength(1);
+    expect(cart.items[0]).toEqual({
+      productId: "test-1",
+      price: 1,
+      qty: 100,
+    });
+  });
 });

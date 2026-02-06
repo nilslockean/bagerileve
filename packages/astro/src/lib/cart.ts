@@ -21,8 +21,7 @@ export type CartTotal = {
 
 const TAX_PERCENTAGE = 0.12;
 const CART_COOKIE = "cart";
-
-export const EMPTY_CART = { items: [] } as const satisfies Cart;
+export const EMPTY_CART = Object.freeze({ items: [] }) satisfies Cart;
 
 export function getCart(cookies: AstroCookies): Cart {
   const cookie = cookies.get(CART_COOKIE);
@@ -40,38 +39,44 @@ export function getCart(cookies: AstroCookies): Cart {
   return EMPTY_CART;
 }
 
-export function addToCart(cart: Cart, item: CartItem, maxQty?: number): Cart {
-  // Total quantity of this product already in cart (all price options)
-  const qtyInCart = cart.items
-    .filter((i) => i.productId === item.productId)
-    .reduce((sum, i) => sum + i.qty, 0);
+export function addToCart(cart: Cart, item: CartItem, maxQty = 0): Cart {
+  // const cart = Object.create(currentCart);
+  const nextCart = structuredClone(cart);
+  const isUnlimited = maxQty === 0;
 
-  const qtyLimit =
-    maxQty !== undefined ? Math.max(maxQty - qtyInCart, 0) : item.qty;
+  console.log("adding", item, "to", JSON.stringify(cart), { maxQty });
+  // Total quantity of this product already in cart (all price options)
+  const qtyInCart = nextCart.items
+    .filter(({ productId }) => productId === item.productId)
+    .reduce((sum, { qty }) => sum + qty, 0);
+
+  const qtyLimit = isUnlimited ? item.qty : Math.max(maxQty - qtyInCart, 0);
 
   const qtyToAdd =
     maxQty !== undefined ? Math.min(item.qty, qtyLimit) : item.qty;
 
+  console.log({ qtyInCart, qtyLimit, qtyToAdd });
+
   // Nothing to add → return cart unchanged
   if (qtyToAdd <= 0) {
-    return cart;
+    return nextCart;
   }
 
   // Find items in cart with same id and price option
-  const existing = cart.items.find(
+  const existing = nextCart.items.find(
     (i) => i.productId === item.productId && i.price === item.price
   );
 
   if (existing) {
     existing.qty += qtyToAdd;
   } else {
-    cart.items.push({
+    nextCart.items.push({
       ...item,
       qty: qtyToAdd,
     });
   }
 
-  return cart;
+  return nextCart;
 }
 
 export function setCart(cookies: AstroCookies, cart: Cart) {
