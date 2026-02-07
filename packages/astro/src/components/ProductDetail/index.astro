@@ -2,7 +2,7 @@
 import Section from "@components/Section.astro";
 import { PortableText } from "astro-portabletext";
 import Button from "@components/Button.astro";
-import { getShopUrl } from "src/config";
+import { getCartUrl, getShopUrl } from "src/config";
 import type { HTMLAttributes } from "astro/types";
 import type { Product } from "@lib/schemas/Product";
 import Breadcrumbs from "@components/Breadcrumbs.astro";
@@ -15,7 +15,9 @@ import ProductVariantSelector from "./VariantSelector.astro";
 import ProductQtySelector from "./QtySelector.astro";
 import { actions } from "astro:actions";
 import ButtonLink from "@components/ButtonLink.astro";
+import { getCart } from "@lib/cart";
 
+const cart = getCart(Astro.cookies);
 const result = Astro.getActionResult(actions.addToCart);
 const addedToCart = result && !result.error;
 const errorMessage = result?.error?.message;
@@ -32,8 +34,21 @@ const {
   ...rest
 } = Astro.props;
 const featuredImage = product.images[0];
-const disabled = product.outOfStock || availablePickupDates.length === 0;
 
+const qtyInCart = cart.items
+  .filter((item) => item.productId === product.id)
+  .map(({ qty }) => qty)
+  .reduce((a, b) => a + b, 0);
+
+const max = product.maxQuantityPerOrder
+  ? product.maxQuantityPerOrder - qtyInCart
+  : 0;
+
+const isCartFull =
+  product.maxQuantityPerOrder && product.maxQuantityPerOrder === qtyInCart;
+
+const disabled =
+  product.outOfStock || availablePickupDates.length === 0 || isCartFull;
 const buttonActionDescription = disabled ? "Ej tillgänlig" : "Beställ";
 const buttonLabel =
   product.prices.length === 1
@@ -58,8 +73,12 @@ const buttonLabel =
         <p class="m-0">
           <strong>{product.title}</strong> lades till i din varukorg
         </p>
-        <ButtonLink href="/kassa" variant="outline" class="text-current m-0">
-          Gå till kassan
+        <ButtonLink
+          href={getCartUrl()}
+          variant="outline"
+          class="text-current m-0"
+        >
+          Visa kundvagn
         </ButtonLink>
       </div>
     )
@@ -102,11 +121,19 @@ const buttonLabel =
 
         <ProductVariantSelector prices={product.prices} />
 
-        {!disabled && <ProductQtySelector max={product.maxQuantityPerOrder} />}
+        {!disabled && <ProductQtySelector max={max} />}
 
         <fieldset>
           {
-            disabled ? (
+            isCartFull ? (
+              <ButtonLink
+                href={getCartUrl()}
+                variant="primary"
+                class="w-full text-center"
+              >
+                Visa kundvagn
+              </ButtonLink>
+            ) : disabled ? (
               <Button type="button" variant="outline" class="w-full" disabled>
                 {buttonLabel}
               </Button>

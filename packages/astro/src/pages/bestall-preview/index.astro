@@ -5,9 +5,9 @@ import IntroText from "@components/IntroText.astro";
 import { getCollection } from "astro:content";
 import ProductOverview from "@components/ProductOverview.astro";
 import Link from "@components/Link.astro";
-import { isProduction } from "@lib/envUtils";
+import { ENABLE_STOREFRONT } from "astro:env/server";
 
-if (isProduction()) {
+if (!ENABLE_STOREFRONT) {
   return Astro.rewrite("/404");
 }
 

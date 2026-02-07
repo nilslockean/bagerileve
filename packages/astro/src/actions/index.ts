@@ -1,10 +1,77 @@
-import { getCart, setCart } from "@lib/cart";
+import { addToCart, EMPTY_CART, getCart, setCart, updateCart } from "@lib/cart";
 import { defineAction, ActionError } from "astro:actions";
 import { getEntry } from "astro:content";
 import { z } from "astro:schema";
 
 export const server = {
   // action declarations
+  clearCart: defineAction({
+    accept: "form",
+    handler: async (_input, context) => {
+      setCart(context.cookies, EMPTY_CART);
+      return {
+        success: true,
+      };
+    },
+  }),
+  updateCart: defineAction({
+    accept: "form",
+    input: z.object({
+      productId: z.string(),
+      price: z.number(),
+      qty: z.number(),
+    }),
+    handler: async (input, context) => {
+      const { productId, price, qty } = input;
+      const entry = await getEntry("products", productId);
+
+      if (!entry) {
+        throw new ActionError({
+          code: "BAD_REQUEST",
+          message: "Produkten finns inte.",
+        });
+      }
+
+      const product = entry.data;
+      const { maxQuantityPerOrder } = product;
+
+      const currentCart = getCart(context.cookies);
+      const cart = updateCart(
+        currentCart,
+        {
+          productId,
+          price,
+          qty,
+        },
+        maxQuantityPerOrder
+      );
+      setCart(context.cookies, cart);
+
+      return {
+        success: true,
+      };
+    },
+  }),
+  removeFromCart: defineAction({
+    accept: "form",
+    input: z.object({
+      productId: z.string(),
+      price: z.number(),
+    }),
+    handler: async (input, context) => {
+      const { productId, price } = input;
+      const currentCart = getCart(context.cookies);
+      const cart = updateCart(currentCart, {
+        productId,
+        price,
+        qty: 0,
+      });
+
+      setCart(context.cookies, cart);
+
+      return cart;
+    },
+  }),
   addToCart: defineAction({
     accept: "form",
     input: z.object({
@@ -90,26 +157,16 @@ export const server = {
       //   }
       // }
 
-      const cart = getCart(context.cookies);
-      const existing = cart.items.find(
-        (item) => item.productId === product.id && item.price === input.price
-      );
-
-      // Update cart item in place if it exists
-      if (existing) {
-        const requestedQty = existing.qty + input.qty;
-
-        existing.qty = product.maxQuantityPerOrder
-          ? Math.min(product.maxQuantityPerOrder, requestedQty)
-          : requestedQty;
-      } else {
-        cart.items.push({
+      const currentCart = getCart(context.cookies);
+      const cart = addToCart(
+        currentCart,
+        {
           productId: product.id,
           price: input.price,
           qty: input.qty,
-        });
-      }
-
+        },
+        product.maxQuantityPerOrder
+      );
       setCart(context.cookies, cart);
 
       // ✅ All validation passed

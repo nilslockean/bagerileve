@@ -1,5 +1,11 @@
 import { describe, test, expect } from "vitest";
-import { getCartTotal, EMPTY_CART, addToCart, type Cart } from "./cart";
+import {
+  getCartTotal,
+  EMPTY_CART,
+  addToCart,
+  type Cart,
+  updateCart,
+} from "./cart";
 
 describe("getCartTotal", () => {
   test("returns 0 when cart is empty", () => {
@@ -177,7 +183,6 @@ describe("addToCart", () => {
   });
 
   test("adds to cart if maxQty is 0 (unlimited)", () => {
-    console.log({ EMPTY_CART: JSON.stringify(EMPTY_CART) });
     const cart = addToCart(
       EMPTY_CART,
       {
@@ -194,5 +199,107 @@ describe("addToCart", () => {
       price: 1,
       qty: 100,
     });
+  });
+});
+
+describe("updateCart", () => {
+  const ITEM_1_MAX_QTY = 3;
+  const ITEM_2_MAX_QTY = 10;
+  const CART: Cart = {
+    items: [
+      {
+        productId: "test-1",
+        price: 1,
+        qty: 1,
+      },
+      {
+        productId: "test-1",
+        price: 2,
+        qty: 1,
+      },
+      {
+        productId: "test-2",
+        price: 1,
+        qty: 10,
+      },
+    ],
+  };
+
+  test("throws if product is not in cart", () => {
+    expect(() => {
+      updateCart(CART, {
+        productId: "test-3",
+        price: 1,
+        qty: 5,
+      });
+    }).toThrow("PRODUCT_ID_MISMATCH");
+  });
+
+  test("reduces qty of single item", () => {
+    const cart = updateCart(
+      CART,
+      {
+        productId: "test-2",
+        price: 1,
+        qty: 5,
+      },
+      ITEM_2_MAX_QTY
+    );
+
+    expect(cart.items).toHaveLength(CART.items.length);
+    expect(cart.items[2]).toEqual({
+      productId: "test-2",
+      price: 1,
+      qty: 5,
+    });
+  });
+
+  test("caps qty at maxQty for single price option", () => {
+    const cart = updateCart(
+      CART,
+      {
+        productId: "test-2",
+        price: 1,
+        qty: 1000000000,
+      },
+      ITEM_2_MAX_QTY
+    );
+
+    expect(cart.items).toHaveLength(CART.items.length);
+    expect(cart.items[2]).toEqual({
+      productId: "test-2",
+      price: 1,
+      qty: ITEM_2_MAX_QTY,
+    });
+  });
+
+  test("caps qty at maxQty for product with multiple price options", () => {
+    const cart = updateCart(
+      CART,
+      {
+        productId: "test-1",
+        price: 2,
+        qty: 3,
+      },
+      ITEM_1_MAX_QTY
+    );
+
+    expect(cart.items).toHaveLength(CART.items.length);
+    expect(cart.items[1]).toEqual({
+      productId: "test-1",
+      price: 2,
+      qty: 2,
+    });
+  });
+
+  test("removes item if qty is 0", () => {
+    const cart = updateCart(CART, {
+      productId: "test-2",
+      price: 1,
+      qty: 0,
+    });
+
+    expect(cart.items).toHaveLength(CART.items.length - 1);
+    expect(cart.items.map((item) => item.productId)).not.toContain("test-2");
   });
 });

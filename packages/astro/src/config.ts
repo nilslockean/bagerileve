@@ -17,6 +17,8 @@ export enum Slug {
   PRIVACY_POLICY = "gdpr",
   // BOOKING_TERMS = "villkor",
   ADMIN = "admin",
+  CART = "kundvagn",
+  CHECKOUT = "kassa",
 }
 
 type SiteConfig = {
@@ -59,6 +61,14 @@ export const PageMap: Record<Slug, NavLink> = Object.freeze({
     label: "Logga in",
     path: "https://leve.sanity.studio/production",
   },
+  [Slug.CART]: {
+    label: "Kundvagn",
+    path: "/kundvagn",
+  },
+  [Slug.CHECKOUT]: {
+    label: "Kassa",
+    path: "/kassa",
+  },
 });
 
 const config: SiteConfig = {
@@ -68,14 +78,11 @@ const config: SiteConfig = {
       link: PageMap[Slug.HOME],
       areas: [NavArea.HEADER, NavArea.FOOTER],
     },
-    // { link: PageMap[Slug.ASSORTMENT], areas: [NavArea.HEADER, NavArea.FOOTER] },
     { link: PageMap[Slug.COURSES], areas: [NavArea.HEADER, NavArea.FOOTER] },
     { link: PageMap[Slug.ORDER], areas: [NavArea.HEADER, NavArea.FOOTER] },
-    // { link: PageMap[Slug.ABOUT], areas: [NavArea.HEADER, NavArea.FOOTER] },
     { link: PageMap[Slug.CONTACT], areas: [NavArea.HEADER, NavArea.FOOTER] },
     { link: PageMap[Slug.PRIVACY_POLICY], areas: [NavArea.COLOPHON] },
     { link: PageMap[Slug.ADMIN], areas: [NavArea.COLOPHON] },
-    // { link: PageMap[Slug.BOOKING_TERMS], areas: [NavArea.COLOPHON] },
   ],
   siteUrl: "https://bagerileve.se",
   siteDomain: "bagerileve.se",
@@ -103,12 +110,16 @@ export function getShopUrl() {
   return SHOP_BASE_PATH;
 }
 
-export function getProductUrl(slug: string) {
-  return `${SHOP_BASE_PATH}/${slug}`;
+export function getCartUrl() {
+  return PageMap.kundvagn.path;
 }
 
 export function getCheckoutUrl() {
-  return `${SHOP_BASE_PATH}/kassa`;
+  return PageMap.kassa.path;
+}
+
+export function getProductUrl(slug: string) {
+  return `${SHOP_BASE_PATH}/${slug}`;
 }
 
 export function getThankYouUrl() {

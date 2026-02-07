@@ -6,10 +6,15 @@ import { sanityAPI } from "@lib/sanityAPI";
 import {
   PICKUP_DATE_MIN_OFFSET,
   PICKUP_DATE_MAX_OFFSET,
+  ENABLE_STOREFRONT,
 } from "astro:env/server";
 import { getDateString, addDays, isDateInFuture } from "@lib/dateUtils";
 
 export const prerender = false;
+
+if (!ENABLE_STOREFRONT) {
+  return Astro.rewrite("/404");
+}
 
 const { id = "" } = Astro.params;
 const entry = await getEntry("products", id);

@@ -92,6 +92,12 @@ export default defineConfig({
         optional: false,
         default: 30,
       }),
+      ENABLE_STOREFRONT: envField.boolean({
+        context: "server",
+        access: "public",
+        optional: false,
+        default: false,
+      }),
     },
   },
   experimental: {},

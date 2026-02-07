@@ -2,7 +2,7 @@
 import "../base.css";
 import Logo from "@components/Logo.astro";
 import { NavArea } from "@lib/enums/NavArea";
-import config, { SiteLanguage } from "../config";
+import config, { getCartUrl, SiteLanguage } from "../config";
 import { LogoSize } from "@lib/enums/LogoSize";
 import NavLinks from "@components/NavLinks.astro";
 import OpeningHours from "@components/OpeningHours.astro";
@@ -24,6 +24,9 @@ import { getCanonicalUrl } from "@lib/canonicalUrl";
 import { sanityAPI } from "@lib/sanityAPI";
 import Posthog from "@components/Posthog.astro";
 import { isProduction } from "@lib/envUtils";
+import { ENABLE_STOREFRONT } from "astro:env/server";
+import Icon from "@components/Icon.astro";
+import { IconName } from "@lib/enums/IconName";
 
 interface Props {
   title: string;
@@ -119,10 +122,17 @@ const optimizedOgImage = await getImage({
         <Logo />
       </a>
       <nav
-        class="flex lg:text-lg gap-x-3 gap-y-1 flex-wrap justify-end"
+        class="flex lg:text-lg gap-x-3 gap-y-1 flex-wrap justify-end items-center"
         aria-label="Huvudmeny"
       >
         <NavLinks links={_getNavLinks(NavArea.HEADER)} />
+        {
+          ENABLE_STOREFRONT && (
+            <a href={getCartUrl()} class="ml-2" title="Visa kundvagn">
+              <Icon name={IconName.CART} />
+            </a>
+          )
+        }
       </nav>
     </header>
 

@@ -1,0 +1,96 @@
+---
+import { getProductUrl } from "src/config";
+import type { HTMLAttributes } from "astro/types";
+import { actions } from "astro:actions";
+import type { Product } from "@lib/schemas/Product";
+import { formatPrice } from "@lib/stringUtils";
+import { Image } from "astro:assets";
+import { urlFor } from "@lib/sanityAPI";
+
+interface Props extends HTMLAttributes<"li"> {
+  productId: string;
+  price: number;
+  qty: number;
+  product: Product;
+}
+
+const {
+  productId,
+  price,
+  qty,
+  product,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const priceOptionDesc = product.prices.find(
+  (option) => option.price === price
+)?.description;
+
+const title = priceOptionDesc
+  ? `${product.title} - ${priceOptionDesc}`
+  : product.title;
+
+const thumbnail = product.images[0];
+---
+
+<li {...rest} class="flex gap-4 border-white/30 pb-6 border-b last:border-b-0">
+  <a href={getProductUrl(productId)} class="block shrink-0">
+    <Image
+      src={urlFor(thumbnail.asset).width(128).height(128).url()}
+      alt={thumbnail.alt}
+      inferSize
+      class="block w-14 md:w-18 lg:w-28 h-auto"
+    />
+  </a>
+  <div class="grow">
+    <div class="flex justify-between items-baseline gap-4">
+      <h2 class="text-lg mb-2">
+        <a href={getProductUrl(productId)}>
+          {title}
+        </a>
+      </h2>
+      <p class="whitespace-nowrap">
+        {formatPrice([price * qty])}
+      </p>
+    </div>
+    <p class="text-sm">{formatPrice([price])}</p>
+    {
+      product.pickupDates?.length && (
+        <p class="text-sm">
+          Kan endast hämtas {product.pickupDates.join(", ")}
+        </p>
+      )
+    }
+    <div class="flex flex-wrap gap-4 justify-between items-baseline">
+      <!-- Update itme quantity form -->
+      <form
+        class="form__update-cart flex gap-4 items-center flex-wrap"
+        action={actions.updateCart}
+        method="POST"
+      >
+        <input hidden name="productId" value={productId} />
+        <input hidden name="price" value={price} />
+        <input
+          name="qty"
+          class="border border-white/30 text-sm p-2 w-12"
+          type="number"
+          min="1"
+          max={product.maxQuantityPerOrder || undefined}
+          value={qty}
+        />
+        <button type="submit" class="text-sm cursor-pointer underline">
+          Ändra antal
+        </button>
+      </form>
+      <!-- Remove item form -->
+      <form action={actions.removeFromCart} method="POST" class="mt-4">
+        <input type="text" name="productId" value={productId} hidden />
+        <input type="text" name="price" value={price} hidden />
+        <button type="submit" class="text-sm cursor-pointer underline">
+          Ta bort
+        </button>
+      </form>
+    </div>
+  </div>
+</li>

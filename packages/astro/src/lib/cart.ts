@@ -44,18 +44,13 @@ export function addToCart(cart: Cart, item: CartItem, maxQty = 0): Cart {
   const nextCart = structuredClone(cart);
   const isUnlimited = maxQty === 0;
 
-  console.log("adding", item, "to", JSON.stringify(cart), { maxQty });
   // Total quantity of this product already in cart (all price options)
   const qtyInCart = nextCart.items
     .filter(({ productId }) => productId === item.productId)
     .reduce((sum, { qty }) => sum + qty, 0);
 
   const qtyLimit = isUnlimited ? item.qty : Math.max(maxQty - qtyInCart, 0);
-
-  const qtyToAdd =
-    maxQty !== undefined ? Math.min(item.qty, qtyLimit) : item.qty;
-
-  console.log({ qtyInCart, qtyLimit, qtyToAdd });
+  const qtyToAdd = isUnlimited ? item.qty : Math.min(item.qty, qtyLimit);
 
   // Nothing to add → return cart unchanged
   if (qtyToAdd <= 0) {
@@ -75,6 +70,43 @@ export function addToCart(cart: Cart, item: CartItem, maxQty = 0): Cart {
       qty: qtyToAdd,
     });
   }
+
+  return nextCart;
+}
+
+export function updateCart(cart: Cart, item: CartItem, maxQty = 0) {
+  const nextCart = structuredClone(cart);
+  const nextItemIndex = nextCart.items.findIndex(
+    ({ productId, price }) =>
+      productId === item.productId && price === item.price
+  );
+  const nextItem = nextCart.items[nextItemIndex];
+
+  if (!nextItem) {
+    throw new Error("PRODUCT_ID_MISMATCH");
+  }
+
+  // Remove item from cart if quanity is 0
+  if (item.qty === 0) {
+    nextCart.items.splice(nextItemIndex, 1);
+    return nextCart;
+  }
+
+  // Add if maxQty is unlimited (0)
+  if (maxQty === 0) {
+    nextItem.qty = item.qty;
+    return nextCart;
+  }
+
+  // Total quantity of this product already in cart (not this price option)
+  const qtyInCart = nextCart.items
+    .filter(
+      ({ productId, price }) =>
+        productId === item.productId && price !== item.price
+    )
+    .reduce((sum, { qty }) => sum + qty, 0);
+
+  nextItem.qty = Math.min(item.qty, maxQty - qtyInCart);
 
   return nextCart;
 }
