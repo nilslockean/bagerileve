@@ -2,7 +2,7 @@
 import "../base.css";
 import Logo from "@components/Logo.astro";
 import { NavArea } from "@lib/enums/NavArea";
-import config, { getCartUrl, SiteLanguage } from "../config";
+import config, { getCartUrl, SiteLanguage } from "@config";
 import { LogoSize } from "@lib/enums/LogoSize";
 import NavLinks from "@components/NavLinks.astro";
 import OpeningHours from "@components/OpeningHours.astro";
@@ -27,6 +27,8 @@ import { isProduction } from "@lib/envUtils";
 import { ENABLE_STOREFRONT } from "astro:env/server";
 import Icon from "@components/Icon.astro";
 import { IconName } from "@lib/enums/IconName";
+import MobileHeader from "@components/MobileHeader.astro";
+import ButtonLink from "@components/ButtonLink.astro";
 
 interface Props {
   title: string;
@@ -116,7 +118,7 @@ const optimizedOgImage = await getImage({
   </head>
   <body>
     <header
-      class="p-6 flex items-center justify-between gap-6 max-w-screen-2xl mx-auto"
+      class="p-6 hidden md:flex items-center justify-between gap-6 max-w-screen-2xl mx-auto"
     >
       <a href="/" aria-label="Gå till startsidan">
         <Logo />
@@ -128,13 +130,19 @@ const optimizedOgImage = await getImage({
         <NavLinks links={_getNavLinks(NavArea.HEADER)} />
         {
           ENABLE_STOREFRONT && (
-            <a href={getCartUrl()} class="ml-2" title="Visa kundvagn">
+            <ButtonLink
+              href={getCartUrl()}
+              variant="outline"
+              class="flex gap-2 items-center text-sm m-0 ml-4 py-2 px-3 border-2"
+              title="Visa kundvagn"
+            >
               <Icon name={IconName.CART} />
-            </a>
+            </ButtonLink>
           )
         }
       </nav>
     </header>
+    <MobileHeader links={_getNavLinks(NavArea.HEADER)} />
 
     <main class:list={[{ "py-16": !fullwidth }]} transition:animate="fade">
       <slot />
