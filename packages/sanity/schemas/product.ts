@@ -29,7 +29,7 @@ export default defineType({
     select: {
       title: 'title',
       images: 'images',
-      prices: 'prices',
+      variants: 'variants',
       outOfStock: 'outOfStock',
     },
     prepare(selection) {
@@ -41,7 +41,7 @@ export default defineType({
       return {
         title: title,
         icon: ComponentIcon,
-        subtitle: formatPrice(selection.prices),
+        subtitle: formatPrice(selection.variants),
         media: selection.images?.[0],
       }
     },
@@ -63,11 +63,85 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
 
+    // Start variants
+    defineField({
+      name: 'variants',
+      type: 'array',
+      title: 'Varianter',
+      of: [
+        {
+          type: 'object',
+          title: 'Prisalternativ',
+          fields: [
+            {
+              name: 'description',
+              type: 'string',
+              title: 'Beskrivning',
+              description: 'Visas endast i butiken om produkten har flera prisalternativ',
+              initialValue: 'Standard',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'price',
+              type: 'number',
+              title: 'Pris',
+              description: 'Ange priset i SEK',
+              validation: (Rule) => Rule.positive().required(),
+            },
+            {
+              name: 'id',
+              type: 'slug',
+              title: 'Variant-ID',
+              description: 'Skapas automatiskt från beskrivningen',
+              options: {
+                source: (_doc, options) => {
+                  // `options.parent` is the current array item
+                  return options.parent?.description
+                },
+                isUnique: (value, context) => {
+                  const {parent, document} = context
+                  if (!document?.variants) {
+                    return true
+                  }
+
+                  const duplicates = document.variants.filter(
+                    (variant: any) => variant.id?.current === value && variant !== parent,
+                  )
+
+                  return duplicates.length === 0
+                },
+              },
+              validation: (Rule) => Rule.required(),
+            },
+          ],
+          preview: {
+            select: {
+              description: 'description',
+              price: 'price',
+            },
+            prepare(selection) {
+              const formattedPrice = currenyFormatter.format(selection.price || 0)
+              const title = selection.description
+              const subtitle = formattedPrice
+
+              return {
+                title,
+                subtitle,
+                media: TagIcon,
+              }
+            },
+          },
+        },
+      ],
+    }),
+    // End variants
+
     // Start prices
     defineField({
       name: 'prices',
       type: 'array',
-      title: 'Priser',
+      title: 'Priser (ANVÄND EJ)',
+      description: 'Detta fält kommer tas bort. Använd Varianter istället.',
       of: [
         {
           type: 'object',
