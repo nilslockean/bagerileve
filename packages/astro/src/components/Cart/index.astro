@@ -10,7 +10,6 @@ import ButtonLink from "@components/ButtonLink.astro";
 import CartTotals from "./CartTotals.astro";
 
 interface Props extends HTMLAttributes<"section"> {
-  availablePickupDates: string[];
   total: CartTotal;
   contents: {
     productId: string;
@@ -20,13 +19,7 @@ interface Props extends HTMLAttributes<"section"> {
   }[];
 }
 
-const {
-  availablePickupDates,
-  total,
-  contents,
-  class: className,
-  ...rest
-} = Astro.props;
+const { total, contents, class: className, ...rest } = Astro.props;
 
 const isEmpty = contents.length === 0;
 ---
