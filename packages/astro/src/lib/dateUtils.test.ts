@@ -1,5 +1,10 @@
 import { describe, test } from "vitest";
-import { addDays, getDatesInRange, getDateString } from "./dateUtils";
+import {
+  addDays,
+  getDatesInRange,
+  getDateString,
+  isDateInFuture,
+} from "./dateUtils";
 import { expect } from "@playwright/test";
 
 describe("getDateString", () => {
@@ -86,5 +91,46 @@ describe("addDays", () => {
     const after = Date.now();
     expect(result.getTime()).toBeGreaterThanOrEqual(before);
     expect(result.getTime()).toBeLessThanOrEqual(after + 10);
+  });
+});
+
+describe("isDateInFuture", () => {
+  const base = new Date("2024-05-10T12:00:00Z");
+
+  test("returns true when the input date is after the base date (Date input)", () => {
+    expect(isDateInFuture(new Date("2024-05-11T00:00:00Z"), base)).toBe(true);
+  });
+
+  test("returns false when the input date is the same as the base date (Date input)", () => {
+    expect(isDateInFuture(new Date("2024-05-10T12:00:00Z"), base)).toBe(false);
+  });
+
+  test("returns false when the input date is before the base date (Date input)", () => {
+    expect(isDateInFuture(new Date("2024-05-09T23:59:59Z"), base)).toBe(false);
+  });
+
+  test("returns true for a future ISO date string", () => {
+    expect(isDateInFuture("2024-05-12", base)).toBe(true);
+  });
+
+  test("returns false for a past ISO date string", () => {
+    expect(isDateInFuture("2024-05-01", base)).toBe(false);
+  });
+
+  test("handles YYYY-MM-DD strings by treating them as midnight UTC", () => {
+    // 2024-05-10 at midnight is still before the base date at noon
+    expect(isDateInFuture("2024-05-10", base)).toBe(false);
+  });
+
+  test("returns true when using the real current date and the input is tomorrow", () => {
+    const today = new Date("2024-05-10T00:00:00Z");
+    const tomorrow = "2024-05-11";
+    expect(isDateInFuture(tomorrow, today)).toBe(true);
+  });
+
+  test("throws or returns false for invalid date strings (choose desired behaviour)", () => {
+    expect(() => isDateInFuture("not-a-date", base)).toThrow();
+    // or, if you prefer:
+    // expect(isDateInFuture("not-a-date", base)).toBe(false);
   });
 });

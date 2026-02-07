@@ -1,22 +1,19 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getEntry, getCollection } from "astro:content";
+import { getEntry } from "astro:content";
 import ProductDetail from "@components/ProductDetail/index.astro";
 import { sanityAPI } from "@lib/sanityAPI";
 import {
   PICKUP_DATE_MIN_OFFSET,
   PICKUP_DATE_MAX_OFFSET,
+  ENABLE_STOREFRONT,
 } from "astro:env/server";
-import { getDateString, addDays } from "@lib/dateUtils";
+import { getDateString, addDays, isDateInFuture } from "@lib/dateUtils";
 
-export async function getStaticPaths() {
-  const products = await getCollection("products");
+export const prerender = false;
 
-  return products.map(({ data: { id } }) => ({
-    params: {
-      id,
-    },
-  }));
+if (!ENABLE_STOREFRONT) {
+  return Astro.rewrite("/404");
 }
 
 const { id = "" } = Astro.params;
@@ -35,7 +32,7 @@ const defaultPickupDates = await sanityAPI.getOpenDaysInRange(
 );
 
 const availablePickupDates = entry.data.pickupDates?.length
-  ? entry.data.pickupDates
+  ? entry.data.pickupDates.filter((dateStr) => isDateInFuture(dateStr))
   : defaultPickupDates;
 ---
 

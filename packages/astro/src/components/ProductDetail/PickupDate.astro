@@ -9,15 +9,9 @@ import {
 
 interface Props extends HTMLAttributes<"fieldset"> {
   product: Product;
-  availablePickupDates: string[];
 }
 
-const {
-  product,
-  availablePickupDates,
-  class: className,
-  ...rest
-} = Astro.props;
+const { product, class: className, ...rest } = Astro.props;
 const dateFormatter = new Intl.DateTimeFormat("sv-SE", {
   dateStyle: "full",
 });
@@ -31,7 +25,15 @@ function formatDate(dateStr: string) {
   <legend>Tillgänglighet</legend>
   {
     product.pickupDates && product.pickupDates.length > 0 ? (
-      <p>{product.title} går endast att hämta under specifika datum.</p>
+      <>
+        <p>{product.title} går endast att hämta under specifika datum:</p>
+        <ul>
+          {product.pickupDates.map((date) => (
+            <li>{formatDate(date)}</li>
+          ))}
+        </ul>
+        <p>Välj upphämtningsdatum i kassan.</p>
+      </>
     ) : (
       <>
         <p>
@@ -43,24 +45,4 @@ function formatDate(dateStr: string) {
       </>
     )
   }
-
-  <select name="pickupDate">
-    <option value="" selected={availablePickupDates.length !== 1}>
-      {
-        availablePickupDates.length === 0
-          ? "Inga datum tillgängliga"
-          : "Välj datum för upphämtning"
-      }
-    </option>
-    {
-      availablePickupDates.map((dateStr, i) => (
-        <option
-          value={dateStr}
-          selected={availablePickupDates.length === 1 && i === 0}
-        >
-          {formatDate(dateStr)}
-        </option>
-      ))
-    }
-  </select>
 </fieldset>

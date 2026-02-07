@@ -20,7 +20,7 @@ const { max, class: className, ...rest } = Astro.props;
     )
   }
   <label class="flex flex-wrap items-center gap-4">
-    <input type="number" min="1" value="1" max={max || undefined} />
+    <input name="qty" type="number" min="1" value="1" max={max || undefined} />
     <span class="font-semibold">st.</span>
   </label>
 </fieldset>

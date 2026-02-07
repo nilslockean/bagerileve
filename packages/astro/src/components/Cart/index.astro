@@ -1,0 +1,73 @@
+---
+import Section from "@components/Section.astro";
+import { getShopUrl } from "src/config";
+import type { HTMLAttributes } from "astro/types";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { type CartTotal } from "@lib/cart";
+import type { Product } from "@lib/schemas/Product";
+import CartItem from "./CartItem.astro";
+import ButtonLink from "@components/ButtonLink.astro";
+import CartTotals from "./CartTotals.astro";
+
+interface Props extends HTMLAttributes<"section"> {
+  availablePickupDates: string[];
+  total: CartTotal;
+  contents: {
+    productId: string;
+    price: number;
+    qty: number;
+    product: Product;
+  }[];
+}
+
+const {
+  availablePickupDates,
+  total,
+  contents,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const isEmpty = contents.length === 0;
+---
+
+<Section {...rest}>
+  <Breadcrumbs
+    trail={[
+      { label: "Hem", href: "/" },
+      { label: "Beställ", href: getShopUrl() },
+      { label: "Kundvagn" },
+    ]}
+  />
+
+  <h1 class="mt-8 mb-16">Kundvagn</h1>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12">
+    <!-- Image and description -->
+    <div class="lg:col-span-2">
+      {
+        isEmpty ? (
+          <p>Kundvagnen är tom.</p>
+        ) : (
+          <ul class="list-none flex flex-col gap-6 m-0">
+            {contents.map((row) => (
+              <CartItem {...row} />
+            ))}
+          </ul>
+        )
+      }
+    </div>
+
+    <div class="flex flex-col bg-blue-950 p-8 gap-8 self-start sticky top-8">
+      {
+        isEmpty ? (
+          <ButtonLink href={getShopUrl()} variant="primary" class="m-0">
+            Fortsätt handla
+          </ButtonLink>
+        ) : (
+          <CartTotals total={total} />
+        )
+      }
+    </div>
+  </div>
+</Section>

@@ -5,9 +5,9 @@ import IntroText from "@components/IntroText.astro";
 import { getCollection } from "astro:content";
 import ProductOverview from "@components/ProductOverview.astro";
 import Link from "@components/Link.astro";
-import { isProduction } from "@lib/envUtils";
+import { ENABLE_STOREFRONT } from "astro:env/server";
 
-if (isProduction()) {
+if (!ENABLE_STOREFRONT) {
   return Astro.rewrite("/404");
 }
 
@@ -33,9 +33,10 @@ const products = await getCollection("products");
   <Section>
     <h2>Så funkar det</h2>
     <p>
-      Vi bakar allt på beställning, så beställ helst senast dagen innan du vill
-      hämta. Hämta i butiken under <Link href="/kontakt">våra öppettider</Link> och
-      betala smidigt med kort här på sidan.
+      Beställ online och betala i butik. Välj upphämtningsdatum i kassan, minst
+      två dagars framförhållning, och hämta i butiken under <Link
+        href="/kontakt">våra öppettider</Link
+      >.
     </p>
   </Section>
 
