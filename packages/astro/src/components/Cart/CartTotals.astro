@@ -4,7 +4,7 @@ import { type CartTotal } from "@lib/cart";
 import { formatPrice } from "@lib/stringUtils";
 import { cn } from "@lib/cn";
 import ButtonLink from "@components/ButtonLink.astro";
-import { getCheckoutUrl } from "src/config";
+import { getCheckoutUrl } from "@config";
 
 interface Props extends HTMLAttributes<"fieldset"> {
   total: CartTotal;
