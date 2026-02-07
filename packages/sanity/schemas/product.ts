@@ -30,12 +30,15 @@ export default defineType({
       title: 'title',
       images: 'images',
       variants: 'variants',
-      outOfStock: 'outOfStock',
+      maxQuantityPerOrder: 'maxQuantityPerOrder',
     },
     prepare(selection) {
       let title = selection.title
-      if (selection.outOfStock) {
+      if (selection.maxQuantityPerOrder === 0) {
         title += ` (fullbokad)`
+      }
+      if (selection.maxQuantityPerOrder === null) {
+        title += ` (obegränsad)`
       }
 
       return {
@@ -92,7 +95,7 @@ export default defineType({
               name: 'id',
               type: 'slug',
               title: 'Variant-ID',
-              description: 'Skapas automatiskt från beskrivningen',
+              description: 'Genereras från beskrivningen',
               options: {
                 source: (_doc, options) => {
                   // `options.parent` is the current array item
@@ -269,10 +272,11 @@ export default defineType({
     defineField({
       name: 'maxQuantityPerOrder',
       type: 'number',
-      title: 'Max antal per order',
-      description: 'Max antal av produkten som kan köpas i en beställning (0 = obegränsat)',
-      initialValue: 5,
-      validation: (Rule) => Rule.positive(),
+      title: 'Max antal per beställning',
+      description: 'Lämna tomt för obegränsat. Ange 0 om produkten är fullbokad.',
+      initialValue: 10,
+      validation: (Rule) =>
+        Rule.integer().min(0).warning('Använd 0 för fullbokad, tomt för obegränsat'),
     }),
     // End max quantity per order
 
@@ -292,15 +296,5 @@ export default defineType({
         },
       ],
     }),
-
-    // Start outOfStock
-    defineField({
-      name: 'outOfStock',
-      type: 'boolean',
-      title: 'Fullbokad',
-      description: 'Kryssa i om produkten är slut i lager och inte ska gå att beställa.',
-      initialValue: false,
-    }),
-    // End outOfStock
   ],
 })
