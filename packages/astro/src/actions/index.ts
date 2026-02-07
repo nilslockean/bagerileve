@@ -94,9 +94,10 @@ export const server = {
       }
 
       const product = entry.data;
+      const maxQty = product.maxQuantityPerOrder;
 
       // 2. Check stock status
-      if (product.outOfStock) {
+      if (maxQty === 0) {
         throw new ActionError({
           code: "BAD_REQUEST",
           message: "Produkten är fullbokad.",
@@ -104,7 +105,7 @@ export const server = {
       }
 
       // 3. Validate price option
-      const validPrice = product.prices.some(
+      const validPrice = product.variants.some(
         (option) => option.price === price
       );
 
@@ -116,9 +117,7 @@ export const server = {
       }
 
       // 4. Validate quantity
-      const maxQty = product.maxQuantityPerOrder;
-
-      if (maxQty > 0 && qty > maxQty) {
+      if (maxQty !== null && qty > maxQty) {
         throw new ActionError({
           code: "BAD_REQUEST",
           message: `Du kan max beställa ${maxQty} st av denna produkt.`,

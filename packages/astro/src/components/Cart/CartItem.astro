@@ -23,13 +23,14 @@ const {
   ...rest
 } = Astro.props;
 
-const priceOptionDesc = product.prices.find(
+const priceOptionDesc = product.variants.find(
   (option) => option.price === price
 )?.description;
 
-const title = priceOptionDesc
-  ? `${product.title} - ${priceOptionDesc}`
-  : product.title;
+const title =
+  product.variants.length > 1 && priceOptionDesc
+    ? `${product.title} - ${priceOptionDesc}`
+    : product.title;
 
 const thumbnail = product.images[0];
 ---

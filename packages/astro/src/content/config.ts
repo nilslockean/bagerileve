@@ -20,8 +20,11 @@ const products = defineCollection({
         title,
         content,
         images,
-        prices,
-        outOfStock,
+        variants[]{
+          "id": id.current,
+          price,
+          description
+        },
         pickupDates
       }`
     );

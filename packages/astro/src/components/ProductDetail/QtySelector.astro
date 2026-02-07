@@ -4,23 +4,35 @@ import type { Product } from "@lib/schemas/Product";
 
 interface Props extends HTMLAttributes<"fieldset"> {
   max: Product["maxQuantityPerOrder"];
+  qtyInCart: number;
 }
 
-const { max, class: className, ...rest } = Astro.props;
+const { max, qtyInCart, class: className, ...rest } = Astro.props;
+const isUnlimited = max === null;
 ---
 
 <fieldset {...rest}>
   <legend>Antal</legend>
   {
-    max > 0 && (
+    !isUnlimited && (
       <p>
         Kontakta oss på order@bagerileve.se om du vill beställa fler än {max}{" "}
         st.
       </p>
     )
   }
-  <label class="flex flex-wrap items-center gap-4">
-    <input name="qty" type="number" min="1" value="1" max={max || undefined} />
-    <span class="font-semibold">st.</span>
-  </label>
+  {
+    !isUnlimited && max > 0 && (
+      <label class="flex flex-wrap items-center gap-4">
+        <input
+          name="qty"
+          type="number"
+          min="1"
+          value="1"
+          max={max - qtyInCart}
+        />
+        <span class="font-semibold">st.</span>
+      </label>
+    )
+  }
 </fieldset>

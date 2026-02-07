@@ -39,10 +39,14 @@ export function getCart(cookies: AstroCookies): Cart {
   return EMPTY_CART;
 }
 
-export function addToCart(cart: Cart, item: CartItem, maxQty = 0): Cart {
+export function addToCart(
+  cart: Cart,
+  item: CartItem,
+  maxQty: number | null = null
+): Cart {
   // const cart = Object.create(currentCart);
   const nextCart = structuredClone(cart);
-  const isUnlimited = maxQty === 0;
+  const isUnlimited = maxQty === null;
 
   // Total quantity of this product already in cart (all price options)
   const qtyInCart = nextCart.items
@@ -74,7 +78,11 @@ export function addToCart(cart: Cart, item: CartItem, maxQty = 0): Cart {
   return nextCart;
 }
 
-export function updateCart(cart: Cart, item: CartItem, maxQty = 0) {
+export function updateCart(
+  cart: Cart,
+  item: CartItem,
+  maxQty: number | null = null
+) {
   const nextCart = structuredClone(cart);
   const nextItemIndex = nextCart.items.findIndex(
     ({ productId, price }) =>
@@ -92,8 +100,8 @@ export function updateCart(cart: Cart, item: CartItem, maxQty = 0) {
     return nextCart;
   }
 
-  // Add if maxQty is unlimited (0)
-  if (maxQty === 0) {
+  // Add if maxQty is unlimited
+  if (maxQty === null) {
     nextItem.qty = item.qty;
     return nextCart;
   }

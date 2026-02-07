@@ -14,8 +14,8 @@ interface Props extends HTMLAttributes<"a"> {
 
 const { product, ...rest } = Astro.props;
 const featuredImage = product.images[0];
-const prices = product.prices.map(({ price }) => price);
-const { outOfStock } = product;
+const prices = product.variants.map(({ price }) => price);
+const outOfStock = product.maxQuantityPerOrder === 0;
 ---
 
 <a {...rest} href={getProductUrl(product.id)} class="max-w-prose">
