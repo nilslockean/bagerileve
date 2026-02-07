@@ -1,4 +1,4 @@
-import { SiteLanguage } from "src/config";
+import { SiteLanguage } from "@config";
 
 export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);

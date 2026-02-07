@@ -1,0 +1,123 @@
+---
+import Logo from "./Logo.astro";
+import type { NavLink } from "@lib/types/NavLink";
+import NavLinks from "./NavLinks.astro";
+import { ENABLE_STOREFRONT } from "astro:env/server";
+import Icon from "./Icon.astro";
+import { IconName } from "@lib/enums/IconName";
+import { getCartUrl } from "@config";
+import ButtonLink from "./ButtonLink.astro";
+
+interface Props {
+  links: NavLink[];
+}
+const { links } = Astro.props;
+---
+
+<header class="flex justify-between px-6 py-4 md:hidden">
+  <a href="/" aria-label="Gå till startsidan">
+    <Logo />
+  </a>
+  <button aria-haspopup="dialog" aria-label="Toggle menu" id="menu-toggle">
+    <span class="sr-only">Öppna eller stäng huvudmenyn</span>
+    <svg
+      aria-hidden="true"
+      class="mobile-menu__icon--open"
+      focusable="false"
+      height="24"
+      viewBox="0 0 48 24"
+      width="48"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+    >
+      <rect height="1.5" width="42" x="4" y="7.5"></rect>
+      <rect height="1.5" width="42" x="4" y="15"></rect>
+    </svg>
+    <svg
+      aria-hidden="true"
+      class="mobile-menu__icon--close hidden"
+      focusable="false"
+      height="24"
+      viewBox="0 0 48 24"
+      width="48"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+    >
+      <path
+        d="M31.2479 3.69151L15.6915 19.2479L16.7522 20.3085L32.3085 4.75217L31.2479 3.69151Z"
+      ></path>
+      <path
+        d="M32.3085 19.2479L16.7522 3.69153L15.6915 4.75219L31.2479 20.3085L32.3085 19.2479Z"
+      ></path>
+    </svg>
+  </button>
+</header>
+
+<!-- Navigation -->
+<nav
+  aria-label="Primary"
+  class="interpolate-size z-50 hidden flex flex-col px-8 py-16 bg-blue-950 items-center gap-4"
+  id="primary-nav__mobile"
+>
+  <NavLinks links={links} class="no-underline text-4xl" />
+  {
+    ENABLE_STOREFRONT && (
+      <ButtonLink
+        variant="outline"
+        href={getCartUrl()}
+        class="flex gap-2 items-center m-0 mt-8"
+      >
+        <Icon name={IconName.CART} />
+        <span>Kundvagn</span>
+      </ButtonLink>
+    )
+  }
+</nav>
+
+<style>
+  @supports (interpolate-size: allow-keywords) {
+    .interpolate-size {
+      interpolate-size: allow-keywords;
+      height: auto;
+      transition: height 300ms;
+    }
+  }
+
+  #menu-toggle[aria-expanded="true"] .mobile-menu__icon--open,
+  #menu-toggle[aria-expanded="false"] .mobile-menu__icon--close {
+    display: none;
+  }
+
+  #menu-toggle[aria-expanded="false"] .mobile-menu__icon--open,
+  #menu-toggle[aria-expanded="true"] .mobile-menu__icon--close {
+    display: block;
+  }
+</style>
+
+<!-- Client-side script for toggling menu -->
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const close = document.getElementById("menu-close");
+  const nav = document.getElementById("primary-nav__mobile");
+
+  toggle?.addEventListener("click", () => {
+    nav?.classList.toggle("hidden");
+    toggle.setAttribute(
+      "aria-expanded",
+      nav?.classList.contains("hidden") ? "false" : "true"
+    );
+  });
+
+  close?.addEventListener("click", () => {
+    nav?.classList.add("hidden");
+    toggle?.setAttribute("aria-expanded", "false");
+  });
+
+  // Close menu on link click (useful on mobile)
+  nav?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      nav.classList.add("hidden");
+      toggle?.setAttribute("aria-expanded", "false");
+    });
+  });
+</script>

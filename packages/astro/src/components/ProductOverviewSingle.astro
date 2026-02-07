@@ -6,7 +6,7 @@ import { Image } from "astro:assets";
 import { urlFor } from "@lib/sanityAPI";
 import { formatPrice } from "@lib/stringUtils";
 import { buttonStyles } from "@lib/buttonStyles";
-import { getProductUrl } from "src/config";
+import { getProductUrl } from "@config";
 
 interface Props extends HTMLAttributes<"a"> {
   product: Product;
