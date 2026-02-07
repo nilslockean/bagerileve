@@ -139,54 +139,6 @@ export default defineType({
     }),
     // End variants
 
-    // Start prices
-    defineField({
-      name: 'prices',
-      type: 'array',
-      title: 'Priser (ANVÄND EJ)',
-      description: 'Detta fält kommer tas bort. Använd Varianter istället.',
-      of: [
-        {
-          type: 'object',
-          title: 'Prisalternativ',
-          fields: [
-            {
-              name: 'price',
-              type: 'number',
-              title: 'Pris',
-              description: 'Ange priset i SEK',
-              initialValue: 0,
-              validation: (Rule) => Rule.positive(),
-            },
-            {
-              name: 'description',
-              type: 'string',
-              description: 'Frivilligt om endast ett prisalternativ',
-              title: 'Beskrivning',
-            },
-          ],
-          preview: {
-            select: {
-              description: 'description',
-              price: 'price',
-            },
-            prepare(selection) {
-              const formattedPrice = currenyFormatter.format(selection.price || 0)
-              const title = selection.description || formattedPrice
-              const subtitle = selection.description && formattedPrice
-
-              return {
-                title,
-                subtitle,
-                media: TagIcon,
-              }
-            },
-          },
-        },
-      ],
-    }),
-    // End prices
-
     // Start images
     defineField({
       name: 'images',
