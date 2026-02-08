@@ -2,23 +2,7 @@ import {defineField, defineType} from 'sanity'
 import {ComponentIcon} from '@sanity/icons'
 import {BasketIcon} from '@sanity/icons'
 import {TagIcon} from '@sanity/icons'
-
-const currenyFormatter = new Intl.NumberFormat('sv-SE', {
-  style: 'currency',
-  currency: 'SEK',
-})
-
-function formatPrice(variants?: {price: number}[]) {
-  const prices = variants?.map((v) => v.price || 0) || [0]
-  const minPrice = Math.min(...prices)
-  const maxPrice = Math.max(...prices)
-
-  if (minPrice === maxPrice) {
-    return currenyFormatter.format(minPrice)
-  }
-
-  return currenyFormatter.formatRange(minPrice, maxPrice)
-}
+import {formatPrice, formatVariants} from '../lib/utils'
 
 export default defineType({
   name: 'product',
@@ -44,7 +28,7 @@ export default defineType({
       return {
         title: title,
         icon: ComponentIcon,
-        subtitle: formatPrice(selection.variants),
+        subtitle: formatVariants(selection.variants),
         media: selection.images?.[0],
       }
     },
@@ -123,7 +107,7 @@ export default defineType({
               price: 'price',
             },
             prepare(selection) {
-              const formattedPrice = currenyFormatter.format(selection.price || 0)
+              const formattedPrice = formatPrice([selection.price])
               const title = selection.description
               const subtitle = formattedPrice
 
