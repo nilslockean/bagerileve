@@ -69,11 +69,15 @@ const orderId = result?.data;
   >
     <!-- Image and description -->
     <div class="lg:col-span-2">
-      <PickupDateSelector {availablePickupDates} />
+      <PickupDateSelector {availablePickupDates} legend="1. Upphämtning" />
+
       <fieldset>
+        <legend>2. Personuppgifter</legend>
+
         <label for="name">Namn</label>
         <input type="text" name="name" id="name" autocomplete="name" required />
-        <label for="name">E-post</label>
+
+        <label for="email">E-post</label>
         <input
           type="email"
           name="email"
@@ -81,10 +85,17 @@ const orderId = result?.data;
           autocomplete="email"
           required
         />
+
         <label for="tel">Telefon</label>
         <input type="text" name="phone" id="tel" autocomplete="tel" required />
+
         <label for="message">Meddelande (valfri)</label>
         <textarea id="message" name="message"></textarea>
+      </fieldset>
+
+      <fieldset>
+        <legend>3. Betalning</legend>
+        <p>Betalning sker på plats vid upphämtning.</p>
       </fieldset>
     </div>
 

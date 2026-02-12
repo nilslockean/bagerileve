@@ -3,9 +3,10 @@ import type { HTMLAttributes } from "astro/types";
 import { capitalize } from "@lib/stringUtils";
 interface Props extends HTMLAttributes<"fieldset"> {
   availablePickupDates: string[];
+  legend?: string;
 }
 
-const { availablePickupDates, class: className, ...rest } = Astro.props;
+const { availablePickupDates, legend, class: className, ...rest } = Astro.props;
 const dateFormatter = new Intl.DateTimeFormat("sv-SE", {
   dateStyle: "full",
 });
@@ -16,7 +17,8 @@ function formatDate(dateStr: string) {
 ---
 
 <fieldset {...rest}>
-  <label for="pickupDate" class="mb-2 block">Upphämtningsdatum</label>
+  {legend && <legend>{legend}</legend>}
+  <label for="pickupDate">Upphämtningsdatum</label>
   <select id="pickupDate" name="pickupDate" required>
     <option value="" selected={availablePickupDates.length !== 1}>
       {
