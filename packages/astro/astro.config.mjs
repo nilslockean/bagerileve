@@ -5,25 +5,8 @@ import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import "dotenv/config";
-import { loadEnv } from "vite";
 
-function getEnv(varName) {
-  const viteEnv = loadEnv(process.env.NODE_ENV, process.cwd());
-  const metaEnv = import.meta.env;
-  const nodeEnv = process.env;
-
-  console.log(varName, {
-    vite: viteEnv[varName],
-    meta: metaEnv[varName],
-    node: nodeEnv[varName],
-  });
-
-  return viteEnv[varName] ?? metaEnv[varName] ?? nodeEnv[varName];
-}
-
-const SANITY_DATASET = getEnv("SANITY_DATASET") ?? "production";
-const SANITY_TOKEN = getEnv("SANITY_TOKEN") ?? "";
-const MAILERSEND_API_KEY = getEnv("MAILERSEND_API_KEY");
+const { SANITY_DATASET = "production", SANITY_TOKEN } = process.env;
 
 console.log(
   "META ENVZ",
@@ -35,7 +18,6 @@ console.log(
       NODE_ENV: process.env.NODE_ENV,
       SANITY_DATASET,
       SANITY_TOKEN,
-      MAILERSEND_API_KEY,
     },
     null,
     2
@@ -130,7 +112,6 @@ export default defineConfig({
         context: "server",
         access: "secret",
         optional: false,
-        default: MAILERSEND_API_KEY,
       }),
       ORDER_ADMIN_PRINTER_EMAIL: envField.string({
         context: "server",
