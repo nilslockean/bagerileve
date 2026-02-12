@@ -5,16 +5,8 @@ export default defineType({
   name: 'orderItem',
   title: 'Orderrad',
   type: 'object',
-
+  readOnly: true,
   fields: [
-    // References (for navigation)
-    defineField({
-      name: 'product',
-      title: 'Produkt',
-      type: 'reference',
-      to: [{type: 'product'}],
-    }),
-
     // Snapshot data
     defineField({
       name: 'productTitle',
@@ -52,6 +44,7 @@ export default defineType({
       title: 'Antal',
       type: 'number',
       validation: (Rule) => Rule.min(1),
+      readOnly: true,
     }),
 
     defineField({

@@ -10,13 +10,6 @@ export const OpeningHoursSchema = z
   .array(
     z.object({
       title: z.string(),
-      hours: z.array(
-        z.object({
-          day: z.string(),
-          time: z.string().optional().nullable(),
-          closed: z.boolean().optional(),
-        })
-      ),
       days: z.object({
         mon: WeekdaySchema,
         tue: WeekdaySchema,

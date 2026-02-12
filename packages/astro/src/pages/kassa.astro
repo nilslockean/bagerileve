@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getEntry } from "astro:content";
+import Checkout from "@components/Checkout/index.astro";
+import { sanityAPI } from "@lib/sanityAPI";
+import {
+  PICKUP_DATE_MIN_OFFSET,
+  PICKUP_DATE_MAX_OFFSET,
+} from "astro:env/server";
+import { getAvailablePickupDates } from "@lib/dateUtils";
+import { getCart, getCartTotal } from "@lib/cart";
+import { ENABLE_STOREFRONT } from "astro:env/server";
+import { getCartUrl } from "@config";
+
+export const prerender = false;
+
+if (!ENABLE_STOREFRONT) {
+  return Astro.rewrite("/404");
+}
+
+const cart = getCart(Astro.cookies);
+if (cart.items.length === 0) {
+  return Astro.rewrite(getCartUrl());
+}
+
+const cartContents = await Promise.all(
+  cart.items.map(async (item) => {
+    const entry = await getEntry("products", item.productId);
+    if (!entry) {
+      throw `Product ${item.productId} not found`;
+    }
+
+    return {
+      ...item,
+      product: entry.data,
+    };
+  })
+);
+const cartTotal = getCartTotal(cart);
+const availablePickupDates = await getAvailablePickupDates(
+  PICKUP_DATE_MIN_OFFSET,
+  PICKUP_DATE_MAX_OFFSET,
+  sanityAPI.getOpenDaysInRange.bind(sanityAPI),
+  cartContents.map((item) => item.product)
+);
+---
+
+<Layout
+  title="Slutför din beställning"
+  metaDescription="Slutför din beställning"
+>
+  <Checkout {availablePickupDates} contents={cartContents} total={cartTotal} />
+</Layout>

@@ -1,0 +1,203 @@
+---
+import Section from "@components/Section.astro";
+import { getCartUrl, getShopUrl } from "@config";
+import type { HTMLAttributes } from "astro/types";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { type CartTotal } from "@lib/cart";
+import type { Product } from "@lib/schemas/Product";
+import PickupDateSelector from "./PickupDateSelector.astro";
+import { formatPrice } from "@lib/stringUtils";
+import Button from "@components/Button.astro";
+import { actions } from "astro:actions";
+
+interface Props extends HTMLAttributes<"section"> {
+  availablePickupDates: string[];
+  total: CartTotal;
+  contents: {
+    productId: string;
+    price: number;
+    qty: number;
+    product: Product;
+  }[];
+}
+
+const {
+  availablePickupDates,
+  total,
+  contents,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const result = Astro.getActionResult(actions.checkout);
+const errorMessage = result?.error?.message;
+const orderId = result?.data;
+---
+
+<Section {...rest}>
+  <Breadcrumbs
+    trail={[
+      { label: "Hem", href: "/" },
+      { label: "Beställ", href: getShopUrl() },
+      { label: "Kundvagn", href: getCartUrl() },
+      { label: "Kassa" },
+    ]}
+  />
+
+  <h1 class="mt-8 mb-16">Kassa</h1>
+
+  {
+    errorMessage && (
+      <div class="bg-red-200 border border-red-400 text-red-900 w-full px-6 py-4 mb-12">
+        {errorMessage}
+      </div>
+    )
+  }
+
+  {
+    orderId && (
+      <div class="bg-green-200 border border-green-400 text-green-900 w-full px-6 py-4 mb-12">
+        {JSON.stringify(orderId)}
+      </div>
+    )
+  }
+
+  <form
+    method="POST"
+    action={actions.checkout}
+    class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12"
+  >
+    <!-- Image and description -->
+    <div class="lg:col-span-2">
+      <PickupDateSelector {availablePickupDates} />
+      <fieldset>
+        <label for="name">Namn</label>
+        <input type="text" name="name" id="name" autocomplete="name" required />
+        <label for="name">E-post</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          autocomplete="email"
+          required
+        />
+        <label for="tel">Telefon</label>
+        <input type="text" name="phone" id="tel" autocomplete="tel" required />
+        <label for="message">Meddelande (valfri)</label>
+        <textarea id="message" name="message"></textarea>
+      </fieldset>
+    </div>
+
+    <div class="flex flex-col bg-blue-950 p-8 gap-8 self-start sticky top-8">
+      <fieldset>
+        <legend>Din beställning</legend>
+        <table class="table-auto w-full">
+          {
+            contents.map((row) => (
+              <tr class="border-b border-current last:border-none align-top">
+                <td class="py-2">
+                  <p class="mb-0">
+                    {row.qty} x {row.product.title}
+                  </p>
+                  {row.product.variants.length > 1 && (
+                    <p class="text-sm">
+                      {
+                        row.product.variants.find(
+                          ({ price }) => price === row.price
+                        )?.description
+                      }
+                    </p>
+                  )}
+                </td>
+                <td class="text-right py-2 whitespace-nowrap">
+                  <p>{formatPrice([row.qty * row.price])}</p>
+                </td>
+              </tr>
+            ))
+          }
+        </table>
+        <hr class="my-6" />
+
+        <p class="text-4xl mb-1">{formatPrice([total.total])}</p>
+
+        <p class="text-sm">Inkl. {formatPrice([total.tax])} moms</p>
+      </fieldset>
+      <fieldset>
+        <!-- <legend>Ordertotal</legend> -->
+        <Button type="submit" variant="primary" class="w-full text-center">
+          Slutför beställning
+        </Button>
+      </fieldset>
+    </div>
+  </form>
+</Section>
+
+<script>
+  const STORAGE_KEY = "checkout-form";
+
+  const fields = ["name", "email", "tel", "message", "pickupDate"];
+
+  function getLocalStorageItem(item: string) {
+    if ("localStorage" in globalThis === false) {
+      return null;
+    }
+
+    const savedItem = localStorage.getItem(item);
+    if (!savedItem) {
+      return null;
+    }
+
+    return JSON.parse(savedItem);
+  }
+
+  function setLocalStorageItem(item: string, data: any): void {
+    if ("localStorage" in globalThis === false) {
+      return;
+    }
+
+    localStorage.setItem(item, JSON.stringify(data));
+  }
+
+  function load() {
+    const saved = getLocalStorageItem(STORAGE_KEY);
+    if (!saved) return;
+
+    for (const id of fields) {
+      const el = document.getElementById(id);
+
+      if (!el || saved[id] === null || "value" in el === false) {
+        continue;
+      }
+
+      el.value = saved[id];
+    }
+  }
+
+  function save() {
+    const data: Record<string, unknown> = {};
+
+    for (const id of fields) {
+      const el = document.getElementById(id);
+
+      if (!el || "value" in el === false) {
+        continue;
+      }
+
+      data[id] = el.value;
+    }
+
+    setLocalStorageItem(STORAGE_KEY, data);
+  }
+
+  document.addEventListener("input", ({ target }) => {
+    if (!(target instanceof HTMLElement) || typeof target.id !== "string") {
+      return;
+    }
+
+    if (fields.includes(target.id)) {
+      save();
+    }
+  });
+
+  load();
+</script>

@@ -42,7 +42,7 @@ export default defineType({
         {name: 'name', title: 'Namn', type: 'string'},
         {name: 'email', title: 'E-post', type: 'string'},
         {name: 'phone', title: 'Telefon', type: 'string'},
-        {name: 'message', title: 'Meddelande', type: 'text'},
+        {name: 'message', title: 'Meddelande', type: 'text', readOnly: true},
       ],
     }),
 
@@ -67,6 +67,7 @@ export default defineType({
       name: 'totals',
       title: 'Sammanställning',
       type: 'object',
+      readOnly: true,
       fields: [
         // {name: 'subtotal', type: 'number'},
         {name: 'tax', type: 'number', title: 'Moms'},
@@ -78,14 +79,15 @@ export default defineType({
   preview: {
     select: {
       orderNumber: 'orderNumber',
-      email: 'customer.email',
       total: 'totals.total',
+      name: 'customer.name',
+      pickupDate: 'pickupDate',
       // status: 'status',
     },
-    prepare({orderNumber, email, total}) {
+    prepare({name, orderNumber, total, pickupDate}) {
       return {
-        title: orderNumber ?? 'Ny order',
-        subtitle: `${email} – ${formatPrice([total])}`,
+        title: `${pickupDate} - ${name}`,
+        subtitle: `#${orderNumber} – ${formatPrice([total])}`,
       }
     },
   },

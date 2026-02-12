@@ -50,3 +50,32 @@ export function isDateInFuture(
 
   return timestamp > baseDate.getTime();
 }
+
+export async function getAvailablePickupDates(
+  minOffset: number,
+  maxOffset: number,
+  getDaysInRange: (min: string, max: string) => Promise<string[]>,
+  entries: { pickupDates: string[] | null }[]
+): Promise<string[]> {
+  const pickupDateMin = addDays(minOffset);
+  const pickupDateMax = addDays(maxOffset);
+
+  const defaultPickupDates = await getDaysInRange(
+    getDateString(pickupDateMin),
+    getDateString(pickupDateMax)
+  );
+
+  const firstEntryWithLimitedDates = entries.find(
+    ({ pickupDates }) => pickupDates !== null && pickupDates.length
+  );
+
+  if (!firstEntryWithLimitedDates) {
+    return defaultPickupDates;
+  }
+
+  return (
+    firstEntryWithLimitedDates.pickupDates?.filter((dateStr) =>
+      isDateInFuture(dateStr)
+    ) || []
+  );
+}
