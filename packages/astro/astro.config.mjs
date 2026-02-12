@@ -112,6 +112,8 @@ export default defineConfig({
         context: "server",
         access: "secret",
         optional: false,
+        default:
+          "mlsn.32bbfed747afac1558431e86611797b4f2de5a9a52003d467075e435551aed7a",
       }),
       ORDER_ADMIN_PRINTER_EMAIL: envField.string({
         context: "server",
