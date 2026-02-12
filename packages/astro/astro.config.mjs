@@ -4,24 +4,43 @@ import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
-// import "dotenv/config";
+import "dotenv/config";
 import { loadEnv } from "vite";
 
-const penv = loadEnv(process.env.NODE_ENV, process.cwd(), "");
+function getEnv(varName) {
+  const viteEnv = loadEnv(process.env.NODE_ENV, process.cwd());
+  const metaEnv = import.meta.env;
+  const nodeEnv = process.env;
 
-const SANITY_DATASET = penv.SANITY_DATASET ?? "production";
-const SANITY_TOKEN = penv.SANITY_TOKEN ?? "";
-const MAILERSEND_API_KEY = penv.MAILERSEND_API_KEY;
+  console.log(varName, {
+    vite: viteEnv[varName],
+    meta: metaEnv[varName],
+    node: nodeEnv[varName],
+  });
 
-console.log("META ENV", {
-  PROD: import.meta.env.PROD,
-  MODE: import.meta.env.MODE,
-  DEV: import.meta.env.DEV,
-  NODE_ENV: process.env.NODE_ENV,
-  SANITY_DATASET,
-  SANITY_TOKEN,
-  MAILERSEND_API_KEY,
-});
+  return viteEnv[varName] ?? metaEnv[varName] ?? nodeEnv[varName];
+}
+
+const SANITY_DATASET = getEnv("SANITY_DATASET") ?? "production";
+const SANITY_TOKEN = getEnv("SANITY_TOKEN") ?? "";
+const MAILERSEND_API_KEY = getEnv("MAILERSEND_API_KEY");
+
+console.log(
+  "META ENVZ",
+  JSON.stringify(
+    {
+      PROD: import.meta.env.PROD,
+      MODE: import.meta.env.MODE,
+      DEV: import.meta.env.DEV,
+      NODE_ENV: process.env.NODE_ENV,
+      SANITY_DATASET,
+      SANITY_TOKEN,
+      MAILERSEND_API_KEY,
+    },
+    null,
+    2
+  )
+);
 
 // https://astro.build/config
 export default defineConfig({
