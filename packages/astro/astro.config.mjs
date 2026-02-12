@@ -4,14 +4,14 @@ import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
-import "dotenv/config";
+// import "dotenv/config";
+import { loadEnv } from "vite";
 
-const SANITY_DATASET =
-  process.env.SANITY_DATASET ?? import.meta.env.SANITY_DATASET ?? "production";
-const SANITY_TOKEN =
-  process.env.SANITY_TOKEN ?? import.meta.env.SANITY_TOKEN ?? "";
-const MAILERSEND_API_KEY =
-  process.env.MAILERSEND_API_KEY ?? import.meta.env.MAILERSEND_API_KEY;
+const penv = loadEnv(process.env.NODE_ENV, process.cwd(), "");
+
+const SANITY_DATASET = penv.SANITY_DATASET ?? "production";
+const SANITY_TOKEN = penv.SANITY_TOKEN ?? "";
+const MAILERSEND_API_KEY = penv.MAILERSEND_API_KEY;
 
 console.log("META ENV", {
   PROD: import.meta.env.PROD,
