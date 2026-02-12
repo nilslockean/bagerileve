@@ -4,8 +4,11 @@ import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
+import "dotenv/config";
 
 const SANITY_DATASET = process.env.SANITY_DATASET || "production";
+const SANITY_TOKEN = process.env.SANITY_TOKEN || "";
+const MAILERSEND_API_KEY = process.env.MAILERSEND_API_KEY;
 
 console.log("META ENV", {
   PROD: import.meta.env.PROD,
@@ -13,6 +16,8 @@ console.log("META ENV", {
   DEV: import.meta.env.DEV,
   NODE_ENV: process.env.NODE_ENV,
   SANITY_DATASET,
+  SANITY_TOKEN,
+  MAILERSEND_API_KEY,
 });
 
 // https://astro.build/config
@@ -33,6 +38,7 @@ export default defineConfig({
       dataset: SANITY_DATASET,
       apiVersion: "2024-01-21",
       useCdn: false,
+      token: SANITY_TOKEN,
     }),
     mdx(),
     sitemap({
@@ -97,6 +103,18 @@ export default defineConfig({
         access: "public",
         optional: false,
         default: false,
+      }),
+      MAILERSEND_API_KEY: envField.string({
+        context: "server",
+        access: "secret",
+        optional: false,
+        default: MAILERSEND_API_KEY,
+      }),
+      ORDER_ADMIN_PRINTER_EMAIL: envField.string({
+        context: "server",
+        access: "public",
+        optional: true,
+        default: "cbty732mccw842@hpeprint.com",
       }),
     },
   },
