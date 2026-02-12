@@ -6,9 +6,12 @@ import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import "dotenv/config";
 
-const SANITY_DATASET = process.env.SANITY_DATASET || "production";
-const SANITY_TOKEN = process.env.SANITY_TOKEN || "";
-const MAILERSEND_API_KEY = process.env.MAILERSEND_API_KEY;
+const SANITY_DATASET =
+  process.env.SANITY_DATASET ?? import.meta.env.SANITY_DATASET ?? "production";
+const SANITY_TOKEN =
+  process.env.SANITY_TOKEN ?? import.meta.env.SANITY_TOKEN ?? "";
+const MAILERSEND_API_KEY =
+  process.env.MAILERSEND_API_KEY ?? import.meta.env.MAILERSEND_API_KEY;
 
 console.log("META ENV", {
   PROD: import.meta.env.PROD,
