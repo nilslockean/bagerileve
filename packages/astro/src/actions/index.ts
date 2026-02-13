@@ -1,3 +1,4 @@
+import { MailerSendAPI } from "@lib/api/MailerSendAPI";
 import {
   addToCart,
   EMPTY_CART,
@@ -12,6 +13,9 @@ import { orderSnapshotSchema } from "@lib/schemas/OrderSnapshot";
 import { defineAction, ActionError } from "astro:actions";
 import { getCollection, getEntry } from "astro:content";
 import {
+  MAILERSEND_API_KEY,
+  ORDER_ADMIN_EMAIL,
+  ORDER_ADMIN_PRINTER_EMAIL,
   PICKUP_DATE_MAX_OFFSET,
   PICKUP_DATE_MIN_OFFSET,
 } from "astro:env/server";
@@ -245,13 +249,32 @@ export const server = {
       });
       const order = await sanityAPI.createOrder(orderSnapshot);
 
+      const mailerSend = new MailerSendAPI({
+        snapshot: orderSnapshot,
+        createdAt: order._createdAt,
+        orderNr: order.orderNumber,
+        adminEmail: ORDER_ADMIN_EMAIL,
+        apiKey: MAILERSEND_API_KEY,
+        hostname: context.url.hostname,
+      });
+
+      // 4. Send confirmation email to customer
+      try {
+        await mailerSend.sendOrderConfirmation();
+        await mailerSend.sendAdminNotification();
+        await mailerSend.sendAdminNotification(ORDER_ADMIN_PRINTER_EMAIL);
+      } catch (error) {
+        throw new ActionError({
+          code: "SERVICE_UNAVAILABLE",
+          message: "Kunde inte skicka bekräftelsemail.",
+        });
+      }
+
       return {
         success: true,
         orderId: order.orderNumber,
       };
 
-      // 4. Send confirmation email to customer
-      // 5. Send notification to shop keeper
       // 6. Track order in PostHog
       // 7. Clear cart cookies
       // 8. Redirect to thank-you page with order ID

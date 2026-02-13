@@ -112,6 +112,11 @@ export default defineConfig({
         context: "server",
         access: "secret",
       }),
+      ORDER_ADMIN_EMAIL: envField.string({
+        context: "server",
+        access: "public",
+        default: "order@bagerileve.se",
+      }),
       ORDER_ADMIN_PRINTER_EMAIL: envField.string({
         context: "server",
         access: "public",
