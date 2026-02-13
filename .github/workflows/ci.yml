@@ -48,8 +48,8 @@ jobs:
       # Save secrets to .dev.vars and .env
       - name: Save secrets to .dev.vars and .env
         run: |
-          echo "FIENTA_API_KEY=${{ secrets.FIENTA_API_KEY }}" > .dev.vars
-          echo "MAILERSEND_API_KEY=${{ secrets.MAILERSEND_API_KEY }}" > .dev.vars
+          echo "FIENTA_API_KEY=${{ secrets.FIENTA_API_KEY }}" >> .dev.vars
+          echo "MAILERSEND_API_KEY=${{ secrets.MAILERSEND_API_KEY }}" >> .dev.vars
           cp .dev.vars .env
 
       # Build Astro
