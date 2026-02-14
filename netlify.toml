@@ -1,0 +1,4 @@
+[build]
+  base = "packages/astro"
+  publish = "dist"
+  command = "pnpm build"
