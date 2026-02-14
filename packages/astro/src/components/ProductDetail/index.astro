@@ -40,19 +40,18 @@ const qtyInCart = cart.items
   .map(({ qty }) => qty)
   .reduce((a, b) => a + b, 0);
 
-const max = product.maxQuantityPerOrder
-  ? product.maxQuantityPerOrder - qtyInCart
-  : 0;
-
-const isCartFull =
-  product.maxQuantityPerOrder && product.maxQuantityPerOrder === qtyInCart;
-
+const max = product.maxQuantityPerOrder;
+const isCartFull = max === qtyInCart;
+const isOutOfStock = max === 0;
 const disabled =
-  product.outOfStock || availablePickupDates.length === 0 || isCartFull;
+  isOutOfStock || availablePickupDates.length === 0 || isCartFull;
+
+console.log({ pm: product.maxQuantityPerOrder, max, isCartFull });
+
 const buttonActionDescription = disabled ? "Ej tillgänlig" : "Beställ";
 const buttonLabel =
-  product.prices.length === 1
-    ? `${formatPrice([product.prices[0].price])} - ${buttonActionDescription}`
+  product.variants.length === 1
+    ? `${formatPrice([product.variants[0].price])} - ${buttonActionDescription}`
     : buttonActionDescription;
 ---
 
@@ -112,16 +111,16 @@ const buttonLabel =
         <input name="productId" value={product.id} class="hidden" />
 
         {
-          product.outOfStock ? (
+          isOutOfStock ? (
             <ProductOutOfStock {product} />
           ) : (
             <ProductPickupDate {product} />
           )
         }
 
-        <ProductVariantSelector prices={product.prices} />
+        <ProductVariantSelector prices={product.variants} />
 
-        {!disabled && <ProductQtySelector max={max} />}
+        {!disabled && <ProductQtySelector max={max} qtyInCart={qtyInCart} />}
 
         <fieldset>
           {

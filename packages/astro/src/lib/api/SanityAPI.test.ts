@@ -86,11 +86,6 @@ describe("SanityAPI", () => {
 
   test("should filter out irregular opening hours in the past", async () => {
     const title = "Test";
-    const hours = [
-      { day: "tisdag - fredag", time: "11-18" },
-      { day: "lördag", time: "9-16" },
-      { day: "söndag - måndag", closed: true },
-    ];
     const irregular = [
       { date: "2022-02-01", time: "10-15" },
       { date: "2022-12-31", time: "10-15" },
@@ -104,7 +99,6 @@ describe("SanityAPI", () => {
     sanityClient.returnData = [
       {
         title,
-        hours,
         irregular,
         days,
       },
@@ -112,11 +106,7 @@ describe("SanityAPI", () => {
 
     const result = await api.getOpeningHours();
     expect(result.title).toEqual(title);
-    expect(result.hours).toStrictEqual([
-      { day: "tisdag - fredag", time: "11-18" },
-      { day: "lördag", time: "9-16" },
-      { day: "söndag - måndag", closed: true },
-    ]);
+    expect(result.days).toStrictEqual(DEFAULT_WEEKDAYS);
     expect(result.irregular?.length).toBe(2);
     expect(result.irregular![0].date).toEqual("2023-12-24");
     expect(result.irregular![1].date).toEqual("2023-12-25");
@@ -124,7 +114,6 @@ describe("SanityAPI", () => {
 
   test("should format format irregular dates correctly", async () => {
     const title = "Test";
-    const hours = [{ day: "tisdag - fredag", time: "11-18" }];
     const irregular = [{ date: "2022-02-01", time: "10-15" }];
     const days = DEFAULT_WEEKDAYS;
 
@@ -132,7 +121,6 @@ describe("SanityAPI", () => {
     sanityClient.returnData = [
       {
         title,
-        hours,
         irregular,
         days,
       },

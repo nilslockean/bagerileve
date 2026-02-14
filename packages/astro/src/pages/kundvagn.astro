@@ -2,12 +2,6 @@
 import Layout from "../layouts/Layout.astro";
 import { getEntry } from "astro:content";
 import Cart from "@components/Cart/index.astro";
-import { sanityAPI } from "@lib/sanityAPI";
-import {
-  PICKUP_DATE_MIN_OFFSET,
-  PICKUP_DATE_MAX_OFFSET,
-} from "astro:env/server";
-import { getDateString, addDays } from "@lib/dateUtils";
 import { getCart, getCartTotal } from "@lib/cart";
 import { ENABLE_STOREFRONT } from "astro:env/server";
 
@@ -32,24 +26,11 @@ const cartContents = await Promise.all(
   })
 );
 const cartTotal = getCartTotal(cart);
-const pickupDateMin = addDays(PICKUP_DATE_MIN_OFFSET);
-const pickupDateMax = addDays(PICKUP_DATE_MAX_OFFSET);
-
-const defaultPickupDates = await sanityAPI.getOpenDaysInRange(
-  getDateString(pickupDateMin),
-  getDateString(pickupDateMax)
-);
-
-const availablePickupDates = defaultPickupDates;
-
-// const availablePickupDates = entry.data.pickupDates?.length
-//   ? entry.data.pickupDates.filter((dateStr) => isDateInFuture(dateStr))
-//   : defaultPickupDates;
 ---
 
 <Layout
-  title="Slutför din beställning"
-  metaDescription="Slutför din beställning"
+  title="Gör ändringar i din kundvagn"
+  metaDescription="Produkter i din kundvagn"
 >
-  <Cart {availablePickupDates} contents={cartContents} total={cartTotal} />
+  <Cart contents={cartContents} total={cartTotal} />
 </Layout>

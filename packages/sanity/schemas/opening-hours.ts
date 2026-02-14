@@ -64,63 +64,6 @@ export default defineType({
       ],
     },
     {
-      name: 'hours',
-      type: 'array',
-      title: 'Öppettider',
-      of: [
-        {
-          type: 'object',
-          icon: ClockIcon,
-          preview: {
-            select: {
-              day: 'day',
-              time: 'time',
-              closed: 'closed',
-            },
-            prepare({day, time, closed}) {
-              return {
-                title: day,
-                subtitle: closed ? 'stängt' : time,
-              }
-            },
-          },
-          fields: [
-            defineField({
-              name: 'day',
-              type: 'string',
-              title: 'Veckodag',
-            }),
-            {
-              name: 'time',
-              type: 'string',
-              title: 'Öppettider',
-              hidden: ({parent}) => parent?.closed,
-            },
-            {
-              name: 'closed',
-              type: 'boolean',
-              title: 'Stängt',
-              initialValue: false,
-            },
-          ],
-        },
-      ],
-      initialValue: [
-        {
-          day: 'tisdag - fredag',
-          time: '11-18',
-        },
-        {
-          day: 'lördag',
-          time: '9-16',
-        },
-        {
-          day: 'söndag - måndag',
-          closed: true,
-        },
-      ],
-    },
-    {
       name: 'irregular',
       type: 'array',
       title: 'Avvikande öppettider',

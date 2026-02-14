@@ -2,23 +2,7 @@ import {defineField, defineType} from 'sanity'
 import {ComponentIcon} from '@sanity/icons'
 import {BasketIcon} from '@sanity/icons'
 import {TagIcon} from '@sanity/icons'
-
-const currenyFormatter = new Intl.NumberFormat('sv-SE', {
-  style: 'currency',
-  currency: 'SEK',
-})
-
-function formatPrice(variants?: {price: number}[]) {
-  const prices = variants?.map((v) => v.price || 0) || [0]
-  const minPrice = Math.min(...prices)
-  const maxPrice = Math.max(...prices)
-
-  if (minPrice === maxPrice) {
-    return currenyFormatter.format(minPrice)
-  }
-
-  return currenyFormatter.formatRange(minPrice, maxPrice)
-}
+import {formatPrice, formatVariants} from '../lib/utils'
 
 export default defineType({
   name: 'product',
@@ -29,19 +13,22 @@ export default defineType({
     select: {
       title: 'title',
       images: 'images',
-      prices: 'prices',
-      outOfStock: 'outOfStock',
+      variants: 'variants',
+      maxQuantityPerOrder: 'maxQuantityPerOrder',
     },
     prepare(selection) {
       let title = selection.title
-      if (selection.outOfStock) {
+      if (selection.maxQuantityPerOrder === 0) {
         title += ` (fullbokad)`
+      }
+      if (selection.maxQuantityPerOrder === null) {
+        title += ` (obegränsad)`
       }
 
       return {
         title: title,
         icon: ComponentIcon,
-        subtitle: formatPrice(selection.prices),
+        subtitle: formatVariants(selection.variants),
         media: selection.images?.[0],
       }
     },
@@ -63,29 +50,55 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
 
-    // Start prices
+    // Start variants
     defineField({
-      name: 'prices',
+      name: 'variants',
       type: 'array',
-      title: 'Priser',
+      title: 'Varianter',
       of: [
         {
           type: 'object',
           title: 'Prisalternativ',
           fields: [
             {
+              name: 'description',
+              type: 'string',
+              title: 'Beskrivning',
+              description: 'Visas endast i butiken om produkten har flera prisalternativ',
+              initialValue: 'Standard',
+              validation: (Rule) => Rule.required(),
+            },
+            {
               name: 'price',
               type: 'number',
               title: 'Pris',
               description: 'Ange priset i SEK',
-              initialValue: 0,
-              validation: (Rule) => Rule.positive(),
+              validation: (Rule) => Rule.positive().required(),
             },
             {
-              name: 'description',
-              type: 'string',
-              description: 'Frivilligt om endast ett prisalternativ',
-              title: 'Beskrivning',
+              name: 'id',
+              type: 'slug',
+              title: 'Variant-ID',
+              description: 'Genereras från beskrivningen',
+              options: {
+                source: (_doc, options) => {
+                  // `options.parent` is the current array item
+                  return options.parent?.description
+                },
+                isUnique: (value, context) => {
+                  const {parent, document} = context
+                  if (!document?.variants) {
+                    return true
+                  }
+
+                  const duplicates = document.variants.filter(
+                    (variant: any) => variant.id?.current === value && variant !== parent,
+                  )
+
+                  return duplicates.length === 0
+                },
+              },
+              validation: (Rule) => Rule.required(),
             },
           ],
           preview: {
@@ -94,9 +107,9 @@ export default defineType({
               price: 'price',
             },
             prepare(selection) {
-              const formattedPrice = currenyFormatter.format(selection.price || 0)
-              const title = selection.description || formattedPrice
-              const subtitle = selection.description && formattedPrice
+              const formattedPrice = formatPrice([selection.price])
+              const title = selection.description
+              const subtitle = formattedPrice
 
               return {
                 title,
@@ -108,7 +121,7 @@ export default defineType({
         },
       ],
     }),
-    // End prices
+    // End variants
 
     // Start images
     defineField({
@@ -195,10 +208,11 @@ export default defineType({
     defineField({
       name: 'maxQuantityPerOrder',
       type: 'number',
-      title: 'Max antal per order',
-      description: 'Max antal av produkten som kan köpas i en beställning (0 = obegränsat)',
-      initialValue: 5,
-      validation: (Rule) => Rule.positive(),
+      title: 'Max antal per beställning',
+      description: 'Lämna tomt för obegränsat. Ange 0 om produkten är fullbokad.',
+      initialValue: 10,
+      validation: (Rule) =>
+        Rule.integer().min(0).warning('Använd 0 för fullbokad, tomt för obegränsat'),
     }),
     // End max quantity per order
 
@@ -218,15 +232,5 @@ export default defineType({
         },
       ],
     }),
-
-    // Start outOfStock
-    defineField({
-      name: 'outOfStock',
-      type: 'boolean',
-      title: 'Fullbokad',
-      description: 'Kryssa i om produkten är slut i lager och inte ska gå att beställa.',
-      initialValue: false,
-    }),
-    // End outOfStock
   ],
 })

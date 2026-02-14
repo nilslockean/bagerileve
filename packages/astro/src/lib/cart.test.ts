@@ -182,7 +182,7 @@ describe("addToCart", () => {
     });
   });
 
-  test("adds to cart if maxQty is 0 (unlimited)", () => {
+  test("adds to cart if maxQty is null (unlimited)", () => {
     const cart = addToCart(
       EMPTY_CART,
       {
@@ -190,7 +190,7 @@ describe("addToCart", () => {
         price: 1,
         qty: 100,
       },
-      0
+      null
     );
 
     expect(cart.items).toHaveLength(1);
@@ -199,6 +199,21 @@ describe("addToCart", () => {
       price: 1,
       qty: 100,
     });
+  });
+
+  test("doesn't add to cart if maxQty is 0 (out of stock)", () => {
+    const cart = addToCart(
+      EMPTY_CART,
+      {
+        productId: "test-1",
+        price: 1,
+        qty: 1,
+      },
+      0
+    );
+
+    expect(cart.items).toHaveLength(0);
+    expect(cart).toEqual(EMPTY_CART);
   });
 });
 

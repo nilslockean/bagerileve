@@ -1,23 +1,12 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import type { Product } from "@lib/schemas/Product";
 import { capitalize } from "@lib/stringUtils";
-import {
-  PICKUP_DATE_MIN_OFFSET,
-  PICKUP_DATE_MAX_OFFSET,
-} from "astro:env/server";
-
 interface Props extends HTMLAttributes<"fieldset"> {
-  product: Product;
   availablePickupDates: string[];
+  legend?: string;
 }
 
-const {
-  product,
-  availablePickupDates,
-  class: className,
-  ...rest
-} = Astro.props;
+const { availablePickupDates, legend, class: className, ...rest } = Astro.props;
 const dateFormatter = new Intl.DateTimeFormat("sv-SE", {
   dateStyle: "full",
 });
@@ -28,23 +17,9 @@ function formatDate(dateStr: string) {
 ---
 
 <fieldset {...rest}>
-  <legend>Tillgänglighet</legend>
-  {
-    product.pickupDates && product.pickupDates.length > 0 ? (
-      <p>{product.title} går endast att hämta under specifika datum.</p>
-    ) : (
-      <>
-        <p>
-          {product.title} går att hämta under våra öppettider med minst{" "}
-          {PICKUP_DATE_MIN_OFFSET}
-          dagars framförhållning, och max {PICKUP_DATE_MAX_OFFSET} dagar in i
-          framtiden.
-        </p>
-      </>
-    )
-  }
-
-  <select name="pickupDate">
+  {legend && <legend>{legend}</legend>}
+  <label for="pickupDate">Upphämtningsdatum</label>
+  <select id="pickupDate" name="pickupDate" required>
     <option value="" selected={availablePickupDates.length !== 1}>
       {
         availablePickupDates.length === 0

@@ -10,6 +10,7 @@ import {
 } from "@lib/schemas/OpeningHoursSchema";
 import { capitalize } from "@lib/stringUtils";
 import { getDatesInRange } from "@lib/dateUtils";
+import type { OrderSnapshot } from "@lib/schemas/OrderSnapshot";
 
 export class SanityAPI {
   private client: ISanityClient;
@@ -72,7 +73,7 @@ export class SanityAPI {
 
   public async getOpeningHours(): Promise<OpeningHours> {
     const groqJson = await this.client.fetch(
-      `*[_type == "opening-hours" && setId.current == "default"]{title, irregular, hours, days}`
+      `*[_type == "opening-hours" && setId.current == "default"]{title, irregular, days}`
     );
     const openingHours = OpeningHoursSchema.parse(groqJson);
     // Filter out any irregular opening hours that are in the past
@@ -132,4 +133,37 @@ export class SanityAPI {
       return !closedWeekdays.includes(weekday);
     });
   }
+
+  private generateOrderNumber(baseDate = new Date()): string {
+    const y = baseDate.getFullYear().toString().slice(-2);
+    const m = String(baseDate.getMonth() + 1).padStart(2, "0");
+    const d = String(baseDate.getDate()).padStart(2, "0");
+
+    // 4 random digits
+    const rand = Math.floor(1000 + Math.random() * 9000);
+
+    return `${y}${m}${d}-${rand}`;
+  }
+
+  public createOrder = async (orderSnapshot: OrderSnapshot) => {
+    const { customer, pickupDate, items, totals } = orderSnapshot;
+
+    if (!this.client.create) {
+      throw new Error("Create method not available in Sanity client instance");
+    }
+
+    const order = await this.client.create({
+      _type: "order",
+      orderNumber: this.generateOrderNumber(),
+      customer,
+      pickupDate,
+      totals,
+      items: items.map((item) => ({
+        _key: crypto.randomUUID(), // 👈 required
+        ...item,
+      })),
+    });
+
+    return order;
+  };
 }
