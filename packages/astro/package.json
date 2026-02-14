@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "build:staging": "astro check && astro build --mode staging",
-    "preview": "pnpm wrangler pages dev ./dist",
+    "preview": "astro preview",
     "astro": "astro",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:unit": "vitest run",
@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.6",
-    "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/mdx": "^4.3.13",
+    "@astrojs/netlify": "^6.6.4",
     "@astrojs/node": "^9.5.3",
     "@astrojs/sitemap": "^3.7.0",
     "@astrojs/tailwind": "^6.0.2",

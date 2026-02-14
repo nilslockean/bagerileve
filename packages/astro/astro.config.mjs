@@ -1,9 +1,9 @@
 import sanity from "@sanity/astro";
 import mdx from "@astrojs/mdx";
-import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
+import netlify from "@astrojs/netlify";
 import "dotenv/config";
 
 const { SANITY_DATASET = "production", SANITY_TOKEN } = process.env;
@@ -27,12 +27,7 @@ console.log(
 // https://astro.build/config
 export default defineConfig({
   site: "https://bagerileve.se",
-  adapter: cloudflare({
-    platformProxy: {
-      enabled: true,
-    },
-    imageService: "passthrough",
-  }),
+  adapter: netlify(),
   vite: {
     plugins: [tailwindcss()],
   },
